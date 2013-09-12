@@ -1,0 +1,8 @@
+
+export MAS_NOTIFY2_DELAY=6000
+
+# scripts at $MAS_CONF_DIR_UTIL
+
+export FLASH_FORCE_PULSEAUDIO=1
+
+# vi: ft=sh

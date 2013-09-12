@@ -1,0 +1,29 @@
+# mas_loadlib_if_not mas_get_paths path
+mas_get_lib_ifnot path mas_get_paths
+
+function mas_set_path ( )
+{
+  local p
+    MAS_INCLUDE_PATH=$INCLUDE_PATH
+  # rpath=$($MAS_CONF_DIR_TERM/path/get_paths include)
+  #  rpath=$(mas_get_paths include)
+    for p in $(mas_get_paths include)
+      do 
+	if [ -z "$MAS_INCLUDE_PATH" ] ; then
+	  MAS_INCLUDE_PATH="$p"
+#       elif [ -z $p ] ; then
+#         mas_logger "p is empty"
+	elif ! echo $MAS_INCLUDE_PATH | /bin/egrep -q "(^|:)$p($|:)"; then
+	  MAS_INCLUDE_PATH="$MAS_INCLUDE_PATH:$p"
+	fi
+    done
+  return
+}
+if [ -z "$MAS_INCLUDE_PATH" ] ; then
+  mas_set_path
+fi
+unset mas_set_path
+
+  export INCLUDE_PATH
+  export MAS_INCLUDE_PATH
+# vi: ft=sh

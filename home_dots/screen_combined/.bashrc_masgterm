@@ -1,0 +1,19 @@
+if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs ]] ; then
+  . ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
+  mas_sourcing_start .bashrc_masgterm
+  unset mas_set_self define_std_binnames mas_call_from MAS_TOPVARS MAS_TOPFUNCS
+  function mas_bashrc_masgterm ()
+  { 
+    mas_get_lib_ifnot terminal_emulator terminal_emulator_euristic
+  #      mas_get_lib_ifnot wm mywmws mywmws_wmctrl
+  #      mas_get_lib_ifnot lib mas_call_from
+    mas_get_lib_call bash_init mas_bash_init
+    mas_get_lib_call stdbins define_std_binnames
+    mas_get_lib_call stddirs define_std_directories
+  }
+
+  mas_bashrc_masgterm $@
+  mas_sourcing_end .bashrc_masgterm
+fi
+
+# vi: ft=sh

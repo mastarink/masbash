@@ -1,0 +1,148 @@
+defutf8 on
+
+#term "$TERM"
+utf8 on
+defscrollback 5000
+termcapinfo xterm ti@:te@
+# logfile "~/log/screen/screenlog.%n"
+logfile "$MAS_BASH_LOG/screen/screenlog.%n"
+log on
+defmonitor on
+activity 'Activity in window %n'
+bell_msg 'Bell in window %n ...'
+altscreen on
+deflogin on
+
+autodetach on
+vbell
+
+# bind > writebuf
+bind >
+# bind < readbuf
+bind <
+bind ^?
+bind ^@
+bind _
+# bind ' ' screen
+bind ,
+bind {
+bind I
+bind O
+bind }
+bind ^A other
+bind A title
+bind b
+bind B
+bind ^B
+bind c
+bind d
+bind D
+bind f
+bind ^F
+bind ^G
+bind H
+bind ? help
+bind l
+bind L
+bind m
+bind M
+bind N
+bind n number
+bind ^O only
+bind ^P
+bind q
+bind K
+bind Z
+bind S split
+# bind K kill
+bind ^K kill
+bind Q quit
+bind r
+bind s
+bind t
+bind v
+bind ^V
+bind w
+bind W
+bind z
+# ?????????? shell '/usr/bin/sg mastar-bash /bin/bash'
+# shell zsh
+# shelltitle "$USER $SHELL $MAS_SCREEN_SESSION $$ Screen"
+# shelltitle "$USER $MAS_SCREEN_SESSION Scre"
+# title "screen N $STY"
+# setenv MAS_SCREENRC_LABEL1 "X%c `date` - $MAS_DSECONDS0 - $MAS_DSECONDS - $SECONDS - $USER - $MAS_SCREEN_SESSION - $MAS_TIME_SCREEN_START - $SHELL"
+setenv MAS_SCREENRC_LABEL1 "$MAS_DSECONDS0 - $MAS_DSECONDS - $SECONDS - $$ - $PPID - $USER - $MAS_SCREEN_SESSION - $MAS_TIME_SCREEN_START - $SHELL"
+setenv MAS_SCREENRC_STY "$STY"
+# Set login shell
+# shell -$SHELL
+# Set NOT login shell
+# shelltitle "S $BASH_PID"
+# exec 'env > /tmp/env.screenrc.txt'
+#? exec bash -c 'echo AAAAAAAA > /tmp/screenrc-echo.tmp'
+# ? exec 'echo AAAAAAAA > /tmp/screenrc-echo.tmp'
+# exec 'echo AAAAAAAA > /tmp/screenrc-echo.tmp' &
+
+# shell:  Default process started in screen's windows.
+# Makes it possible to use a different shell inside screen
+# than is set as the default login shell.
+# If begins with a '-' character, the shell will be started as a login shell.
+# shell                 zsh
+# shell                 bash
+# shell                 ksh
+
+
+# screen -t "screen N $STY"
+
+
+# shell bash --rcfile $HOME/.bashrc
+# shell ksh
+# startup_message on
+#shell $MAS_CONF_DIR_TERM/profile-sets/cromas/screen_bash
+
+# shell $MAS_CONF_DIR_SCREENS/screen_bash1
+
+#shell $MAS_CONF_DIR_PROFILE_GROUPS/bin/screen_bash
+# # # # Useful settings (among many others)
+# # # autodetach on
+# # # multiuser on
+# # # startup_message off
+# # # # Startup commands for a new session
+# # # chdir
+# # # # screen -t local
+# # # # select local
+
+#? exec /usr/bin/genlop -r
+
+#shelltitle 'booooo'
+
+screen 0
+###???  password 111111
+###???  su root
+# --- stuff 'screen -list | grep -{A,B}3 $STY ; ps -p$$ | grep $$'\15
+# ? exec pwd
+#? screen 1
+# --- stuff 'screen -list | grep -{A,B}3 $STY ; ps -p$$ | grep $$'\15
+# ? exec pwd
+#? screen 2
+#? stuff 'screen -list | grep -{A,B}3 $STY ; ps -p$$ | grep $$'\15
+# ? exec pwd
+# select 0
+##########################################################################################
+##########################################################################################
+##########################################################################################
+##########################################################################################
+##########################################################################################
+
+#split
+#screen
+#screen
+#screen
+#screen
+
+
+#Tue May  4 16:06:11 EEST 2010    screen -t zero 0
+#Tue May  4 16:06:11 EEST 2010    screen -t one 1
+#Tue May  4 16:06:11 EEST 2010    select zero
+
+# vi: ft=screen
+

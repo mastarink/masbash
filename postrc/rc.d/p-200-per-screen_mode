@@ -1,0 +1,15 @@
+# if ! [[ "$MAS_SCREEN_MODE_NEW" == "$MAS_SCREEN_MODE" ]] ; then
+    :
+##  export MAS_I_WS=${MAS_I_WS:-$( $MAS_WS_CMD )}
+##  export MAS_SCREEN_MODE_PREV="${MAS_SCREEN_MODE}"
+
+##  export MAS_SCREEN_MODE_NEW=${MAS_SCREEN_MODE_NEW:=noscreen}
+##  export MAS_SCREEN_MODE="${MAS_SCREEN_MODE:+${MAS_SCREEN_MODE},${MAS_SCREEN_MODE_NEW}}"
+##  export MAS_SCREEN_MODE="${MAS_SCREEN_MODE:=${MAS_SCREEN_MODE_NEW}}"
+    
+    MAS_SCREEN_MODE=${MAS_SCREEN_MODE_NEW:=noscreen}
+    MAS_SCREEN_MODE_NEW=noscreen
+# fi
+  return 0 
+
+# vi: ft=sh

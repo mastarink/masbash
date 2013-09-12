@@ -1,0 +1,37 @@
+mas_loadlib_if_not mas_get_paths path
+
+# 20120410 : Moved to function mas_get_paths () at bash_functions.sh
+type=$1
+shift
+if [ -n "$type" ] ; then 
+  #echo >&2 ; echo "<PATH>" >&2
+  for data_file in $MAS_CONF_DIR_PATHS/$type/* $* ; do 
+    /bin/cat $data_file|while( true ) ; do
+      read tpath
+    echo "$type : $tpath" >&2
+      first=`echo $tpath|/bin/cut -b -1`
+      if [ "x$first" == 'x#' ] ; then
+        continue
+      fi
+      #if [ "x$tpath" == 'x' ] ; then
+        #continue
+      #fi
+      if [ -z "$tpath" ] ; then 
+	echo "$rpath"
+	exit
+      fi
+      #echo "<PATH value=\"$tpath\">" >&2
+      if [ -n "$tpath" ] ; then 
+	xpath=`eval "echo $tpath"`
+	if [[ "$rpath" ]] ; then
+	  rpath="$rpath $xpath"
+	else
+	  rpath="$xpath"
+	fi
+      fi
+    done
+  done
+  #echo "</PATH>" >&2
+fi
+
+# vi: ft=sh

@@ -1,0 +1,6 @@
+# Per workspace,user settings
+# MAS_SCREEN_MODE_NEW=su-root
+MAS_SCREEN_MODE_NEW=noscreen
+
+# vi: ft=sh
+

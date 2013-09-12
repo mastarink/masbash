@@ -1,0 +1,19 @@
+
+# see bash_profile.d
+
+function mas_term_new_profile__bash_profile ()
+{
+  return 0
+}
+
+# mas_loadlib_if_not mas_source_register_script_a regzero
+# mas_loadlib_if_not mas_bash_init bash_init
+mas_get_lib_ifnot bash_init mas_bash_init
+
+# mas_source_register_script_a S "profile/bash_profile:${BASH_SOURCE[*]}"
+# [[ "$HOME"                 ]] && mas_source_scriptsn _profcomm_bashrc  -       HOME                   .bashrc
+
+mas_term_new_profile__bash_profile && return 0
+return 2
+
+# vi: ft=sh

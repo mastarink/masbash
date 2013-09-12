@@ -1,0 +1,5 @@
+echo "$$:`date`" >>$/profile.screen_combined.$UID.txt
+#echo .profile >>$MAS_BASH_LOG/bashrc.screen_combined.$UID.txt
+echo "$$:${BASH_SOURCE[0]}" >>$MAS_BASH_LOG/profile.screen_combined.$UID.txt
+echo "$$:STY:$STY" >>$MAS_BASH_LOG/profile.screen_combined.$UID.txt
+echo "TERM: $TERM" >> $MAS_BASH_LOG/profile.screen_combined.$UID.txt

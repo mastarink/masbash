@@ -1,0 +1,36 @@
+  if ! [[ "$MAS_USE_OBSOLETE" ]] ; then
+        unset STY MAS_PROMPT_STY WINDOW
+        unset BROWSER CVSEDITOR CVS_RSH EDITOR FCEDIT GNUSTEP_USER_ROOT GNUSTEP_USER_ROOT_B HISTFILE HISTFILESIZE HISTSIZE HISTTIMEFORMAT INPUTRC
+        unset MAS_BASH_PROFILE_TIME MAS_BASHRC MAS_BASHRC_DIR MAS_BASH_RCFILE MAS_BASH_SET_VAR_TIME MAS_BIN MAS_DSECONDS MAS_GTTY MAS_HOSTNAME MAS_INCLUDE_PATH MAS_I_WS MAS_INPUTRC MAS_INTERACTIVE MAS_LD_LIBRARY_PATH MAS_PATH MAS_pDSECONDS MAS_PROMPT_COUNT MAS_PROMPT_STY MAS_PS MAS_PSECONDS MAS_STATUS MAS_USLEEP MAS_UTIME MAS_WMCTRL MAS_GTERM_WORKSPACE
+        unset PROMPT_COMMAND PS10 SVN_EDITOR TERM_GEOMETRY WMAKER_BIN_NAME WM_DOCKAPPLETS
+    #  To get at least : 	MAS_SCREEN_MODE
+#--        define_std_directories
+#        [[ $MAS_BASH_RC_CALLED ]] || mas_source_scriptsn _bashrc_rc - MAS_CONF_DIR_BASH rc
+#        MAS_BASH_RC_CALLED=yes
+
+    #   if false ; then
+    #     mas_source_scriptsn _bashrc_rc - MAS_CONF_DIR_BASH rc
+    #   else
+    #     define_std_directories
+    #     mas_source_scriptsnt_optional _mastar_settings_per_ws '.sh' MAS_CONF_DIR_I_WS_USER settings
+    #   fi
+#        logfile=$logdir/env."$$.`datemt`.${MAS_SCREEN_MODE:-rs_none}"
+#       env > ${logfile}.${LINENO}
+#echo -e "@@@@@@@@@@@@@@@@@@@@ '$MAS_SCREEN_MODE'\e[K" >&2
+#sleep 10
+      #	read -t 5 MAS_SCREEN_MODE
+
+#       		# MAS_SCREEN_MODE not def. yet
+#       		# MOVE XXX : 
+
+#       			if [[ "$MAS_SCREEN_MODE" ]] ; then
+#       			  mas_loadlib_if_not mas_call_screen screen
+#       			  echo "run screen" >> $logdir/bashrc.screen_combined.txt
+#       			  mas_call_screen $@
+#       		#       else
+#       		#         [[ $MAS_BASH_RC_CALLED ]] || mas_source_scriptsn _bashrc_rc - MAS_CONF_DIR_BASH rc
+#       		#         MAS_BASH_RC_CALLED=yes
+#       			fi
+  fi
+
+# vi: ft=sh

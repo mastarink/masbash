@@ -1,0 +1,113 @@
+
+function mas_set_path ( )
+{
+  local s p show opath order px rest first tempf saved_trap result rpath
+  show='no'
+  #PATH=
+  opath=$PATH
+#  echo "opath: $PATH" >&2
+  tempf="/dev/shm/$$.path.tmp"
+#NO: trap  "rm $tempf" EXIT
+  saved_trap=$(trap  -p RETURN)
+# if [ -n "$saved_trap" ] ; then
+#   saved_trap="$saved_trap ; if [ -f '$tempf' ] ; then mas_logger ' RM $tempf' ; rm -f $tempf ; fi"
+# else
+#   saved_trap="if [ -f '$tempf' ] ; then mas_logger ' RM $saved_trap' ; rm -f $tempf ; fi"
+# fi
+  trap  "$saved_trap" RETURN
+
+
+  > $tempf
+  local rex1 rex2 rex3
+  rex1='^\-(.*)$'
+  rex2='^\+(.*)$'
+  rex3='^\/(.*)$'
+
+#                             while [[ "$opath" ]] ; do
+#                       	first=`echo $rest|/bin/cut -d: -f -1`
+#                       	rest=`echo $opath|/bin/cut -d: -f 2-`
+#                       	echo "first: $first" >&2
+#                       	echo "rest: $rest" >&2
+#                       	result=$?
+
+#                       	if [ "$opath" == "$rest" ] ; then
+#                       	  rest=''
+#                       	fi
+
+#                       	echo "+$first" >> $tempf
+#                           #   if [ "x$show" == 'xyes' ] ; then echo "PRESET '$first'" ; fi
+#                       	opath=$rest
+#                             done
+  for first in `echo $PATH|/bin/tr ':' ' '` ; do
+#   echo "f: $first" >&2
+    echo "+$first" >> $tempf
+  done
+
+# mas_loadlib_if_not mas_get_paths path
+  mas_get_lib_ifnot path mas_get_paths
+
+# rpath=`$MAS_CONF_DIR_TERM/path/get_paths common $tempf`
+  rpath=$( mas_get_paths common $tempf)
+# echo ":: rpath:'$rpath'" >&2
+  #echo $rpath >&2
+# if [ "x$show" == 'xyes' ] ; then echo "rpath:$rpath {common $tempf}" ; fi
+  MAS_PATH=''
+  for p in $rpath
+    do
+      if   [[ $p =~ $rex1 ]] ; then
+	order='-'
+	px=${BASH_REMATCH[1]}
+      elif [[ $p =~ $rex2 ]] ; then
+	order='+'
+	px=${BASH_REMATCH[1]}
+      elif [[ $p =~ $rex3 ]] ; then
+	order='+'
+	px=$p
+      fi
+      
+      if [[ $px =~ ^\/ ]] ; then
+	if [ -z "$MAS_PATH" ] ; then
+	  MAS_PATH="$px"
+#	elif [ -z "$px" ] ; then
+#	  if [ "x$show" == 'xyes' ] ; then mas_logger "px is empty" ; fi
+	elif ! echo $MAS_PATH | /bin/egrep -q "(^|:)$px($|:)"; then
+	  if [[ -d "$px" ]] ; then
+	    if [ "x$order" == 'x+' ] ; then
+	      MAS_PATH="$MAS_PATH:$px"
+	    elif [ "x$order" == 'x-' ] ; then
+	      MAS_PATH="$px:$MAS_PATH"
+	    fi
+#         else
+#           .......... "PATH : directory $px not exists"
+	  fi
+	fi
+      fi
+  done
+
+
+  export MAS_PATH
+#  if [ -n "$tempf" -a -s "$tempf" ] ; then
+#   rm $tempf
+#  fi
+  [ -n "$tempf" -a -s "$tempf" ] && rm -f "$tempf"
+}
+function mas_set_path_test ()
+{
+ unset MAS_PATH
+ mas_set_path
+ echo "MAS_PATH: $MAS_PATH" >&2
+}
+	    
+if [ -z "$MAS_PATH" ] ; then
+  mas_set_path
+# mas_set_path_test
+fi
+
+
+
+#unset mas_set_path
+PATH=$MAS_PATH
+
+export PATH
+
+# vi: ft=sh

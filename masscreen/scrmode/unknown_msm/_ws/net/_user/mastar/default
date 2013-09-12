@@ -1,0 +1,4 @@
+# Per workspace,user settings
+MAS_SCREEN_MODE_NEW=screen-exec
+
+# vi: ft=sh

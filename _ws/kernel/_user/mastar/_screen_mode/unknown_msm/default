@@ -1,0 +1,5 @@
+export SCREENRC="${MAS_CONF_DIR_SCREENS}/rc2" 
+MAS_SCREEN_MODE_NEW=screen-exec
+
+
+# vi: ft=sh

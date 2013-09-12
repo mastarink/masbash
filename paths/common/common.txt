@@ -1,0 +1,17 @@
+/bin
+/usr/local/bin
+/usr/local/wm
+/usr/local/wm/bin
+/usr/bin
+#/usr/X11R6/bin
+$HOME/a/bin
+-$MAS_UBIN
+-$MAS_BIN
+-$MAS_BIN/pathok/cc/b
+#$MAS_BIN/pathok/cc/e
+$MAS_BIN/pathok/cc
+# -$MAS_BIN/pathok/nodir1
+# $MAS_BIN/pathok/nodir2
+#~/sbin
+#$MAS_CONF_DIR_TERM/bin
+#/usr/local/mastar

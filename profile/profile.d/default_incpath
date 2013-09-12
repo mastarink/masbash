@@ -1,0 +1,19 @@
+#echo "Why ${BASH_SOURCE[0]} [$PATH]" >&2
+#echo "Why ${BASH_SOURCE[1]} [$PATH]" >&2
+#if ! [ -n "$MAS_CONF_DIR_BASH" -a -n "$MAS_CONF_DIR_BASH_SET" -a -f $MAS_CONF_DIR_BASH_SET/all_paths ] ; then
+  for p in \
+	  "/usr/include/mysql" \
+	  "/usr/include/"
+    do 
+      if ! echo $INCLUDE_PATH | /bin/egrep -q "(^|:)$p($|:)"; then
+	if [ "none$INCLUDE_PATH" == 'none' ] ; then
+	  INCLUDE_PATH="$p"
+	else
+	  INCLUDE_PATH="$INCLUDE_PATH:$p"
+	fi
+      fi
+  done
+  export INCLUDE_PATH
+#fi
+
+# vi: ft=sh

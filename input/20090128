@@ -1,0 +1,33 @@
+# <mastar-made>
+# set horizontal-scroll-mode on
+set expand-tilde on
+# set editing-mode vi
+set visible-stats on
+# set editing-mode vi
+# set editing-mode vi
+$include /etc/inputrc
+
+
+set output-meta on
+set meta-flag on
+set input-meta on
+
+set convert-meta on
+
+"\e[1~": beginning-of-line
+"\e[4~": end-of-line
+
+#"\M-y": dump-variables
+Control-y: dump-functions
+# Control-y: "C/Y"
+Meta-y: dump-functions
+
+#Super-y:self-insert
+#"ABXCDREARSHJWed Dec  3 12:30:57 EET 2008": self-insert
+#"ЩЩЩЩABXCDREARSHJWed Dec  3 12:30:57 EET 2008": vi-search
+#"Щ":self-insert
+
+Control-u: "^U"
+"\e[20;5~": "ls -l ~/.inputrc\n"
+
+#set convert-meta off

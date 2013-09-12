@@ -1,0 +1,28 @@
+defutf8 on
+
+#term "$TERM"
+utf8 on
+defscrollback 5000
+termcapinfo xterm ti@:te@
+#logfile "/tmp/screenlog.%n"
+#log on
+#startup_message on
+#shell $MAS_CONF_DIR_TERM/profile-sets/cromas/screen_bash
+shell $MAS_CONF_DIR_PROFILE_GROUPS/bin/screen_bash
+# # # # Useful settings (among many others)
+# # # autodetach on
+# # # multiuser on
+# # # startup_message off
+# # # # Startup commands for a new session
+# # # chdir
+# # # # screen -t local
+# # # # select local
+
+#? exec /usr/bin/genlop -r
+
+screen -t zero 0
+# screen -t one 1
+# screen -t two 2
+select zero
+
+# vi: ft=screen

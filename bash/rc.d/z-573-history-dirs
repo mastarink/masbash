@@ -1,0 +1,50 @@
+  export MAS_I_WS=${MAS_I_WS:-$( $MAS_WS_CMD )}
+  if [[ "${MAS_HISTORY_DIR}" ]] && ! [[ -d "${MAS_HISTORY_DIR}" ]] ; then 
+    mas_mkdir ${MAS_HISTORY_DIR}
+  fi
+function histfile ()
+{
+  local histdir histfile termem
+  if [[ "$MAS_GROUPRC" ]] ; then
+    histdir="${MAS_GROUPRC}/"
+  elif [[ "${MAS_HISTORY_DIR}" ]] ; then
+    histdir="${MAS_HISTORY_DIR}/"
+    history -r "${histdir}std_mastar.history"
+
+#   termem=`mas_call_from terminal_emulator_euristic_show terminal_emulator`
+    termem=`mas_get_lib_call terminal_emulator terminal_emulator_euristic_show`
+
+    if [[ "$termem" ]] ; then
+      histdir="${histdir}${termem}/"
+    fi
+    if [[ "$MAS_I_WS" ]] ; then
+      histdir="${histdir}${MAS_I_WS}/"
+      histfile='ws'
+    elif  [[ `${MAS_TTY_CMD:=/bin/tty}` =~ /dev/tty([[:digit:]]+)$ ]] ; then    
+      histdir="${histdir}${BASH_REMATCH[1]}/"
+      histfile='wt'
+    elif  ! [[ "${WINDOWID}" ]] ; then
+      histdir="${histdir}"
+      histfile='wi'
+    else
+      histdir="${histdir}${WINDOWID}/"
+      histfile='ww'
+    fi
+  fi
+  if [[ "$histdir" ]] ; then
+    if ! [[ -d "$histdir" ]] ; then
+      mkdir -p "$histdir"
+    fi
+    echo "${histdir}${histfile}.history"
+  fi
+}
+if [[ "$HISTFILE" ]] && [[ -r "$HISTFILE" ]] ; then
+  history -r "$HISTFILE"
+fi
+export HISTFILE="`histfile`"
+# echo "HISTFILE: '$HISTFILE'" >&2
+# history 30
+
+return 0
+
+# vi: ft=sh

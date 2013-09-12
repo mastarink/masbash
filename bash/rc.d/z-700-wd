@@ -1,0 +1,30 @@
+function mas_load_wd_libs ()
+{
+  if [[ "$MAS_WD_LIB_DIR" ]] && [[ -d "$MAS_WD_LIB_DIR" ]] ; then
+    for masdirlib in $MAS_WD_LIBS ; do
+     masfulllib="${MAS_WD_LIB_DIR}/${MAS_LIB_NAME_PREFIX}${masdirlib}${MAS_LIB_SUFFIX}"
+     if [[ -f "$masfulllib" ]]  ; then
+       . "$masfulllib"
+       echo "w/d Library : '$masfulllib'" >&2
+     fi
+    done
+  else
+    echo "No w/d library dir at '$MAS_WD_LIB_DIR'" >&2
+  fi
+}
+
+if [[ "$MAS_TOPVARS" ]] ; then [[ "$MAS_LIB_NAME_PREFIX" ]] || . $MAS_TOPVARS ; fi
+if [[ "$MAS_WD_LIB_SUB_DIR" ]] ; then
+  if [[ "$MAS_WORK_DIR" ]] && [[ -d "$MAS_WORK_DIR" ]] ; then
+    cd $MAS_WORK_DIR
+    export MAS_WD_LIB_DIR="${MAS_WORK_DIR}/${MAS_WD_LIB_SUB_DIR}"
+  else
+    export MAS_WD_LIB_DIR="`realpath ${MAS_WD_LIB_SUB_DIR}`"
+  fi
+  mas_load_wd_libs
+  export -f mas_load_wd_libs
+fi
+
+return 0
+
+# vim: ft=sh

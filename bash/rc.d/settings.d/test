@@ -1,0 +1,5 @@
+# echo ZZZZZZZZZZZ >&2
+
+return 0
+
+# vi: ft=sh

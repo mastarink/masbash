@@ -1,0 +1,5 @@
+$MAS_BIN/gtermws.sh || echo "Error; MAS_BIN=$MAS_BIN; PATH=$PATH" >&2
+# terminator --geometry='1170x800+100+200' &
+terminator -l devel1 -r "ws.`mywmws`" --working-directory=/mnt/new_misc/develop/autotools/zoc/projects/bins &
+# terminator --geometry='1000x900+20+90' &
+terminator -l devel2 -r "ws.`mywmws`" --working-directory=/mnt/new_misc/develop/autotools/zoc/projects &

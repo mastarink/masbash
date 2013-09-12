@@ -1,0 +1,23 @@
+#echo "Why ${BASH_SOURCE[0]} [$PATH]" >&2
+#echo "Why ${BASH_SOURCE[1]} [$PATH]" >&2
+#if ! [ -n "$MAS_CONF_DIR_BASH" -a -n "$MAS_CONF_DIR_BASH_SET" -a -f $MAS_CONF_DIR_BASH_SET/all_paths ] ; then
+  for p in \
+	  "/bin" \
+	  "/usr/local/bin" \
+	  "/usr/bin" \
+	  "$HOME/a/bin" \
+	  "$MAS_BIN" \
+	  "$MAS_BIN/pathok/p"
+    do 
+      if ! echo $PATH | /bin/egrep -q "(^|:)$p($|:)"; then
+	if [ "none$PATH" == 'none' ] ; then
+	  PATH="$p"
+	else
+	  PATH="$p:$PATH"
+	fi
+      fi
+    done
+  export PATH
+#fi
+
+# vi: ft=sh

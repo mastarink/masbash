@@ -1,0 +1,26 @@
+  export MAS_I_WS=${MAS_I_WS:-$( $MAS_WS_CMD )}
+
+  if [[ "$MAS_GROUPRC" ]] ; then
+    export HISTFILE=${MAS_GROUPRC}.history
+  elif [[ "${MAS_HISTORY_DIR}" ]] ; then
+    if [ -n "${MAS_CONF_DIR_TERM}" -a -d "${MAS_CONF_DIR_TERM}" ] ; then
+      if ! [[ -d "${MAS_HISTORY_DIR}" ]] ; then 
+	mas_mkdir ${MAS_HISTORY_DIR}
+      fi
+    fi
+    if [[ "$MAS_I_WS" ]] ; then
+      export HISTFILE=${MAS_HISTORY_DIR}/ws.${MAS_I_WS}.history
+    elif  [[ `${MAS_TTY_CMD:=/bin/tty}` =~ /dev/tty([0-9]+)$ ]] ; then    
+      export HISTFILE=${MAS_HISTORY_DIR}/wt.${BASH_REMATCH[1]}.history
+    elif  [ -z "${WINDOWID}" ] ; then
+      export HISTFILE=${MAS_HISTORY_DIR}/wi.history
+    else
+      export HISTFILE=${MAS_HISTORY_DIR}/ww.${WINDOWID}.history
+    fi
+    history -r "${MAS_HISTORY_DIR}/std_mastar.history"
+  fi
+
+return 0
+
+# vi: ft=sh
+

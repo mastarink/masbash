@@ -1,0 +1,50 @@
+
+# mas_loadlib_if_not mas_source_register_pid2 regbash
+
+function mas_term_new_bash__rc ()
+{
+  local wpid
+# see rc.d
+# mas_source_scriptsn _rc_mastar_settings  -    MAS_CONF_DIR_BASH         rc_global
+
+  if ! [[ "$TERM" =~ ^(screen)(\..*|)$ ]] ; then
+    unset STY MAS_PROMPT_STY WINDOW
+  fi
+
+  if [[ $- =~ 'i' ]] ; then
+  # Interactive shell
+    if false && [[ "$MAS_CONF_DIR_TERM" ]] && [[ -x $MAS_CONF_DIR_TERM/trap/sigEXIT.sh ]] ; then
+      trap $MAS_CONF_DIR_TERM/trap/sigEXIT.sh EXIT
+      trap $MAS_CONF_DIR_TERM/trap/sigEXIT.sh QUIT
+      trap $MAS_CONF_DIR_TERM/trap/sigEXIT.sh HUP
+      trap $MAS_CONF_DIR_TERM/trap/sigEXIT.sh TERM
+    fi
+
+    export MAS_INTERACTIVE="1"
+
+    [[ "$BASH_ENV" ]] && . $BASH_ENV
+  else
+  # Non-interactive shell
+  #----  echo "Non-interactive shell" > /dev/null
+    :
+    unset MAS_INTERACTIVE
+  fi
+# if [[ -f "$MAS_GTERM_VAR_DIR/pids-$WINDOWID" ]] ; then
+#   while read wpid ; do
+#     if xwininfo -id $WINDOWID >/dev/null 2>&1 ; then 
+#     fi
+#   done < $MAS_GTERM_VAR_DIR/pids-$WINDOWID
+# fi
+
+# mas_source_register_pid2
+  return 0
+}
+
+# mas_loadlib_if_not datemt time
+mas_get_lib_call time datemt
+
+export MAS_TERM_NEW_BASH__RC=$(datemt)
+mas_term_new_bash__rc
+
+
+# vi: ft=sh

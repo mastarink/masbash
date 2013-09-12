@@ -1,0 +1,13 @@
+      
+  if ! [[ "$MAS_USE_OBSOLETE" ]] ; then
+#--      define_std_directories
+   # $MAS_CONF_DIR/term_new/masscreen/rc0 == MAS_CONF_DIR_SCREENS
+      if [[ "$EUID" && "$EUID" -eq 0 && "$PPID" && -r "/proc/$PPID/environ" ]] ; then
+        MAS_STY_UP=$( ${MAS_CAT_CMD:=/bin/cat} /proc/$PPID/environ  | tr '\0' '\n' | ${MAS_SED_CMD:=/bin/sed} -ne 's@^STY=\(.*\)$@\1@p' )
+      fi
+      export MAS_TIME_SCREEN_START=`datemt`
+#      [[ $MAS_BASH_RC_CALLED ]] || mas_source_scriptsnt _bashrc_rc - MAS_CONF_DIR_BASH rc
+#      MAS_BASH_RC_CALLED=yes
+  fi
+
+# vi: ft=sh

@@ -1,0 +1,74 @@
+defutf8 on
+
+#term "$TERM"
+utf8 on
+defscrollback 5000
+termcapinfo xterm ti@:te@
+# logfile "~/log/screen/screenlog.%n"
+logfile "$MAS_BASH_LOG/screen/screenlog.%n"
+log on
+defmonitor on
+activity 'Activity in window %n'
+bell_msg 'Bell in window %n ...'
+altscreen on
+
+
+# shelltitle "$USER $SHELL $MAS_SCREEN_SESSION $$ Screen"
+shelltitle "$USER $MAS_SCREEN_SESSION Screen"
+
+# setenv MAS_SCREENRC_LABEL1 "X%c `date` - $MAS_DSECONDS0 - $MAS_DSECONDS - $SECONDS - $USER - $MAS_SCREEN_SESSION - $MAS_TIME_SCREEN_START - $SHELL"
+setenv MAS_SCREENRC_LABEL1 "$MAS_DSECONDS0 - $MAS_DSECONDS - $SECONDS - $USER - $MAS_SCREEN_SESSION - $MAS_TIME_SCREEN_START - $SHELL"
+# Set login shell
+# shell -$SHELL
+# Set NOT login shell
+shell $SHELL
+
+# shell:  Default process started in screen's windows.
+# Makes it possible to use a different shell inside screen
+# than is set as the default login shell.
+# If begins with a '-' character, the shell will be started as a login shell.
+# shell                 zsh
+# shell                 bash
+# shell                 ksh
+
+
+
+
+# shell bash --rcfile $HOME/.bashrc
+# shell ksh
+# startup_message on
+#shell $MAS_CONF_DIR_TERM/profile-sets/cromas/screen_bash
+#shell $MAS_CONF_DIR_PROFILE_GROUPS/bin/screen_bash
+# # # # Useful settings (among many others)
+# # # autodetach on
+# # # multiuser on
+# # # startup_message off
+# # # # Startup commands for a new session
+# # # chdir
+# # # # screen -t local
+# # # # select local
+
+#? exec /usr/bin/genlop -r
+
+#shelltitle 'booooo'
+
+
+##########################################################################################
+##########################################################################################
+##########################################################################################
+##########################################################################################
+##########################################################################################
+
+#split
+screen
+screen
+#screen
+#screen
+
+
+#Tue May  4 16:06:11 EEST 2010    screen -t zero 0
+#Tue May  4 16:06:11 EEST 2010    screen -t one 1
+#Tue May  4 16:06:11 EEST 2010    select zero
+
+# vi: ft=screen
+

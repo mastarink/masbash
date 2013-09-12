@@ -1,0 +1,25 @@
+
+# see bash_profile.d
+
+function mas_term_new_profile__profile ()
+{
+  return 0
+}
+  # if [ "x$GDMSESSION" != "x" ] ; then
+  #   if [ "x$GDMSESSION" == "xwmaker" ] ; then
+  if [ "x$DESKTOP_SESSION" == "xwmaker" ] ; then
+    export WMPATH="/usr/bin /usr/X11R6/bin /usr/local/bin"  
+    export GNUSTEP_USER_ROOT=$MAS_CONF_DIR/GNUstep
+   #export GNUSTEP_USER_ROOT_B=$MAS_CONF_DIR/GNUstep
+    export WM_DOCKAPPLETS=$MAS_CONF_DIR/wmaker
+  #xrandr -s 1280x2048
+  fi
+  export WM=$DESKTOP_SESSION
+  if [ -z "$MAS_TIME_I_WS" ] ; then
+      export MAS_I_WS=${MAS_I_WS:-$( $MAS_WS_CMD )}
+  fi
+
+mas_term_new_profile__profile && return 0
+return 2
+
+# vi: ft=sh

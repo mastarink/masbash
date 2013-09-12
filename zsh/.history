@@ -1,0 +1,18 @@
+l
+ls -latr
+exit
+help
+exit
+emulate sh
+help
+emulate --help
+?
+helpp
+help
+help
+~/m
+exit\
+~/m
+screen -list | grep -{A,B}3 $STY ; ps -p$$ | grep $$
+screen -list | grep -{A,B}3 $STY ; ps -p$$ | grep $$
+screen -list | grep -{A,B}3 $STY ; ps -p$$ | grep $$

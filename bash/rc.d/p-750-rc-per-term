@@ -1,0 +1,8 @@
+# mas_call_from define_std_directories stddirs
+  mas_get_lib_call stddirs define_std_directories
+
+  mas_source_scriptsn_opt_std _rc_mastar_settings_term   MAS_CONF_DIR_TERM_TERM
+
+  return 0 
+
+# vi: ft=sh

@@ -1,0 +1,7 @@
+echo "A .................." >&2 ; sleep 2
+MAS_BASH_RC_CALLED=yes
+
+
+
+# vi: ft=sh
+

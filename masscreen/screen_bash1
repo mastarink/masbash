@@ -1,0 +1,5 @@
+#!/bin/sh
+${MAS_ENV_CMD:=/bin/env} >/tmp/screen_bash1.env.tmp
+# exec sg mastar-bash "/bin/bash $*"
+#? /usr/bin/newgrp mastar-bash
+/bin/bash "$@"

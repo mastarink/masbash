@@ -1,0 +1,14 @@
+/usr/java/j2sdk1.4.2_01/bin
+/usr/java/j2re1.4.2_01/bin
+/bin
+/usr/local/bin
+/usr/local/wm
+/usr/local/wm/bin
+#/usr/kerberos/bin
+/usr/bin
+$HOME/a/bin
+$MAS_BIN
+$MAS_BIN/pathok/c
+$MAS_BIN/pathok/nodir
+$MAS_UBIN
+# /usr/local/mastar

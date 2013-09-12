@@ -1,0 +1,3 @@
+if [[ "$MAS_BIN" ]] && [[ -d "$MAS_BIN" ]] ; then
+  source $MAS_BIN/gtermws.sh
+fi

@@ -1,0 +1,8 @@
+  if ! [[ "$MAS_SCREEN_MODE_NEW" == "$MAS_SCREEN_MODE" ]] ; then
+#   mas_call_from define_std_directories stddirs
+    mas_get_lib_call stddirs define_std_directories
+    mas_source_scriptsn_opt_std _mastar_settings_per_scrmode MAS_CONF_DIR_SCREEN_MODE
+  fi
+  return 0 
+# vi: ft=sh
+

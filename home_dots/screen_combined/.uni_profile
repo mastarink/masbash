@@ -1,0 +1,44 @@
+if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs ]] ; then
+  . ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
+  mas_sourcing_start .profile
+  
+  set > /mnt/new_misc/develop/bash/saves/set00.txt
+  # 1. MAS_...
+  unset MAS_ATNAME_TIME MAS_ATNAME_TIME MAS_AWK_CMD MAS_AWK_CMD MAS_BASH_LOG MAS_BASH_LOG_XDG MAS_BIN MAS_BINZ MAS_CAT_CMD MAS_CUT_CMD MAS_DATE_CMD MAS_DEFINE_STD_DIRECTORY_POS MAS_DIR_BASH_LOG MAS_DIRS MAS_DIRS_CONF_AT MAS_DIRS_SEARCH_BASH MAS_DIRS_SEARCH_BASH_AT MAS_DIR_XBASH_LOG MAS_DSELF MAS_EDITOR_CMD MAS_EDITOR_OPTS MAS_EDITOR_OPTS_NOFORK MAS_EDITOR_TYPE MAS_GREP_CMD MAS_GTERM_CLASS MAS_GTERM_NAME MAS_GTERM_PROFILE MAS_GTERM_ROLE MAS_GTERM_VAR_DIR MAS_GTERM_WORKSPACE MAS_GT_GEOMETRY MAS_GVAR_PREFIX MAS_GVIM_CMD MAS_HISTORY_DIR MAS_HISTORY_DIR_BASE MAS_HISTORY_DIR_USER MAS_HISTORY_DIR_USER_BASE MAS_HISTORY_T_DIR_BASE MAS_INITIAL_DIRECTORY MAS_I_WS MAS_LIB_PREFIX MAS_LIB_SUFFIX MAS_LOAD_LIB_COUNT MAS_LOG_ENV MAS_LOGGER_SERIAL MAS_MAS_DIR MAS_MKDIR_CMD MAS_NO_REGSCRIPT MAS_NO_REGSCRIPT_A MAS_NO_REGSCRIPT_CALLED MAS_NOTIFY2_DELAY MAS_PERSONAL_EDITOR MAS_PID_AT_PROFILE MAS_PID_AT_XPROFILE MAS_PIDOF_CMD MAS_PROFILE_TERM MAS_PROFILE_TYPE MAS_PS_CMD MAS_RUNONCE_LIB MAS_SAWFISH_BIN MAS_SAWFISH_CLIENT_CMD MAS_SAWFISH_PID_AT_PROFILE MAS_SAWFISH_PID_AT_XPROFILE MAS_SCREEN_CMD MAS_SCREEN_VAR_DIR MAS_SED_CMD MAS_SHLIB MAS_STDDIRS_LOG_FD MAS_T00SP MAS_TERM_VAR_DIR MAS_TERM_WIN_VAR_DIR MAS_TIME_LIBWM MAS_TIME_LOG MAS_TIME_PROFILE MAS_TIME_XPROFILE MAS_TOPVARS MAS_TRY1_DIR MAS_TRY2_DIR MAS_TTY_CMD MAS_UBIN MAS_UNDER MAS_USLEEP MAS_UTIME MAS_VAR_DIR MAS_VI_CMD MAS_VIM_CMD MAS_WHICH MAS_WHICH_CMD MAS_WMCTRL MAS_WMCTRL_TMP MAS_WS_CMD MAS_WS_CMD2 MAS_XDG_ID MAS_XDG_SESSID MAS_XDG_STAMP MAS_XPROFILE_TERM
+  # 2. MAS_...
+  unset MAS_CONF_DIR MAS_CONF_DIR_BASH MAS_CONF_DIR_CUSTOM MAS_CONF_DIR_CUSTOM_BASE MAS_CONF_DIR_DOTS MAS_CONF_DIR_INPUT MAS_CONF_DIR_I_SWS MAS_CONF_DIR_I_SWS_BASE MAS_CONF_DIR_I_SWS_BASE_P MAS_CONF_DIR_I_SWS_P MAS_CONF_DIR_I_SWS_USER MAS_CONF_DIR_I_SWS_USER_BASE MAS_CONF_DIR_I_SWS_USER_BASE_P MAS_CONF_DIR_I_SWS_USER_P MAS_CONF_DIR_I_WS MAS_CONF_DIR_I_WS_USER MAS_CONF_DIR_I_WS_USERS MAS_CONF_DIR_PATHS MAS_CONF_DIR_PATH_UTIL MAS_CONF_DIR_PRERC MAS_CONF_DIR_PROFILE MAS_CONF_DIR_PROFILE_GROUPS MAS_CONF_DIR_RUNONCE MAS_CONF_DIR_SCREEN MAS_CONF_DIR_SCREEN_MODE MAS_CONF_DIR_SCREEN_MODE_BASE MAS_CONF_DIR_SCREEN_MODE_P MAS_CONF_DIR_SCREENS MAS_CONF_DIR_SCRNUM MAS_CONF_DIR_TERM MAS_CONF_DIR_TERM_EMUL MAS_CONF_DIR_TERM_EMUL_BASE MAS_CONF_DIR_TERM_TERM MAS_CONF_DIR_TERM_TERM_BASE MAS_CONF_DIR_TMP MAS_CONF_DIR_VIM MAS_CONF_DIR_WM MAS_CONF_DIR_WS_BASE
+
+  # 1. mas functions
+  unset activate_window_by_name activate_window_by_name0 activate_window_by_name1 activate_window_by_name2 terminal_emulator_euristic_show terminal_emulator_euristic_show0
+  unset datem datemt datemtu datet define_std_binnames dequote libs_sub lili_msg mas_init_colors mas_libs_reload mas_list_msg mas_list_up_pids mas_loadlib mas_loadlib_if_not mas_loadlib_if_yes mas_notify mas_parent_cmd mas_pid_env mas_pid_env_val mas_pid_env_var mas_proc_me_and_parents mas_proc_wm_env mas_set_color_by_id mas_set_self mas_sh_ext mas_source_register_called mas_source_register_called_k mas_source_register_list mas_source_register_pid mas_source_register_pid2 mas_source_register_rcscr mas_source_register_rcscrs mas_source_register_script mas_source_register_script_b mas_source_register_script_c mas_source_register_self mas_term_new_status mas_test_liblib mas_test_liblogger mas_test_libservice mas_this_win_ws_sawfish mas_this_win_ws_sawfish_q mas_true_logger mas_up_pid_env_val mas_up_pid_env_var mas_up_pid_path mywmws mywmws_sawfish_curr mywmws_sawfish_wid mywmws_tty mywmws_wmctrl quote sawfish_client set_reset_colors terminal_cmdline terminal_env terminal_env_var terminal_pid time_for top_init typemas umoment
+
+  # sure - needless - while - debug
+  # CURRENT(!) /etc/profile.env --- except PATH
+  if false ; then
+    unset ANDROID_SWT JAVA_HOME JAVAC JDK_HOME ANT_HOME CONFIG_PROTECT CONFIG_PROTECT_MASK FLTK_DOCDIR GCC_SPECS GSETTINGS_BACKEND GUILE_LOAD_PATH HG INFOPATH LADSPA_PATH LANG LESS LESSOPEN MANPATH MULTIOSDIRS OPENGL_PROFILE PRELINK_PATH_MASK QT_GRAPHICSSYSTEM QT_PLUGIN_PATH ROOTPATH RUBYOPT VBOX_APP_HOME VISUAL XDG_CONFIG_DIRS XDG_DATA_DIRS
+
+    unset SCREENRC SCREENDIR LIBGL_DEBUG ORBIT_SOCKETDIR WINDOWID PAGER
+  # unset LS_COLORS
+    unset INCLUDE_PATH PATH
+  fi
+  ##########################################################################################
+  unset MAS_TOPVARS typemas mas_set_self lili_msg mas_save_debug
+
+  export MAS_SHOME MAS_BHOME MAS_BASHRC MAS_BASHRCL MAS_BASHRC_NAME MAS_BASHPRF MAS_BASHPRFL MAS_BASHPRF_NAME MAS_DIRNAME_CMD MAS_BASENAME_CMD MAS_READLINK MAS_TERM
+
+
+# mas_call_from define_std_directories stddirs
+  mas_get_lib_call stddirs define_std_directories
+# mas_call_from mas_profile_common profile
+  mas_get_lib_call profile mas_profile_common
+# mas_call_from mas_source_scriptsn doscript _profcomm_profile -  MAS_CONF_DIR_PROFILE "$MAS_SELF" rc
+  
+# errormas "(${#BASH_SOURCE[@]}) ${BASH_SOURCE[0]} ${BASH_SOURCE[1]} ${BASH_SOURCE[2]} ${BASH_SOURCE[3]}"
+# mas_get_lib_call doscript mas_source_scriptsn _profcomm_profile -  MAS_CONF_DIR_PROFILE ${MAS_SELF:?Must be set} rc
+# infomas ".profile MAS_SELF=$MAS_SELF"
+  mas_get_lib_call doscript mas_source_scriptsn _profcomm_profile -  MAS_CONF_DIR_PROFILE bash_profile rc
+
+  mas_sourcing_end ".profile"
+fi
+
+# vi: ft=sh

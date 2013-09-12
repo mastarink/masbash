@@ -1,0 +1,12 @@
+unset mas_set_self define_std_binnames mas_call_from MAS_TOPVARS MAS_TOPFUNCS
+declare -xg  MAS_TOPVARS=${BASH_SOURCE[0]}
+function mas_bashrc_masgterm ()
+{ 
+#  mas_loadlib_if_not mas_call_from lib
+#  mas_call_from mas_bash_init bash_init
+  mas_get_lib_call bash_init mas_bash_init
+}
+mas_bashrc_masgterm $@
+
+
+# vi: ft=sh

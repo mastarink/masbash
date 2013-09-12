@@ -1,0 +1,24 @@
+[[ "$MAS_TOPVARS" ]] || . $HOME/.topvars
+
+declare -gx MAS_TEST_AT_BASH_LOGIN=MAS_TEST_AT_BASH_LOGIN
+# declare -agx MAS_TESTAR_AT_BASH_LOGIN
+# declare -Agx MAS_TESTAS_AT_BASH_LOGIN
+# MAS_TESTAR_AT_BASH_LOGIN[0]=MAS_TESTAR_AT_BASH_LOGIN
+# MAS_TESTAS_AT_BASH_LOGIN[MAS_TESTAS_AT_BASH_LOGIN]=MAS_TESTAS_AT_BASH_LOGIN
+
+# {
+#   mas_loadlib_if_not mas_source_register_script_a regzero
+#   mas_loadlib_if_not mas_term_new_status bash_init
+#   type -t mas_term_new_status && mas_term_new_status >>$HOME/.mas/log/mstat/bash_login.1.$$.txt
+# }
+
+mas_loadlib_if_not datemt time
+export MAS_TIME_BASH_LOGIN="`datemt`"
+echo "$( datemt ) :$TERM: ${BASH_SOURCE[0]} " >>$MAS_BASH_LOG/login/log.$( datem )
+
+# {
+#   mas_loadlib_if_not mas_source_register_script_a regzero
+#   mas_loadlib_if_not mas_term_new_status bash_init
+#   type -t mas_term_new_status && mas_term_new_status >>$HOME/.mas/log/mstat/bash_login.2.$$.txt
+# }
+# vi: ft=sh

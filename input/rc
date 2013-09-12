@@ -1,0 +1,238 @@
+# <mastar-made>
+# set horizontal-scroll-mode on
+set expand-tilde on
+# set editing-mode vi
+set visible-stats on
+# set editing-mode vi
+# set editing-mode vi
+
+#$include $MAS_CONF_DIR/term_new/inputrc_self
+#$include $MAS_CONF_DIR/term_new/inputrc_demo
+
+# F1 F2 F3 F4 F5   F6   F7   F8   F9   F10  F11   F12
+# OP OQ OR OS [15~ [17~ [18~ [19~ [20~ [21~ [23~  [24~
+
+$include /etc/inputrc
+$include /home/mastar/.inputrc
+set output-meta on
+set input-meta on
+
+set convert-meta on
+"\M-y": dump-variables
+"\M-k": kill-whole-line
+set convert-meta off
+# Alt-y: self-insert
+# Super-y: self-insert
+Control-y: dump-variables
+#Control-u: dump-functions
+#Control-m: accept-line
+#NEWLINE: accept-line
+# NEWLINE: "\n"
+# "\C-\m": NEWLINE
+"\C-x\C-r": re-read-init-file
+
+# PageUp
+# "\e[5~":
+# dump-functions
+
+# Busy "\eOH": "Home"
+# Busy "\eOF": "End"
+# Busy "\e[3~": "Delete"
+# Control-Up
+#"\e[5A": "Control-Up"
+# Control-Down
+#"\e[5B": "Control-Down"
+# Control-Right
+# Busy "\e[5C": "Control-Right"
+# Control-Left
+# Busy "\e[5D": "Control-Left"
+# 
+# Control-a: "Ctrl-a"
+# Control-b: "C/b"
+# Busy Control-c: "C/c"
+# Busy Control-d: "C/d"
+# Control-e: "C/e"
+#? Alt-y: "Alt/y"
+#? Hyper-u: "Hu"
+#? Meta-u: "Hu"
+#? Meta-Control-u: "MCU"
+# Control-u: "CU"
+#Control-1: "C1"
+
+#"\C-x\C-h": "CxCh"
+#"\C- \C- ": "chmod -R a+rX *"
+"\C- \C- ": complete-into-braces
+#Hyper-u: self-insert
+#tab: menu-complete
+# Hyper-tab: menu-complete
+# Hyper-tab Hyper-tab: complete-into-braces
+
+# BAD: really TAB : Control-Insert: "Control-Insert"
+
+# Busy Control-TAB: "Control-TAB"
+
+# "\e[1~": "Home"
+# "\e[3~": "Delete"
+# "\e[4~": "End"
+# "\e[5~": "PageUp"
+# "\e[6~": "PageDown"
+
+
+# Control-Delete
+# Busy ?? "\e[3;5~": "Control-Delete"
+# Control-Insert
+# Busy ?? "\e[2;5~": "Control-Insert"
+# Control-Home
+# ?? "\e[OF": "Control-Home"
+# Control-End
+# ?? "\e[4;5~": "Control-End"
+
+
+# Control-PageUp
+"\e[5;5~":
+# Control-PageDown
+"\e[6;5~":
+
+# F1
+# "\eOP": "F1"
+"\eOP":possible-completions
+#menu-complete
+#Meta-k: kill-whole-line
+# F2
+# "\eOQ": "F2"
+#"\eOQ": "\M-kF2"
+
+# F3
+#"\eOR": "UNDEF"
+# F4
+#"\eOS": "UNDEF"
+# F5
+#"\e[15~": "UNDEF"
+# F6
+#"\e[17~": "F6"
+# F7
+#"\e[18~": "F7"
+# F8
+#"\e[19~": dump-macros
+# F9
+#"\e[20~": dump-functions
+# F10
+#"\e[21~": dump-variables
+
+
+# F11
+# Busy "\e[23~": "F11"
+# F12
+# Busy "\e[24~": "F12"
+
+
+## Shift-F1
+## "\eO2P": "Shift-F1"
+#"\eO1;2P": "Shift-F1"
+## Shift-F2
+## "\eO2Q": "Shift-F2"
+#"\eO1;2Q": "Shift-F2"
+## Shift-F3
+#"\eO1;2R": "Shift-F3"
+## Shift-F4
+#"\eO1;2S": "Shift-F4"
+## Shift-F5
+#"\e[15;2~": "Shift-F5"
+## Shift-F6
+#"\e[17;2~": "Shift-F6"
+## Shift-F7
+#"\e[18;2~": "Shift-F7"
+## Shift-F8
+#"\e[19;2~": "Shift-F8"
+## Shift-F9
+#"\e[20;2~": "Shift-F9"
+## Shift-F10
+## Busy "\e[21;2~": "Shift-F10"
+## Shift-F11
+#"\e[23;2~": "Shift-F11"
+## Shift-F12
+#"\e[24;2~": "Shift-F12"
+
+## Control-F1
+## Busy ? "\eO5P": "Control-F1"
+## Control-F2
+#"\eO5Q": "Control-F2"
+## Control-F3
+#"\eO5R": "Control-F3"
+## Control-F4
+#"\eO5S": "Control-F4"
+## Control-F5
+#"\e[15;5~": "Control-F5"
+## Control-F6
+#"\e[17;5~": "Control-F6"
+## Control-F7
+#"\e[18;5~": "Control-F7"
+## Control-F8
+#"\e[19;5~": "Control-F8"
+## Control-F9
+##"\e[20;5~": "perl Makefile.PL"
+## Control-F10
+#"\e[21;5~": "make"
+## Control-F11
+#"\e[23;5~": "make test"
+## Control-F12
+#"\e[24;5~": "sudo make install"
+
+## Alt-F1
+#"\eO3P": "Alt-F1"
+## Alt-F2
+#"\eO3Q": "Alt-F2"
+## Alt-F3
+#"\eO3R": "Alt-F3"
+## Alt-F4
+#"\eO3S": "Alt-F4"
+## Alt-F5
+#"\e[15;3~": "Alt-F5"
+## Alt-F6
+#"\e[17;3~": "Alt-F6"
+## Alt-F7
+#"\e[18;3~": "Alt-F7"
+## Alt-F8
+#"\e[19;3~": "Alt-F8"
+## Alt-F9
+#"\e[20;3~": "Alt-F9"
+## Alt-F10
+#"\e[21;3~": "Alt-F10"
+## Alt-F11
+#"\e[23;3~": "Alt-F11"
+## Alt-F12
+#"\e[24;3~": "mc\n"
+
+
+#"\e[3;2~": "Shift-Delete"
+#"\e[3;3~": "Alt-Delete"
+#"\e[3;5~": "Control-Delete"
+# ??? "\e[y": "Alt/Q"
+
+#"\eOH": "Home"
+#"\eOF": "End"
+# </mastar-made>
+
+# string F1 = "\e[[A"
+# string F2 = "\e[[B"
+# string F3 = "\e[[C"
+# string F4 = "\e[[D"
+# string F5 = "\e[[E"
+# string F6 = "\e[17~"
+# string F7 = "\e[18~"
+# string F8 = "\e[19~"
+# string F9 = "\e[20~"
+# string F10 = "\e[21~"
+# string F11 = "\e[23~"
+# string F12 = "\e[24~"
+# string F13 = "\e[25~"
+# string F14 = "\e[26~"
+# string F15 = "\e[28~"
+# string F16 = "\e[29~"
+# string F17 = "\e[31~"
+# string F18 = "\e[32~"
+# string F19 = "\e[33~"
+# string F20 = "\e[34~"
+
+
+# vi: ft=readline

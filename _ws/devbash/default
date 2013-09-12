@@ -1,0 +1,4 @@
+  export MAS_WORK_DIR=$MAS_MAS_DIR/develop/bash
+  export MAS_WD_LIBS='bashtry1 bashtry2'
+
+# vi: ft=sh

@@ -1,0 +1,11 @@
+
+# see bash_profile.d
+
+function mas_term_new_profile__profile ()
+{
+  return 0
+}
+mas_term_new_profile__profile && return 0
+return 2
+
+# vi: ft=sh

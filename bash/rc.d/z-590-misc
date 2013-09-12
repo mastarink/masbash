@@ -1,0 +1,69 @@
+
+#export COLUMNS
+#export LINES
+
+mas_get_lib_call stdbins define_std_binnames
+infomas "[$LINENO] MAS__MISC_SETTINGS=$MAS__MISC_SETTINGS; MAS_EDITOR_CMD=$MAS_EDITOR_CMD; MAS_PERSONAL_EDITOR=$MAS_PERSONAL_EDITOR"
+if ! [[ "$MAS__MISC_SETTINGS" ]] ; then
+  #MAILDIR=$HOME
+  export USERNAME BASH_ENV PATH 
+  export MAS_TIME_BASH_RC_D="`datemt`"
+
+  # BASH_ENV=${BASH_SOURCE[0]}
+  export MAS_INPUTRC="$MAS_CONF_DIR_INPUT/rc" 
+  export INPUTRC="$MAS_INPUTRC"
+
+ #export MAS_PROMPT_SCRIPT_NAME=masprompt
+  #export MAS_PROMPT_SCRIPT="${MAS_PROMPT_SCRIPT_NAME}.sh"
+  #export MAS_PROMPT_SCRIPT_PATH="$MAS_CONF_DIR_UTIL/$MAS_PROMPT_SCRIPT"
+
+
+  export PS_FORMAT='lstart,tty,ni,user,pid,lwp,%cpu,%mem,rss,vsz,sz,thcount,comm,cmd'
+  export PS_FORMAT='tt,start,user,group:15,ppid,sid,pid,lwp,stat,s,%cpu,%mem,vsz,sz,rss,nlwp,comm,cmd'
+
+  # * export GNUSTEP_USER_ROOT=$MAS_CONF_DIR/GNUstep
+  # * export GNUSTEP_USER_ROOT_B=$MAS_CONF_DIR/GNUstep
+  # * export WM_DOCKAPPLETS=$MAS_CONF_DIR/wmaker
+
+  #export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/local/lib/pkgconfig/
+
+  infomas "[$LINENO] MAS_EDITOR_CMD=$MAS_EDITOR_CMD; MAS_PERSONAL_EDITOR=$MAS_PERSONAL_EDITOR"
+  if [[ "$MAS_EDITOR_CMD" ]] ; then
+    export EDITOR="${MAS_EDITOR_CMD} ${MAS_EDITOR_OPTS_NOFORK}"
+    export VISUAL="${MAS_EDITOR_CMD} ${MAS_EDITOR_OPTS_NOFORK}"
+  else
+    export EDITOR="$MAS_BIN/vim -o"
+    export VISUAL="$MAS_BIN/vim -o"
+  fi
+  export FCEDIT=$EDITOR
+  export CVSEDITOR=$EDITOR
+  export SVN_EDITOR=$EDITOR
+
+  export MAS_590_WD=`pwd`
+
+  export CDPATH
+  # bochs: /usr/share/bochs/BIOS-bochs-latest
+  #export BXSHARE=/usr/local/share/bochs
+  #export BXSHARE=/usr/share/bochs
+
+  #export CVSROOT=/mnt/arc/mastar/cvs
+  #export SVN_MAS_HOME=/mnt/arc2/home/mastar/tmworks
+  #export SVN_MAS_REPOSITORY=/var/spool/mastar/subversion
+
+  #export BROWSER=/home/mastar/bin/firefox-my:/usr/local/firefox/firefox:/usr/bin/mozilla:/usr/bin/opera:/usr/bin/lynx
+  export BROWSER="firefox"
+
+  export TERM_GEOMETRY='156x60+0+0'
+  MAS__MISC_SETTINGS=$SECONDS
+  if [ "$TERM" == 'linux' ] ; then
+  # export TMOUT
+    export readonly TMOUT=1800
+  fi
+fi
+#echo "misc_settings : ${COLUMNS}x${LINES}" >&2
+
+# export GREP_COLORS='ms=01;32:mc=01;31:sl=36:cx=:fn=32:ln=1;31:bn=32:se=36'
+# export GREP_COLORS='ms=01;33:mc=01;31:sl=1;32:cx=32:fn=93:ln=91:bn=95:se=32'
+export GREP_COLORS='ms=01;33:mc=01;31:sl=1;32:cx=32:fn=33:ln=91:bn=95:se=32'
+
+# vi: ft=sh

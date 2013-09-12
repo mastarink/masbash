@@ -1,0 +1,37 @@
+function mas_screen_exec ()
+{
+  local delay=5
+  if [[ "$MAS_DEBUG" -gt 0 ]] ; then
+    mas_term_new_status
+    echo "DEBUG STOP, PRESS <ENTER>" >&2
+    read -t 300
+  fi
+  echo -ne "\e[K"
+  su - root
+
+  echo "$delay seconds TO exit" >&2
+  sleep "$delay"
+  exit
+}
+function mas_screen_exec0 ()
+{
+  local delay=5
+  if [[ "$MAS_DEBUG" -gt 0 ]] ; then
+    mas_term_new_status
+    echo "DEBUG STOP, PRESS <ENTER>" >&2
+    read -t 300
+  fi
+  echo -ne "\e[K"
+  exec su - root
+
+  echo "$delay Seconds to exit" >&2
+  sleep "$delay"
+  exit
+}
+
+
+mas_screen_exec0
+
+
+# vi: ft=sh
+

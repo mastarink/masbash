@@ -1,0 +1,20 @@
+#echo "Why ${BASH_SOURCE[0]} [$PATH]" >&2
+#echo "Why ${BASH_SOURCE[1]} [$PATH]" >&2
+#if ! [ -n "$MAS_CONF_DIR_BASH" -a -n "$MAS_CONF_DIR_BASH_SET" -a -f $MAS_CONF_DIR_BASH_SET/all_paths ] ; then
+  for p in \
+	  "/usr/local/lib" \
+	  "/usr/lib/mysql"
+    do 
+      if ! echo $LD_LIBRARY_PATH | /bin/egrep -q "(^|:)$p($|:)"; then
+	if [ "none$LD_LIBRARY_PATH" == 'none' ] ; then
+	  LD_LIBRARY_PATH="$p"
+	else
+	  LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$p"
+	fi
+      fi
+  done
+  
+  export LD_LIBRARY_PATH
+#fi
+
+# vi: ft=sh

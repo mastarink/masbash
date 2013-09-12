@@ -1,0 +1,13 @@
+  shopt -s histappend
+  export HISTTIMEFORMAT="%Y%m%d.%H%M "
+  export HISTFILESIZE=15000
+  export HISTCONTROL=ignorespace:ignoredups
+  export HISTSIZE=5000
+  if [[ "$HISTFILE" ]] ; then
+    history -r "$HISTFILE"
+  fi
+
+
+return 0
+
+# vi: ft=sh

@@ -1,0 +1,5 @@
+# Per workspace & user settings
+MAS_SCREEN_MODE_NEW=screen-exec
+  echo "@A@@@@@@@@@@@@ $MAS_SCREEN_MODE_NEW @@@ $MAS_SCREEN_MODE @@@@" >>/tmp/ssss2.txt
+
+# vi: ft=sh

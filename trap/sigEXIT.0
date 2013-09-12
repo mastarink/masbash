@@ -1,0 +1,6 @@
+#!/bin/sh
+
+set
+set > $MAS_BASH_LOG/trap_EXIT.$UID.set.txt
+echo "trap EXIT (${BASH_SOURCE[0]})"
+sleep 15

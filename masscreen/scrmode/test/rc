@@ -1,0 +1,13 @@
+function mas_screen_test ()
+{
+  local delay=3
+  echo -e "THIS IS A TEST; sleeping $delay\e[K" >&2
+  if typemas mas_term_new_status  ; then mas_term_new_status ; fi
+  sleep $delay
+}
+
+mas_screen_test
+
+
+
+# vi: ft=sh

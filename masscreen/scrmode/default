@@ -1,0 +1,5 @@
+  echo "@X@@@@@@@@@@@@ $MAS_SCREEN_MODE_NEW @@@ $MAS_SCREEN_MODE @@@@"  >>/tmp/ssss2.txt
+  mas_source_scriptsn_optional _mastar_settings_per_ws - MAS_CONF_DIR_SCREEN_MODE 'scrmode-$MAS_SCREEN_MODE'
+echo "${BASH_SOURCE[0]} Setting default MAS_SCREEN_MODE: $MAS_SCREEN_MODE ($MAS_SCREEN_MODE_DEFAULT)" >> $MAS_BASH_LOG/screen/bashrc.screen_combined.txt
+
+# vi: ft=sh

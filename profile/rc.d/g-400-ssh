@@ -1,0 +1,14 @@
+if [ -n "$SSH_CONNECTION" ] ; then
+  export MAS_CONNECTION=`echo "$SSH_CONNECTION" | /usr/bin/awk '{ print $1 }'`
+fi
+
+if [ -n "$MAS_CONNECTION" ] ; then
+  export MAS_CONNECTION_HOST=`/usr/bin/resolveip -s "$MAS_CONNECTION"`
+fi
+
+if [ -n "$MAS_CONNECTION_HOST" ] ; then
+  export DISPLAY=$MAS_CONNECTION_HOST:0.0
+fi
+
+
+# vi: ft=sh

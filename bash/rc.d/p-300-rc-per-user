@@ -1,0 +1,4 @@
+  mas_source_scriptsn_opt_std _rc_mastar_settings_custom  MAS_CONF_DIR_CUSTOM
+
+  return 0 
+# vi: ft=sh

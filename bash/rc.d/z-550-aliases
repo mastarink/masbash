@@ -1,0 +1,56 @@
+function mas_set_aliases ()
+{
+  # From /etc/bash/bashrc
+  alias ls='${MAS_LS_CMD:=/bin/ls} --color=auto'
+  alias grep='grep --colour=auto'
+  # /From /etc/bash/bashrc
+
+  alias l='ls -lAtr --time-style="+%b %d %Y %H:%M:%S"'
+  alias lt='ls -lAtr |tail'
+  alias mv="mv -i"
+  alias cp="cp -i"
+
+
+
+  #alias d="cd /var/lib/mastar/distrib/"
+  # alias ps="ps ww -eo 'user,pid,ppid,nlwp,%cpu,%mem,vsz,rss,tty,stat,start_time,time,command'"
+  #alias lV="ls -ltr /mnt/arc2/Video/* /mnt/misc/home/mastar/Video/* /mnt/misc2/public/Video/*"
+  alias dignoall='dig +noall +answer'
+  alias mdig='dig +noall +answer'
+  alias e='$MAS_PERSONAL_EDITOR'
+  alias ew='$MAS_BIN/ew.sh'
+  alias malv='echo $MAS_ALIAS_FROM ; alias'
+  alias malr='unalias -a ; for a in $MAS_ALIAS_FROM ; do . $a ; done'
+  alias male='$EDITOR $MAS_ALIAS_FROM'
+  alias me='$MAS_BIN/me.sh'
+  alias lfn='mas_loadlib_if_not'
+  alias gb='mas_loadlib_if_not grep_at_bash_dirs sysbash ; grep_at_bash_dirs'
+  alias cdv='cd $MAS_VAR_DIR'
+  alias cdt='cd $MAS_CONF_DIR_TERM'
+  alias mshow_var=mas_show_var
+  alias mshow_conf=mas_show_conf
+  alias mshow_dir=mas_show_conf_dir
+  alias mscrmode='$EDITOR $MAS_CONF_DIR_I_SWS_USER_P/default'
+  export MAS_ALIAS_FROM
+  # mas_source_scriptsn _aliases1 - /etc bashrc_masaliases
+  if [[ -f /etc/bashrc_masaliases ]] ; then
+    MAS_ALIAS_FROM+=" /etc/bashrc_masaliases"
+    . /etc/bashrc_masaliases
+  fi
+  MAS_ALIAS_FROM+=" ${BASH_SOURCE[0]}"
+  MAS_ALIAS_FROM=$( echo $MAS_ALIAS_FROM | tr ': ' '\n' | grep -v '^\s*$' | sort | uniq | tr '\n' ' ' )
+
+    
+  return 0
+}
+
+
+
+
+export -f mas_set_aliases
+
+mas_set_aliases
+
+return 0
+
+# vi: ft=sh

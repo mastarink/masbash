@@ -1,0 +1,15 @@
+
+
+
+  # for SCREEN!
+  #unset DBUS_SESSION_BUS_ADDRESS
+
+  IGNOREEOF=2
+  umask 077
+
+  shopt -s no_empty_cmd_completion
+  shopt -s checkhash
+  
+
+
+# vi: ft=sh

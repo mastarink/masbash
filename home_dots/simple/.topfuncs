@@ -1,0 +1,105 @@
+function typemas ()
+{
+  type -t $@ >/dev/null 2>&1
+}
+function command_not_found_handle () 
+{
+  local rs=$?
+  local me=`${MAS_CAT_CMD:=/bin/cat} /proc/$$/cmdline`
+  ${MAS_ECHO_CMD:=/bin/echo} "($rs) $me $@ : command not found" >&2
+  ${MAS_ECHO_CMD:=/bin/echo} "${BASH_SOURCE[@]}" >&2
+  caller >&2
+  type command_not_found_handle >&2
+  ${MAS_SLEEP_CMD:=/bin/sleep} 1
+  return $rs
+}
+function off_command_not_found_handle () 
+{
+  local cmd
+  cmd=$1
+  shift
+  type "$cmd" >&2
+  ${MAS_ECHO_CMD:=/bin/echo} -e "eRRor (@.topvars) '$cmd' '$@' :: ${BASH_SOURCE[@]}\e[K" >&2
+  ${MAS_SLEEP_CMD:=/bin/sleep} 3
+}
+function mas_echo_trace ()
+{
+  declare -gx MAS_ECHO_TRACE_SERIAL
+  MAS_ECHO_TRACE_SERIAL=$(( ${MAS_ECHO_TRACE_SERIAL:=0} + 1 ))
+# return 0
+# ${MAS_ECHO_CMD:=/bin/echo} " #${MAS_ECHO_TRACE_SERIAL:=0} : $@ @ ${BASH_SOURCE[@]}" >&2
+####   ${MAS_ECHO_CMD:=/bin/echo} " #${MAS_ECHO_TRACE_SERIAL:=0} [$( ${MAS_WS_CMD:-:} ):$( ${MAS_WS_CMD2:-:} ):${TERM:--}:$(typemas terminal_emulator_euristic_show && terminal_emulator_euristic_show):$( ${MAS_CAT_CMD:=/bin/cat} /proc/$$/cmdline ):$MAS_SCREEN_MODE_NEW:$MAS_SCREEN_MODE]: $@" >&2
+# ${MAS_SLEEP_CMD:=/bin/sleep} 1
+}
+function lili_msg ()
+{
+#${MAS_ECHO_CMD:=/bin/echo} -en "$SECONDS $@\e[K\r" >&2
+ :
+}
+function datemt0 ()
+{
+    /bin/date '+%Y%m%d.%H%M%S'
+}
+function mas_save_debug ()
+{
+  declare -gx MAS_SS_SAVE_SERIAL
+  ${MAS_ENV_CMD:=/bin/env} > /mnt/new_misc/develop/bash/saves/${MAS_SELF}.${MAS_SS_SAVE_SERIAL:=0}.env.txt
+  set > /mnt/new_misc/develop/bash/saves/${MAS_SELF}.${MAS_SS_SAVE_SERIAL:=0}.set.txt
+  MAS_SS_SAVE_SERIAL=$(( ${MAS_SS_SAVE_SERIAL:=0} + 1 ))
+}
+# echo ".topfuncs : mas_set_self ------------- ${BASH_SOURCE[@]} -------( $BASH_SUBSHELL )-------- ${FUNCNAME[@]} ---" >&2
+function mas_set_self ()
+{
+  local atname indx
+  indx=$(( ${#BASH_SOURCE[@]} - 1 ))
+#  echo "mas_set_self -------- 0: ${BASH_SOURCE[0]} / ${#BASH_SOURCE[@]}: ${BASH_SOURCE[${#BASH_SOURCE[@]}]} ----- ${BASH_SOURCE[@]} -------( $BASH_SUBSHELL )-------- ${FUNCNAME[@]} ---" >&2
+  if ! [[ "${BASH_SOURCE[$indx]}" ]] ; then
+    ${MAS_ECHO_CMD:=/bin/echo} "ERROR @$indx@ BASH_SOURCE[$indx] -- ${BASH_SOURCE[@]} -- $0" >&2
+    ${MAS_SLEEP_CMD:=/bin/sleep} 1
+  fi
+  if [[ "${BASH_SOURCE[$indx]}" ]] ; then export MAS_DSELF=$(${MAS_BASENAME:=/usr/bin/basename} ${BASH_SOURCE[$indx]}) ; fi
+  export MAS_SELF=$MAS_DSELF
+  if [[ "$MAS_SELF" =~ ^\.(.*)$ ]] ; then MAS_SELF=${BASH_REMATCH[1]} ; fi
+  if [[ "$MAS_SELF" =~ ^(.*)\.(sh|bash)$ ]] ; then MAS_SELF="${BASH_REMATCH[1]}_${BASH_REMATCH[2]}" ; fi
+  export MAS_SELF_U="${MAS_SELF^^}"
+
+# echo "$MAS_DSELF : $MAS_SELF : $MAS_SELF_U" >&2
+  atname="MAS_PID_AT_${MAS_SELF_U}"
+  declare -gx "$atname"=$$
+  atname="MAS_${MAS_SELF_U}_TERM"
+  declare -gx "$atname"=$TERM
+  
+  declare -gx MAS_PROFILE_TYPE="${MAS_PROFILE_TYPE:+${MAS_PROFILE_TYPE} ${MAS_SELF}}"
+  MAS_PROFILE_TYPE=${MAS_PROFILE_TYPE:-${MAS_SELF}}
+
+  declare -gx MAS_ATNAME_TIME="MAS_TIME_${MAS_SELF_U}"
+
+  declare -gx "$MAS_ATNAME_TIME"=`datemt0`
+  if ! [[ "${!MAS_ATNAME_TIME}" ]] ; then
+    declare -gx "$MAS_ATNAME_TIME"='time-not-set'
+  fi
+  if [[ "$WM" ]] ; then
+    atname="MAS_WM_PID_AT_${MAS_SELF_U}"
+    
+    declare -gx "$atname"="$( ${MAS_PS_CMD:=/bin/ps} -C$WM -o pid= )"
+  fi
+  atname="MAS_SAWFISH_PID_AT_${MAS_SELF_U}" ; declare -gx "$atname"="$( ${MAS_PS_CMD:=/bin/ps} -Csawfish -o pid= )"
+
+  lili_msg "Sourcing  $MAS_DSELF" >&2
+}
+function time_for ()
+{
+  local nrest timevarn timevar
+  nrest=$1
+  if [[ "$nrest" =~ ^\.(.*)$ ]] ; then nrest=${BASH_REMATCH[1]} ; fi
+  timevarn="MAS_TIME_${nrest^^}"
+# ${MAS_ECHO_CMD:=/bin/echo} "************* $timevarn : ${!timevarn}" >&2
+  timevar=${!timevarn}
+  ${MAS_ECHO_CMD:=/bin/echo} ${timevar:-time-not-set}
+}
+
+export -f typemas time_for lili_msg mas_set_self mas_save_debug datemt0
+
+declare -xg  MAS_TOPFUNCS=${BASH_SOURCE[0]}
+
+# vi: ft=sh

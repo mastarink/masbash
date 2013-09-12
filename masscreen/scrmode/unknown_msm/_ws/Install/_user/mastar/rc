@@ -1,0 +1,23 @@
+mas_loadlib_if_not mas_source_register_pid2 regbash
+
+mas_source_register_pid
+  echo "@C@@@@@@@@@@@@ $MAS_SCREEN_MODE_NEW @@@ $MAS_SCREEN_MODE @@@@" >>/tmp/ssss2.txt
+
+export MAS_I_WS=${MAS_I_WS:-$( $MAS_WS_CMD )}
+
+if [[ ! "$MAS_PROBABLE_TERMINAL_EMULATOR" ]] ; then
+  mas_loadlib_if_not termilal_emulator_euristic terminal_emulator
+  termilal_emulator_euristic
+  define_std_directories
+fi
+
+if [ -n "$WM" -a -n "$MAS_PIDOF_CMD" ] ; then
+  export MAS_WM_PID="`$MAS_PIDOF_CMD $WM`"
+elif [ -n "$MAS_WM" -a -n "$MAS_PIDOF_CMD" ] ; then
+  export MAS_WM_PID="`$MAS_PIDOF_CMD $MAS_WM`"
+fi
+# export MAS_DEV_HOME=$MAS_VAR_DIR/develop
+
+#echo $MAS_PROBABLE_TERMINAL_EMULATOR >&2  ; sleep 5
+
+# vi: ft=sh
