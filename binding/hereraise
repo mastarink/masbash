@@ -1,0 +1,8 @@
+# mas_notify custom "In pa-volume-global +2 ( $mas_source_scripts_name ) :: $MAS_PULSESOURCE"
+
+# $MAS_PULSESOURCE/pa-volume-global.sh +2
+  mas_get_lib_ifnot pulseaudio pulseaudio_set_app_volume
+  pulseaudio_set_sink_volume 0 +2
+  return 0
+
+# vi: ft=sh

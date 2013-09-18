@@ -1,4 +1,4 @@
-errormas "Loading obsolete .topfuncs" ; sleep 1
+obsoletemas .topfuncs
 function typemas ()
 {
   type -t $@ >/dev/null 2>&1

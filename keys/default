@@ -1,3 +1,8 @@
+# mas_get_lib_ifnot notify mas_notify
+# mas_notify "key" "4 default"
 if [[ "$MAS_BIN" ]] && [[ -d "$MAS_BIN" ]] ; then
+#  mas_notify "key" "4.$LINENO default"
   source $MAS_BIN/gtermws.sh
 fi
+
+# vi: ft=sh

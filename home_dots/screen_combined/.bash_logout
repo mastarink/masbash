@@ -1,6 +1,3 @@
-# [[ "$MAS_TOPVARS" ]] || . $HOME/.topvars
-#  ! typemas mas_loadlib_if_not && . ${MAS_SHLIB:-${MAS_MAS_DIR:-$HOME/.mas}/sh}/liblib.bash
-# echo -en "Sourcing   ${BASH_SOURCE[0]}\e[K\r" >&2
 mas_sourcing_start ${BASH_SOURCE[0]}
 
 export MAS_LOGOUT_USLEEP=4000000
@@ -18,4 +15,5 @@ fi
 
 mas_sourcing_end ${BASH_SOURCE[0]}
 
+# ${MAS_SHLIB:=${MAS_CONFIG_DIR_TERM:=${MAS_CONFIG_DIR:=${MAS_DIR:=${HOME}/.mas}/config}/term_new}/lib}
 # vi: ft=sh

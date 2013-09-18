@@ -3,7 +3,7 @@ mas_loadlib_if_not mas_source_register_pid2 regbash
 mas_source_register_pid
   echo "@C@@@@@@@@@@@@ $MAS_SCREEN_MODE_NEW @@@ $MAS_SCREEN_MODE @@@@" >>/tmp/ssss2.txt
 
-export MAS_I_WS=${MAS_I_WS:-$( $MAS_WS_CMD )}
+export MAS_I_WS=${MAS_I_WS:-${MAS_DESKTOP_NAME}}
 
 if [[ ! "$MAS_PROBABLE_TERMINAL_EMULATOR" ]] ; then
   mas_loadlib_if_not termilal_emulator_euristic terminal_emulator

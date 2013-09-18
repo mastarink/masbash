@@ -1,4 +1,7 @@
-mas_loadlib_if_not screen_make_suffix screen
+# mas_loadlib_if_not screen_make_suffix screen
+# needed here?
+  mas_get_lib_ifnot screen screen_make_suffix
+
 # export MAS_SCREEN_SESSION=$( mas_call_from screen_find_or_propose_here screen $@ )
   export MAS_SCREEN_SESSION=$( mas_get_lib_call screen screen_find_or_propose_here $@ )
 
@@ -24,7 +27,8 @@ function mas_screen_exec ()
   export MAS_PROFILE_TYPE=${MAS_PROFILE_TYPE:+${MAS_PROFILE_TYPE} scrmode}
   export MAS_PROFILE_TYPE=${MAS_PROFILE_TYPE:-scrmode}
 
-  mas_loadlib_if_not datemt time
+# mas_loadlib_if_not datemt time
+  mas_get_lib_ifnot time datemt
   export MAS_TIME_SCRMODE="`datemt`"
   export MAS_TIME_SCRMODE_EXEC_RC="`datemt`"
 

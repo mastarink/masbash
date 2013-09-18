@@ -1,13 +1,5 @@
 #!/bin/sh
 
-########	  ! type -t mas_source_clean_pid2 >/dev/null 2>&1 && [[ "$MAS_SHLIB" ]] && . $MAS_SHLIB/libregbash.bash
-
-########	  (
-########	    sleep 0.5 ; type -t mas_source_clean_pid2 >/dev/null 2>&1 && mas_source_clean_pid2
-########	  ) &
-########	  mas_logger "it's a trap 1 sigEXIT"
-
-
 ########	  if [[ "$MAS_BASH_LOG" ]] ; then
 ########	    set > $MAS_BASH_LOG/trap_EXIT.$UID.set.txt
 ########	  fi

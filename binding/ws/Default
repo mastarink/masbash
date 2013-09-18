@@ -1,0 +1,20 @@
+  mas_notify "key" "genterm [$LINENO] [$MAS_DESKTOP_NAME]" ; sleep 1
+  
+  MAS_GTERMO_WS=${MAS_DESKTOP_NAME}
+  MAS_GTERMO_BIN='/usr/bin/gnome-terminal'
+  MAS_GTERMO_CLASS="masGtermws-`datemt`-${MAS_DESKTOP_NAME}"
+  MAS_GTERMO_NAME="gtermws-${MAS_DESKTOP_NAME}"
+  MAS_GTERMO_ROLE='gtermws'
+  MAS_GTERMO_PROFILE="wsp-${MAS_DESKTOP_NAME}"
+  MAS_GTERMO_GEOMETRY='156x60+0+0'
+  MAS_GTERMO_TITLE="gtermws @ ${MAS_DESKTOP_NAME}"
+  MAS_GTERMO_WD=$HOME
+  MAS_GTERMOPTS=(['class']=$MAS_GTERMO_CLASS ['role']=$MAS_GTERMO_ROLE ['window-with-profile']=$MAS_GTERMO_PROFILE ['geometry']=$MAS_GTERMO_GEOMETRY ['title']=$MAS_GTERMO_TITLE ['name']=$MAS_GTERMO_NAME ['working-directory']=$MAS_GTERMO_WD)
+# declare -gx MAS_GTERMO_EXE=/bin/bash
+  # WD & TITLE && EXE -> arrays by tab
+
+  return 0
+
+
+# vi: ft=sh
+

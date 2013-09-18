@@ -1,0 +1,8 @@
+
+  # . $MAS_PULSESOURCE/pa-volume-global.sh -2
+  mas_get_lib_ifnot pulseaudio pulseaudio_set_app_volume
+  pulseaudio_set_sink_volume 0 -2
+  return 0
+
+# vi: ft=sh
+

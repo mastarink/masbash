@@ -1,0 +1,6 @@
+
+  . $MAS_PULSESOURCE/pa-mute.sh 0
+  return 0
+
+# vi: ft=sh
+

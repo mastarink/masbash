@@ -1,0 +1,6 @@
+# echo "[$MAS_GTERM_CMD]" >&2
+  mas_genterminal
+  return 0
+
+# vi: ft=sh
+

@@ -1,4 +1,4 @@
-  export MAS_I_WS=${MAS_I_WS:-$( $MAS_WS_CMD )}
+  export MAS_I_WS=${MAS_I_WS:-${MAS_DESKTOP_NAME}}
   if [[ "${MAS_HISTORY_DIR}" ]] && ! [[ -d "${MAS_HISTORY_DIR}" ]] ; then 
     mas_mkdir ${MAS_HISTORY_DIR}
   fi
@@ -10,9 +10,9 @@ function histfile ()
   elif [[ "${MAS_HISTORY_DIR}" ]] ; then
     histdir="${MAS_HISTORY_DIR}/"
     history -r "${histdir}std_mastar.history"
-
+    
 #   termem=`mas_call_from terminal_emulator_euristic_show terminal_emulator`
-    termem=`mas_get_lib_call terminal_emulator terminal_emulator_euristic_show`
+    termem=$MAS_TERMINAL_EMULATOR
 
     if [[ "$termem" ]] ; then
       histdir="${histdir}${termem}/"
@@ -23,11 +23,11 @@ function histfile ()
     elif  [[ `${MAS_TTY_CMD:=/bin/tty}` =~ /dev/tty([[:digit:]]+)$ ]] ; then    
       histdir="${histdir}${BASH_REMATCH[1]}/"
       histfile='wt'
-    elif  ! [[ "${WINDOWID}" ]] ; then
+    elif  ! [[ "${MAS_WINDOWID}" ]] ; then
       histdir="${histdir}"
       histfile='wi'
     else
-      histdir="${histdir}${WINDOWID}/"
+      histdir="${histdir}${MAS_WINDOWID}/"
       histfile='ww'
     fi
   fi

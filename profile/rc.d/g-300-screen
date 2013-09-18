@@ -1,7 +1,7 @@
 echo "<><><> $SCREENRC" >&2
 echo "<><><> $SCREENDIR" >&2
-# export SCREENRC="${SCREENRC:=${MAS_CONF_DIR_SCREENS:=${MAS_CONF_DIR_TERM:=${MAS_CONF_DIR:=${MAS_MAS_DIR:=$HOME/.mas}/config}/term_new}/masscreen}/rc0}" 
-export SCREENDIR=${SCREENDIR:=${MAS_SCREEN_VAR_DIR:=${MAS_VAR_DIR:=${MAS_VAR_DIR:=${MAS_MAS_DIR:=$HOME/.mas}/var}}/screen}}
+# export SCREENRC="${SCREENRC:=${MAS_CONF_DIR_SCREENS:=${MAS_CONF_DIR_TERM:=${MAS_CONF_DIR:=${MAS_DIR:=$HOME/.mas}/config}/term_new}/masscreen}/rc0}" 
+export SCREENDIR=${SCREENDIR:=${MAS_SCREEN_VAR_DIR:=${MAS_VAR_DIR:=${MAS_VAR_DIR:=${MAS_DIR:=$HOME/.mas}/var}}/screen}}
 
 
 

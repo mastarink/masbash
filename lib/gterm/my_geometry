@@ -1,0 +1,31 @@
+#!/bin/sh
+function mas_geometry ()
+{
+  MAS_LOGDIR_OTHER=$MAS_BASH_LOG/otherapps
+  log_to=$MAS_LOGDIR_OTHER/my_geometry_log
+  echo "-$LINENO-=[$geom]-= $prof" > $MAS_BASH_LOG/geom-prof$UID.txt
+
+  echo $0 $* >> $log_to
+  prog=$1
+  shift
+  execute=$1
+  shift
+  caller=$1
+  shift
+  prof=$1
+  p=""
+  if [ "$prog" ] ; then
+    echo "($caller) P= $prog" >> $log_to
+  fi
+  echo "-$LINENO-=[$geom]-= $prof" >> $MAS_BASH_LOG/geom-prof$UID.txt
+  if [ "x$prof" == "xtopt" ] ; then
+    echo '180x73+0+200'
+  elif [ "$execute" == "netwatch" ] ; then
+    echo '139x53+0+0'
+  elif [ -n "$TERM_GEOMETRY" ] ; then
+    echo $TERM_GEOMETRY 
+  else
+    echo '156x60+0+700'
+  fi
+}
+mas_geometry $@

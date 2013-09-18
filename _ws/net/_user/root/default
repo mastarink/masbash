@@ -3,7 +3,7 @@
 MAS_IPTOOL_CONFIG="$MAS_CONF_DIR/net-tools"
 . $MAS_IPTOOL_CONFIG/init.sh
 
-cd $MAS_IPTABLES_SCDIR
-. ./iptables-tools.sh
- lit
+# cd $MAS_IPTABLES_SCDIR
+# . ./iptables-tools.sh
+# lit
 cd $MAS_IPTABLES_SCDIR

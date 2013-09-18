@@ -16,7 +16,7 @@ function mas_term_new_profile__profile ()
   fi
   export WM=$DESKTOP_SESSION
   if [ -z "$MAS_TIME_I_WS" ] ; then
-      export MAS_I_WS=${MAS_I_WS:-$( $MAS_WS_CMD )}
+      export MAS_I_WS=${MAS_I_WS:-${MAS_DESKTOP_NAME}}
   fi
 
 mas_term_new_profile__profile && return 0

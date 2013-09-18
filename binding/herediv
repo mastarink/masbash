@@ -1,0 +1,7 @@
+# if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs ]] ; then
+# . ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
+  mas_sourcing_start "(binding) herediv"
+# mas_gterminal -cmasGtermws -rgtermws  -p$MAS_DESKTOP_NAME $@
+  mas_sourcing_end "(binding) herediv"
+# fi
+  return 0

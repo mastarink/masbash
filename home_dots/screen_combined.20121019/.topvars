@@ -1,9 +1,9 @@
 declare -xg  MAS_TOPVARS=set
-declare -xg  MAS_MAS_DIR=${MAS_MAS_DIR:-$HOME/.mas}
+declare -xg  MAS_DIR=${MAS_DIR:-$HOME/.mas}
 # declare -xg    MAS_SHLIB=${MAS_SHLIB:=$HOME/sh}
-declare -xg    MAS_SHLIB=${MAS_SHLIB:-${MAS_MAS_DIR:-$HOME/.mas}/sh}
-declare -xg MAS_BASH_LOG=${MAS_BASH_LOG:-${MAS_MAS_DIR:=$HOME/.mas}/log}
+declare -xg    MAS_SHLIB=${MAS_SHLIB:-${MAS_DIR:-$HOME/.mas}/sh}
+declare -xg MAS_BASH_LOG=${MAS_BASH_LOG:-${MAS_DIR:=$HOME/.mas}/log}
 # if [[ -z "$MAS_SHLIB" ]] ; then echo "FATAL ERROR [$HOME] [$MAS_SHLIB]" >&2 ; exit 2  ; fi
-#! type -t mas_loadlib_if_not >/dev/null 2>&1 && . ${MAS_SHLIB:-${MAS_MAS_DIR:-$HOME/.mas}/sh}/liblib.bash
+#! type -t mas_loadlib_if_not >/dev/null 2>&1 && . ${MAS_SHLIB:-${MAS_DIR:-$HOME/.mas}/sh}/liblib.bash
 
 # vi: ft=sh

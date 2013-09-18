@@ -4,6 +4,9 @@ function typemas ()
 }
 export -f typemas
 
-declare -xg  MAS_BIN=${MAS_BIN:=${MAS_MAS_DIR:=$HOME/.mas}/bin}
+declare -xg  MAS_BIN=${MAS_BIN:=${MAS_DIR:=$HOME/.mas}/bin}
 declare -xg  MAS_UBIN=${MAS_UBIN:=$HOME/ubin}
 declare -xg  MAS_SAWFISH_BIN=${MAS_SAWFISH_BIN:=${MAS_UBIN:=$HOME/ubin}/sawfish}
+
+
+# vi: ft=sh

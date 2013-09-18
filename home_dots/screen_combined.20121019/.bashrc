@@ -14,7 +14,7 @@ declare -gx MAS_TEST_AT_BASHRC=MAS_TEST_AT_BASHRC
 # }
 
 
-if [[ -f "${MAS_FLAGS_DIR:=${MAS_VAR_DIR:=${MAS_MAS_DIR:=$HOME/.mas}/var}/flags}/mas_libs_reload" ]] ; then
+if [[ -f "${MAS_FLAGS_DIR:=${MAS_VAR_DIR:=${MAS_DIR:=$HOME/.mas}/var}/flags}/mas_libs_reload" ]] ; then
   mas_libs_reload
 # echo "RELOAD" >&2 
 # sleep 3

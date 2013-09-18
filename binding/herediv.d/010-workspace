@@ -1,0 +1,8 @@
+ if ! mas_source_scriptsn           _bindws_rc       -   MAS_CONF_DIR_BINDWS $MAS_DESKTOP_NAME  ; then
+    mas_source_scriptsn           _bindws_rc       -   MAS_CONF_DIR_BINDWS Default
+ fi
+
+ return 0
+
+# vi: ft=sh
+

@@ -1,1 +1,5 @@
-source ${MAS_BIN:=${MAS_MAS_DIR:=$HOME/.mas}/bin}/gtermws.sh
+# mas_get_lib_ifnot notify mas_notify
+# mas_notify "key" "3 default"
+source ${MAS_BIN:=${MAS_DIR:=$HOME/.mas}/bin}/gtermws.sh
+
+# vi: ft=sh
