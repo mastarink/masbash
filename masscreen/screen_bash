@@ -1,11 +1,7 @@
 #!/bin/sh
-echo "sb.$PPID.$$.$LINENO ($STY) date:`date +'%s.%N'`" >>"/tmp/mscreen.log"
 export MAS_RSC="$MAS_RSC;screen_bash:$LINENO($STY)"
 
 
-echo "sb.$$.$LINENO ($STY) date:`date +'%s.%N'`" >>"/tmp/mscreen.log"
-
-echo "sb.$$.$LINENO ($STY) date:`date +'%s.%N'`" >>"/tmp/mscreen.log"
 [[ -r "$MAS_BASH_FUNCTIONS" ]] && . $MAS_BASH_FUNCTIONS
 $MAS_LOGGER "running ${BASH_ARGV[0]}"
 
@@ -17,7 +13,6 @@ $MAS_LOGGER screen_bash :STY:: "$STY"
 export MAS_RSC="$MAS_RSC;screen_bash:$LINENO($STY)"
 
 
-echo "sb.$$.$LINENO ($STY) date:`date +'%s.%N'`" >>"/tmp/mscreen.log"
 if [ -n "$STY" ] ; then
   MAS_STY_TAIL=`echo $STY | ${MAS_SED_CMD:=/bin/sed} 's/\([0-9]\+\)\./'/`
   $MAS_LOGGER "1. MAS_STY_TAIL=$MAS_STY_TAIL"
@@ -32,7 +27,6 @@ export MAS_RSC="$MAS_RSC;screen_bash:$LINENO($STY)"
     MAS_PNAME=default
     $MAS_LOGGER "2. MAS_PSET_NAME=$MAS_PSET_NAME"
   fi
-echo "sb.$$.$LINENO ($STY) date:`date +'%s.%N'`" >>"/tmp/mscreen.log"
   
 #   if [ -n "$MAS_PROFILE_GROUPS" ] ; then
 #     if [ -d "$MAS_PROFILE_GROUPS" ] ; then
@@ -52,7 +46,6 @@ echo "sb.$$.$LINENO ($STY) date:`date +'%s.%N'`" >>"/tmp/mscreen.log"
 #   fi
   #echo ". $MAS_PROFILE_GROUPS/..." >&2
   #echo "B0: $MAS_PROFILE_GROUP : $MAS_GROUPRC" >&2
-  echo "init ($STY) date:`date +'%s.%N'`" >>"/tmp/mscreen.log"
   [[ -r $MAS_PROFILE_GROUPS/bin/init.sh ]] && . $MAS_PROFILE_GROUPS/bin/init.sh && echo "INIT $MAS_GROUPRC" >&2
   #echo "B1: $MAS_PROFILE_GROUP : $MAS_GROUPRC" >&2
   export MAS_RSC="$MAS_RSC;screen_bash:$LINENO($STY)"
@@ -64,12 +57,10 @@ echo "sb.$$.$LINENO ($STY) date:`date +'%s.%N'`" >>"/tmp/mscreen.log"
 #    echo "A bash --rcfile \"$MAS_GROUPRC\" $@"
 #    sleep 3
 export MAS_RSC="$MAS_RSC;screen_bash:$LINENO($STY:$MAS_GROUPRC)"
-  echo "bash1 ($STY) date:`date +'%s.%N'`" >>"/tmp/mscreen.log"
     exec bash --rcfile "$MAS_GROUPRC" "$@"
 #    echo "B bash --rcfile \"$MAS_GROUPRC\""
 #    sleep 3
   else
-  echo "bash2 ($STY) date:`date +'%s.%N'`" >>"/tmp/mscreen.log"
     echo "bash $@"
     exec bash "$@"
   fi

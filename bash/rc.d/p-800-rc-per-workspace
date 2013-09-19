@@ -1,11 +1,10 @@
   export MAS_I_WS=${MAS_I_WS:-${MAS_DESKTOP_NAME}}
   if [[ "$MAS_I_WS" ]] ; then
-#   mas_call_from define_std_directories stddirs
     mas_get_lib_call stddirs define_std_directories
 
-    mas_source_scriptsn_opt_std _mastar_settings_per_ws      MAS_CONF_DIR_I_WS
-    mas_source_scriptsn_opt_std _mastar_settings_per_wsu     MAS_CONF_DIR_I_WS_USER
-    mas_source_scriptsn_opt_std _mastar_settings_per_wsu_scm MAS_CONF_DIR_I_WS_USER_SCM
+    mas_src_scriptsn_opt_std _mastar_settings_per_ws      MAS_CONF_DIR_I_WS
+    mas_src_scriptsn_opt_std _mastar_settings_per_wsu     MAS_CONF_DIR_I_WS_USER
+    mas_src_scriptsn_opt_std _mastar_settings_per_wsu_scm MAS_CONF_DIR_I_WS_USER_SCM
   fi
   
   return 0 

@@ -1,12 +1,7 @@
-mas_loadlib_if_not mas_source_register_pid regbash
-
-mas_source_register_pid
-
 export MAS_I_WS=${MAS_I_WS:-${MAS_DESKTOP_NAME}}
 
 if [[ ! "$MAS_PROBABLE_TERMINAL_EMULATOR" ]] ; then
-  mas_loadlib_if_not termilal_emulator_euristic terminal_emulator
-  termilal_emulator_euristic
+  mas_get_lib_call terminal_emulator terminal_emulator_euristic
   define_std_directories
 fi
 

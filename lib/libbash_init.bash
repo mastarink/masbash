@@ -3,7 +3,7 @@ declare -xg MAS_SCREEN_MODE
 
 function mas_bash_init_after_shell ()
 {
-  mas_source_scriptsnt _bashrc_rc - MAS_CONF_DIR_BASH rc
+  mas_src_scriptsnt _bashrc_rc - MAS_CONF_DIR_BASH - rc
   trap - SIGTERM SIGINT SIGHUP SIGTERM EXIT
   unset MAS_DO_EXIT
 }
@@ -25,14 +25,11 @@ function mas_bash_init ()
 #  2. $MAS_CONF_DIR_PRERC/rc
 #  3. $MAS_CONF_DIR_PRERC/rc.d/*
 
-#   mas_mas_source_scriptsn_opt_std doscript       _rc_mastar_pre       MAS_CONF_DIR_PRERC
-    mas_get_lib_call doscript mas_source_scriptsn_opt_std    _rc_mastar_pre       MAS_CONF_DIR_PRERC
+    mas_get_lib_call doscript mas_src_scriptsn_opt_std    _rc_mastar_pre       MAS_CONF_DIR_PRERC
 
-#   mas_call_from mas_source_scriptsnt doscript              _bashrc_rc       -   MAS_CONF_DIR_BASH rc
-    mas_get_lib_call doscript mas_source_scriptsn            _bashrc_rc       -   MAS_CONF_DIR_BASH rc
+    mas_get_lib_call doscript mas_src_scriptsn            _bashrc_rc       -   MAS_CONF_DIR_BASH - rc
 
-#   mas_call_from mas_source_scriptsn_opt_std doscript       _rc_mastar_post      MAS_CONF_DIR_POSTRC
-    mas_get_lib_call doscript mas_source_scriptsn_opt_std    _rc_mastar_post      MAS_CONF_DIR_POSTRC
+    mas_get_lib_call doscript mas_src_scriptsn_opt_std    _rc_mastar_post      MAS_CONF_DIR_POSTRC
 
     MAS_BASH_RC_CALLED=yes
   fi

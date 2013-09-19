@@ -3,7 +3,7 @@
 # set -x
 
 
-mas_source_scriptsn _profcomm_bashrc  -       HOME                   .bashrc
+mas_src_scriptsn _profcomm_bashrc  -       HOME              -     .bashrc
 return 0
 
 # vi: ft=sh

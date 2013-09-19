@@ -15,6 +15,7 @@ function mas_notify ()
 #?  /usr/bin/notify --expire-time="$mtime" "$text"
 # ? 5 times ??  sw-notify-send --expire-time="$mtime" "$text"
   /usr/bin/tinynotify-send --timeout "$mtime" "$text"
+  return 0
 }
 export -f mas_notify
 

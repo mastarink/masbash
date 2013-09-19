@@ -1,0 +1,13 @@
+  MAS_GTERMO_BIN='/usr/bin/sakura'
+# MAS_GTERMO_GEOMETRY='156x60+0+0'
+  MAS_GTERMOPTSPLUS=(['r']=60 ['c']=156)
+  MAS_GTERMO_OPTPREF='-'
+  MAS_GTERMO_OPTEQ=' '
+  return 0
+
+
+# vi: ft=sh
+
+
+
+

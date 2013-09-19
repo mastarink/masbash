@@ -1,0 +1,7 @@
+ . ./Default.lxterminal
+  MAS_GTERMO_WD=/tmp
+
+  return 0
+
+
+# vi: ft=sh

@@ -1,4 +1,4 @@
-# mas_notify custom "In herefav ( $mas_source_scripts_name ) :: $@"
+# mas_notify custom "In herefav ( $mas_src_scripts_name ) :: $@"
   return 0
 
 # vi: ft=sh

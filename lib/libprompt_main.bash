@@ -1,7 +1,6 @@
 #  mas_loadlib_if_not set_prompt_reset_colors prompt
 mas_get_lib_ifnot prompt set_prompt_reset_colors
 
-# mas_loadlib_if_not datemt time
 mas_get_lib_ifnot time datemt
 export MAS_TIME_LIBPROMPT_MAIN=$(datemt)
 
@@ -145,11 +144,7 @@ function mas_prompt ()
   declare -p MAS_DECORS >/dev/null 2>&1 || declare -Axg MAS_DECORS
 
 
-# mas_loadlib_if_not mas_init_colors colors
   mas_get_lib_ifnot colors mas_init_colors
-# mas_loadlib_if_not  mas_source_clean_pid2 regbash
-# mas_loadlib_if_not  mas_source_register_pid2 regbash
-# mas_source_register_pid2 PROMPT
 
   if ! [[ "${MAS_COLORS[@]}" && "${MAS_BGCOLORS[@]}" && "${MAS_DECORS[@]}" ]] ; then
     mas_init_colors

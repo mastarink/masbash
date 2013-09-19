@@ -7,8 +7,8 @@ function unset_gtermo ()
 }
  mas_sourcing_start 010-workspace " ( $MAS_DESKTOP_NAME )"
  unset_gtermo
- MAS_BIND_GROUP=$MAS_DOSCRIPT_NAME
- mas_notify gterm "At 010-workspace : $MAS_DOSCRIPT_MPATH -- $MAS_DOSCRIPT_NAME -- $MAS_BIND_GROUP"
+ 
+    mas_notify gterm ">>>>> $@"
  [[ "$MAS_DESKTOP_NAME" ]] \
  && \
  mas_src_scriptsn           _bindws_rc       -   MAS_CONF_DIR_BINDWS Default $MAS_DESKTOP_NAME

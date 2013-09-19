@@ -1,11 +1,8 @@
 
-# mas_loadlib_if_not mas_source_register_pid2 regbash
-
 function mas_term_new_bash__rc ()
 {
   local wpid
 # see rc.d
-# mas_source_scriptsn _rc_mastar_settings  -    MAS_CONF_DIR_BASH         rc_global
 
   if ! [[ "$TERM" =~ ^(screen)(\..*|)$ ]] ; then
     unset STY MAS_PROMPT_STY WINDOW
@@ -36,7 +33,6 @@ function mas_term_new_bash__rc ()
 #   done < $MAS_GTERM_VAR_DIR/pids-$WINDOWID
 # fi
 
-# mas_source_register_pid2
   return 0
 }
 

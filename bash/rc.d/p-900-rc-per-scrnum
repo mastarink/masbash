@@ -1,8 +1,7 @@
-# mas_call_from define_std_directories stddirs
   mas_get_lib_call stddirs define_std_directories
 
-  mas_source_scriptsn_opt_std _mastar_settings_per_scrnum MAS_CONF_DIR_SCRNUM
-  mas_source_scriptsn_opt_std _mastar_settings_per_scr MAS_CONF_DIR_SCREEN
+  mas_src_scriptsn_opt_std _mastar_settings_per_scrnum MAS_CONF_DIR_SCRNUM
+  mas_src_scriptsn_opt_std _mastar_settings_per_scr MAS_CONF_DIR_SCREEN
 
   return 0 
 

@@ -1,7 +1,5 @@
 echo ".profile <@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@>" >&2
 shopt -u sourcepath
-## env > /tmp/env.uni_profile
-## set > /tmp/set.uni_profile
 
     echo "-=$-" >&2
     echo "TERM=$TERM" >&2
@@ -12,7 +10,7 @@ shopt -u sourcepath
     echo "MAS_DESKTOP_NUM=$MAS_DESKTOP_NUM" >&2
     echo "MAS_DESKTOP_NAME=$MAS_DESKTOP_NAME" >&2
     echo "MAS_TERMINAL_EMULATOR=$MAS_TERMINAL_EMULATOR" >&2
-if true && [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs ]] ; then
+if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs ]] ; then
   . ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
   mas_sourcing_start .profile
   infomas "$MAS_BASHRC :: $MAS_BASHRC_SUB"
@@ -22,15 +20,9 @@ if true && [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.toppa
 
   export MAS_SHOME MAS_BHOME MAS_BASHRC MAS_BASHRCL MAS_BASHRC_NAME MAS_BASHPRF MAS_BASHPRFL MAS_BASHPRF_NAME MAS_DIRNAME_CMD MAS_BASENAME_CMD MAS_READLINK MAS_TERM
 
-
   mas_get_lib_call stddirs define_std_directories
 
-# errormas "(${#BASH_SOURCE[@]}) ${BASH_SOURCE[0]} ${BASH_SOURCE[1]} ${BASH_SOURCE[2]} ${BASH_SOURCE[3]}"
-# mas_get_lib_call doscript mas_source_scriptsn _profcomm_profile -  MAS_CONF_DIR_PROFILE ${MAS_SELF:?Must be set} rc
-# env > /tmp/env.uni_profile.$LINENO
-  mas_get_lib_call doscript mas_source_scriptsn _profcomm_profile -  MAS_CONF_DIR_PROFILE bash_profile rc
-# env > /tmp/env.uni_profile.$LINENO
-#  set > /tmp/set.uni_profile.$LINENO
+  mas_get_lib_call doscript mas_src_scriptsn _profcomm_profile -  MAS_CONF_DIR_PROFILE - bash_profile rc
   mas_sourcing_end ".profile"
 fi
 

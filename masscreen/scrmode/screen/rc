@@ -6,12 +6,11 @@ function masscreen_scrmode_screen_rc ()
   export MAS_PROFILE_TYPE=${MAS_PROFILE_TYPE:-scrmode}
     
 # echo ">>>>>>>>>>> screen/rc : ${#MAS_SRUN_SSCRIPTS[@]}" >&2 ; sleep 2
-#  mas_loadlib_if_not mas_source_register_script_a regzero
-  mas_loadlib_if_not datemt time
+  mas_get_lib_ifnot time datemt
   export MAS_TIME_SCRMODE_RC="`datemt`"
   export MAS_TIME_SCRMODE="`datemt`"
-  mas_loadlib_if_not mas_source_regiscript_a_save regzero
-  mas_source_regiscript_a_save "scrmode.1.${MAS_TIME_SCRMODE_RC:-time-not-set}"
+# mas_get_lib_ifnot regzero mas_src_regiscript_a_save
+# mas_src_regiscript_a_save "scrmode.1.${MAS_TIME_SCRMODE_RC:-time-not-set}"
 
   ${MAS_SCREEN_CMD:=/usr/bin/screen} -D -R -S "$MAS_SCREEN_SESSION"
   trap mas_bash_init_after_shell SIGTERM SIGINT SIGHUP SIGTERM EXIT

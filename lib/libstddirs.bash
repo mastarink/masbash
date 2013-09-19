@@ -138,7 +138,10 @@ function define_std_directories ()
     mas_define_dir          CONF_DIR_BASH                CONF_DIR_TERM                    bash
     mas_define_dir          CONF_DIR_DOTS                CONF_DIR_TERM                    home_dots
     mas_define_dir          CONF_DIR_BINDING             CONF_DIR_TERM                    binding
-    mas_define_dir          CONF_DIR_BINDWS              CONF_DIR_BINDING                 ws
+#   mas_define_dir          CONF_DIR_BINDWS_BASE         CONF_DIR_BINDING                 _ws
+#   mas_define_dir          CONF_DIR_BINDWS              CONF_DIR_BINDWS_BASE             "${MAS_I_WS:-${MAS_DESKTOP_NAME}}"
+    mas_define_dir          CONF_DIR_BINDWS              CONF_DIR_BINDING                 _ws
+    mas_define_dir          CONF_DIR_BINDGTERM           CONF_DIR_BINDING                 gterm
     mas_define_dir          CONF_DIR_PRERC               CONF_DIR_TERM                    prerc
     mas_define_dir          CONF_DIR_POSTRC              CONF_DIR_TERM                    postrc
 #           mas_define_dir          CONF_DIR_UTIL                CONF_DIR_TERM                    util

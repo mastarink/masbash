@@ -1,0 +1,6 @@
+ . ./Default.gnome-terminal || . ./Default.terminator
+
+  return 0
+
+
+# vi: ft=sh

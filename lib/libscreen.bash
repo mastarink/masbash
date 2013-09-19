@@ -134,21 +134,24 @@
     shift
 
 
-    local pos=0 IFS='.' freeid=0
+    local pos=0 IFS='.' freeidmin=0 freeid=0
     if [[ "${suffix}" ]] ; then
   #   echo "Test: ${defterm}.${defws}$( screen_make_suffix $suffix)" >&2
       echo "${defterm}.${defws}$( screen_make_suffix $suffix)"
     else
       while read term ws id rest ; do
     #   echo "Test:$pos -term:$term ($defterm) -ws:$ws ($defws) -id:$id -rest:$rest" >&2
-	if [[ "$id" -eq "$freeid" ]] && [[ "$ws" == "$defws" ]] && [[ "$term" == "$defterm" ]] ; then
-	  freeid=$(( $freeid + 1 ))
+	if [[ "$id" -eq "$freeidmin" ]] && [[ "$ws" == "$defws" ]] && [[ "$term" == "$defterm" ]] ; then
+	  freeidmin=$(( $freeidmin + 1 ))
     #   else
-    #     echo "Why:$pos -term:$term ($defterm) -ws:$ws ($defws) -id:$id ($freeid) -rest:$rest" >&2
+    #     echo "Why:$pos -term:$term ($defterm) -ws:$ws ($defws) -id:$id ($freeidmin) -rest:$rest" >&2
 	fi
 	pos=$(( $pos + 1 ))
       done
-    # echo "Test:$pos -freeid:$freeid" >&2
+    # echo "Test:$pos -freeidmin:$freeidmin" >&2
+      while freeid=$RANDOM && [[ "$freeid" -lt $freeidmin ]] ; do
+        :
+      done
       echo "${defterm}.${defws}.${freeid}"
     fi
   }
@@ -161,7 +164,23 @@
   # 1. suffix ....
   function screen_find_or_propose ()
   {
-    local sess=$( screen_find_detached '' $@ )
+    local sess sess1 sess2 sess3 w1 w2 w
+    while true ; do
+      sess1=$( screen_find_detached '' $@ )
+      if ! [[ "$sess1" ]] ; then
+        break
+      fi
+      w1=10
+      if [[ "$RANDOM" =~ ^(.)(.*)$ ]] ; then w1=${BASH_REMATCH[1]} w2=${BASH_REMATCH[2]} w="${w1}.${w2}" ; fi
+      if [[ "$RANDOM" -lt 20000 ]] ; then w1=0 ; else w1=1 ; fi
+      w="${w1}.${w2}"
+      sleep $w
+      sess2=$( screen_find_detached '' $@ )
+      if [[ "$sess1" == "$sess2" ]] ; then
+        sess=$sess1
+	break
+      fi
+    done
     if [[ "$sess" ]] ; then
       echo -n "$sess"
     else
@@ -180,14 +199,17 @@
     local lmode
     lmode=$1
     shift
-    sesname=$( screen_find_or_propose_here pwd )
+#   sesname=$( screen_find_or_propose_here pwd )
+    sesname=$( screen_find_or_propose_here )
+    infomas "launch_screen_shell 1"
     if [[ "$sesname" ]] ; then
       export SCREENRC="${SCREENRC:=${MAS_CONF_DIR_SCREENS:=${MAS_CONF_DIR_TERM:=${MAS_CONF_DIR:=${MAS_DIR:=$HOME/.mas}/config}/term_new}/masscreen}/rc0}" 
       export SCREENDIR=${SCREENDIR:=${MAS_SCREEN_VAR_DIR:=${MAS_VAR_DIR:=${MAS_DIR:=$HOME/.mas}/var}/screen}}
       
       export MAS_XSHELL_CMD="${MAS_SCREEN_CMD:=/usr/bin/screen} -t $sesname -D -RR $sesname"
       export MAS_SGSHELL_CMD="${MAS_SG_CMD:=/usr/bin/sg} mastar-screen '$MAS_XSHELL_CMD'"
-      infomas "Go ($lmode) screen $MAS_SGSHELL_CMD"
+      infomas "libscreen Go ($lmode) screen $MAS_SGSHELL_CMD"
+      infomas "sgs: $MAS_SGSHELL_CMD"
       case "$lmode" in
 	bash)
 	  ${MAS_BASH_CMD:=/bin/bash} --norc --noprofile -c $MAS_SGSHELL_CMD
@@ -214,6 +236,7 @@
   export -f screen_find_detached screen_list_as screen_list_ws screen_list_attached screen_list_detached screen_propose_new
   export -f screen_find_or_propose screen_find_or_propose_here launch_screen_shell
 
+  mas_sourcing_end libscreen.bash
 # fi
 
 # vi: ft=sh

@@ -6,29 +6,13 @@ echo -en "Sourcing   ${BASH_SOURCE[0]}\e[K\r" >&2
 declare -gx MAS_TEST_AT_BASH_LOGIN=MAS_TEST_AT_BASH_LOGIN
 function mas_func_defined_at_dot_bash_login () { echo "${BASH_SOURCE[0]}" >&2 ; } ; declare -gx mas_func_defined_at_dot_bash_login
 function mas_func_defined_at_dot_cur_profile () { echo "${BASH_SOURCE[0]}" >&2 ; } ; declare -gx mas_func_defined_at_dot_cur_profile
-# declare -agx MAS_TESTAR_AT_BASH_LOGIN
-# declare -Agx MAS_TESTAS_AT_BASH_LOGIN
-# MAS_TESTAR_AT_BASH_LOGIN[0]=MAS_TESTAR_AT_BASH_LOGIN
-# MAS_TESTAS_AT_BASH_LOGIN[MAS_TESTAS_AT_BASH_LOGIN]=MAS_TESTAS_AT_BASH_LOGIN
 
-# {
-#   mas_loadlib_if_not mas_source_register_script_a regzero
-#   mas_loadlib_if_not mas_term_new_status bash_init
-#   typemas mas_term_new_status && mas_term_new_status >>$HOME/.mas/log/mstat/bash_login.1.$$.txt
-# }
-
-# mas_loadlib_if_not datemt time
 mas_get_lib_ifnot time datemt
 export MAS_TIME_BASH_LOGIN="`datemt`"
 echo "$( datemt ) :$TERM: ${BASH_SOURCE[0]} " >>$MAS_BASH_LOG/login/log.$( datem )
 
 echo "`/bin/date +%Y%m%d.%H%M%S.%N` : .bash_login : $LINENO : ${BASH_SOURCE[@]}" >> ${MAS_BASH_LOG:=${MAS_DIR:=$HOME/.mas}/log}/timing/prof.time.txt
 
-# {
-#   mas_loadlib_if_not mas_source_register_script_a regzero
-#   mas_loadlib_if_not mas_term_new_status bash_init
-#   typemas mas_term_new_status && mas_term_new_status >>$HOME/.mas/log/mstat/bash_login.2.$$.txt
-# }
 
 
 # ${MAS_SHLIB:=${MAS_CONFIG_DIR_TERM:=${MAS_CONFIG_DIR:=${MAS_DIR:=${HOME}/.mas}/config}/term_new}/lib}

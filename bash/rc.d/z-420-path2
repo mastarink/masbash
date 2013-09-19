@@ -1,4 +1,4 @@
-mas_source_scriptsn _all_paths - MAS_CONF_DIR_PATH_UTIL set_path
+mas_src_scriptsn _all_paths - MAS_CONF_DIR_PATH_UTIL - set_path
 
 return 0
 

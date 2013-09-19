@@ -32,7 +32,6 @@ function mas_set_aliases ()
   alias mshow_dir=mas_show_conf_dir
   alias mscrmode='$EDITOR $MAS_CONF_DIR_I_SWS_USER_P/default'
   export MAS_ALIAS_FROM
-  # mas_source_scriptsn _aliases1 - /etc bashrc_masaliases
   if [[ -f /etc/bashrc_masaliases ]] ; then
     MAS_ALIAS_FROM+=" /etc/bashrc_masaliases"
     . /etc/bashrc_masaliases

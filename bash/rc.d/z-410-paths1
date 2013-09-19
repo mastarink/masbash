@@ -1,6 +1,5 @@
-mas_source_scriptsn _all_paths - MAS_CONF_DIR_PATH_UTIL set_lib_path set_inc_path
+mas_src_scriptsn _all_paths - MAS_CONF_DIR_PATH_UTIL - set_lib_path set_inc_path
 
 return 0
 
 # vi: ft=sh
-

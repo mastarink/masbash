@@ -2,7 +2,7 @@
   if ! [[ "$MAS_USE_OBSOLETE" ]] ; then
 #--      define_std_directories
       unset STY MAS_PROMPT_STY WINDOW
-#      [[ $MAS_BASH_RC_CALLED ]] || mas_source_scriptsnt _bashrc_rc - MAS_CONF_DIR_BASH rc
+#      [[ $MAS_BASH_RC_CALLED ]] || mas_src_scriptsnt _bashrc_rc - MAS_CONF_DIR_BASH - rc
 #      MAS_BASH_RC_CALLED=yes
   fi
 # vi: ft=sh

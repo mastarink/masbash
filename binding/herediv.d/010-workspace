@@ -1,5 +1,6 @@
- if ! mas_source_scriptsn           _bindws_rc       -   MAS_CONF_DIR_BINDWS $MAS_DESKTOP_NAME  ; then
-    mas_source_scriptsn           _bindws_rc       -   MAS_CONF_DIR_BINDWS Default
+ if ! mas_src_scriptsn           _bindws_rc       -   MAS_CONF_DIR_BINDWS Default $MAS_DESKTOP_NAME  ; then
+#    mas_src_scriptsn           _bindws_rc       -   MAS_CONF_DIR_BINDWS Default
+   :
  fi
 
  return 0

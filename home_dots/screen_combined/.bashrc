@@ -28,6 +28,12 @@ if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
 # echo "[$LINENO]-- MAS_SHOME=$MAS_SHOME -- MAS_BHOME=$MAS_BHOME -- MAS_BASHRC_NAME=$MAS_BASHRC_NAME -- MAS_BASHRC_SUB=$MAS_BASHRC_SUB" >&2
 # env > /tmp/env.bashrc.$LINENO
 # set > /tmp/set.bashrc.$LINENO
+  if [[ "$MAS_INITIAL_DIRECTORY" ]] && pushd ${MAS_INITIAL_DIRECTORY} &>/dev/null ; then
+    if [[ -f .localrc ]] ; then
+      . ./.localrc
+    fi
+    popd &>/dev/null
+  fi
   mas_sourcing_end .bashrc
 fi
 

@@ -1,0 +1,18 @@
+ . ./Default.gnome-terminal
+# MAS_GTERMO_HAS_TABS="--tab -e '$MAS_DIR/gtbin/scs' --working-directory"
+  MAS_GTERMO_HAS_TABS="--tab --working-directory"
+  MAS_GTERMO_PROJECT=$MAS_DEVELOP_DIR/autotools/zoc/projects
+  MAS_GTERMO_TABS=(
+     $MAS_GTERMO_PROJECT/bins/zocromas_server
+     $MAS_GTERMO_PROJECT/bins/zocromas_client
+     $MAS_GTERMO_PROJECT
+     $MAS_GTERMO_PROJECT
+     $MAS_GTERMO_PROJECT
+     $MAS_GTERMO_PROJECT
+     $MAS_GTERMO_PROJECT/..
+     )
+
+  return 0
+
+
+# vi: ft=sh

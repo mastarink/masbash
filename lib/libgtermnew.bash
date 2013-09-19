@@ -90,7 +90,7 @@ function mas_gterminal ()
 ##  echo ":6: '$( mywmws )'" >&2
 #   echo "$cmd" >>/tmp/gtermcmd.txt
 #   echo "$cmd" >&2
-    mas_notify gterm $MAS_GTERM_CMD
+    mas_notify gterm "$MAS_GTERM_CMD"
     eval $cmd  >>/tmp/gtermcmd.txt 2>&1
   else
     echo $cmd
@@ -98,13 +98,25 @@ function mas_gterminal ()
 }
 function mas_genterminal ()
 {
-  local ko
+  local ko val
   declare -gx MAS_GTERMO_WD
   MAS_GTERMO_WD=$MAS_GTERMO_BIN
   for ko in ${!MAS_GTERMOPTS[@]} ; do
-    MAS_GTERMO_WD="$MAS_GTERMO_WD --${ko}='${MAS_GTERMOPTS[$ko]}'"
+    val="${MAS_GTERMOPTS[$ko]}"
+    if [[ "$val" ]] ; then MAS_GTERMO_WD="$MAS_GTERMO_WD ${MAS_GTERMO_OPTPREF:---}${ko}${MAS_GTERMO_OPTEQ:-=}'${val}'" ; fi
   done
+  for ko in ${!MAS_GTERMOPTSPLUS[@]} ; do
+    val="${MAS_GTERMOPTSPLUS[$ko]}"
+    if [[ "$val" ]] ; then MAS_GTERMO_WD="$MAS_GTERMO_WD ${MAS_GTERMO_OPTPREF:--}${ko}${MAS_GTERMO_OPTEQ:-=}'${val}'" ; fi
+  done
+  if [[ "$MAS_GTERMO_HAS_TABS" ]] ; then
+    for ko in ${MAS_GTERMO_TABS[@]} ; do
+      MAS_GTERMO_WD="$MAS_GTERMO_WD ${MAS_GTERMO_HAS_TABS}${MAS_GTERMO_OPTEQ:-=}${ko}"
+    done
+  fi
   echo ">>> [${#MAS_GTERMOPTS[@]}]  $MAS_GTERMO_WD"
+  echo "[${#MAS_GTERMOPTS[@]}]  $MAS_GTERMO_WD" >&2
+  mas_notify gterm key ">>> $MAS_GTERMO_WD <<<"
   eval $MAS_GTERMO_WD
 }
 

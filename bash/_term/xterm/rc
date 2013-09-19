@@ -5,14 +5,14 @@
         unset PROMPT_COMMAND PS10 SVN_EDITOR TERM_GEOMETRY WMAKER_BIN_NAME WM_DOCKAPPLETS
     #  To get at least : 	MAS_SCREEN_MODE
 #--        define_std_directories
-#        [[ $MAS_BASH_RC_CALLED ]] || mas_source_scriptsn _bashrc_rc - MAS_CONF_DIR_BASH rc
+#        [[ $MAS_BASH_RC_CALLED ]] || mas_src_scriptsn _bashrc_rc - MAS_CONF_DIR_BASH - rc
 #        MAS_BASH_RC_CALLED=yes
 
     #   if false ; then
-    #     mas_source_scriptsn _bashrc_rc - MAS_CONF_DIR_BASH rc
+    #     mas_src_scriptsn _bashrc_rc - MAS_CONF_DIR_BASH - rc
     #   else
     #     define_std_directories
-    #     mas_source_scriptsnt_optional _mastar_settings_per_ws '.sh' MAS_CONF_DIR_I_WS_USER settings
+    #     mas_src_scriptsnt_optional _mastar_settings_per_ws '.sh' MAS_CONF_DIR_I_WS_USER - settings
     #   fi
 #        logfile=$logdir/env."$$.`datemt`.${MAS_SCREEN_MODE:-rs_none}"
 #       env > ${logfile}.${LINENO}
@@ -28,7 +28,7 @@
 #       			  echo "run screen" >> $logdir/bashrc.screen_combined.txt
 #       			  mas_call_screen $@
 #       		#       else
-#       		#         [[ $MAS_BASH_RC_CALLED ]] || mas_source_scriptsn _bashrc_rc - MAS_CONF_DIR_BASH rc
+#       		#         [[ $MAS_BASH_RC_CALLED ]] || mas_src_scriptsn _bashrc_rc - MAS_CONF_DIR_BASH - rc
 #       		#         MAS_BASH_RC_CALLED=yes
 #       			fi
   fi
