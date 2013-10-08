@@ -49,7 +49,7 @@
     shift
   # echo ">>>>>>>>[`terminal_emulator_euristic_show`]  ${term}\.${ws}\.[[:digit:]]\+.*(\<\($rex\)\>) --- $term.$ws - $limit" >&2
     ${MAS_SCREEN_CMD:=/usr/bin/screen} -list "${term}.${ws}$( screen_make_suffix $suffix)" \
-      | grep "${term}\.${ws}\.[[:digit:]]\+.*(\<\($rex\)\>)" \
+      | grep "${term}\.${ws}\.[[:digit:]]\+_.*(\<\($rex\)\>)" \
       | head -${limit}
   }
   function screen_list_as_test ()
@@ -140,6 +140,9 @@
       echo "${defterm}.${defws}$( screen_make_suffix $suffix)"
     else
       while read term ws id rest ; do
+        if [[ "$id" =~ ^([[:digit:]]+)_$ ]] ; then
+	  id=${BASH_REMATCH[1]}
+	fi
     #   echo "Test:$pos -term:$term ($defterm) -ws:$ws ($defws) -id:$id -rest:$rest" >&2
 	if [[ "$id" -eq "$freeidmin" ]] && [[ "$ws" == "$defws" ]] && [[ "$term" == "$defterm" ]] ; then
 	  freeidmin=$(( $freeidmin + 1 ))
@@ -152,7 +155,7 @@
       while freeid=$RANDOM && [[ "$freeid" -lt $freeidmin ]] ; do
         :
       done
-      echo "${defterm}.${defws}.${freeid}"
+      echo "${defterm}.${defws}.${freeid}_"
     fi
   }
   # 1. suffix ....
@@ -170,10 +173,12 @@
       if ! [[ "$sess1" ]] ; then
         break
       fi
+      w="0.$RANDOM"
       w1=10
       if [[ "$RANDOM" =~ ^(.)(.*)$ ]] ; then w1=${BASH_REMATCH[1]} w2=${BASH_REMATCH[2]} w="${w1}.${w2}" ; fi
       if [[ "$RANDOM" -lt 20000 ]] ; then w1=0 ; else w1=1 ; fi
-      w="${w1}.${w2}"
+      w="${w1}.${w2}"     
+      echo "W $w" >&2
       sleep $w
       sess2=$( screen_find_detached '' $@ )
       if [[ "$sess1" == "$sess2" ]] ; then

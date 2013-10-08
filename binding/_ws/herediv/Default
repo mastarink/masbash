@@ -1,0 +1,11 @@
+  mas_get_lib_ifnot notify mas_notify
+  mas_notify TMP "Wow.... [ $BASHOPTS ] [ `pwd` ] $MAS_BIND_GROUP"
+
+ def_ref=Default.gnome-terminal
+ def_ref=$( readlink -f $def_ref )
+ . $def_ref
+
+  return 0
+
+
+# vi: ft=sh

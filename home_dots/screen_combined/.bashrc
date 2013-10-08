@@ -1,3 +1,4 @@
+if [[ "$-" == *i* ]] ; then
 #   infomas "TERM=$TERM"
 #   infomas "MAS_TERM=$MAS_TERM"
 #   infomas "MAS_BASHRC_TYPE=$MAS_BASHRC_TYPE"
@@ -6,13 +7,13 @@
 #   infomas "MAS_DESKTOP_NUM=$MAS_DESKTOP_NUM"
 #   infomas "MAS_DESKTOP_NAME=$MAS_DESKTOP_NAME"
 #   infomas "MAS_TERMINAL_EMULATOR=$MAS_TERMINAL_EMULATOR"
-echo ".bashrc <@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@>" >&2
+   echo ".bashrc <@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@>" >&2
+fi
 shopt -u sourcepath
-if shopt login_shell ; then
+if shopt login_shell >/dev/null ; then
   :
 fi
-# env > /tmp/env.bashrc
-# set > /tmp/set.bashrc
+
 if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs ]] ; then
   . ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
   mas_sourcing_start .bashrc

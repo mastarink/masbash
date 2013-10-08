@@ -1,10 +1,1 @@
-  mas_get_lib_ifnot gtermnew mas_gterminal
-  
- mas_notify gterm "At 200-genterm : $MAS_DOSCRIPT_MPATH -- $MAS_DOSCRIPT_NAME -- $MAS_BIND_GROUP"
-# MAS_GTERMOPTS=(['class']=$MAS_GTERMO_CLASS ['role']=$MAS_GTERMO_ROLE ['window-with-profile']=$MAS_GTERMO_PROFILE ['geometry']=$MAS_GTERMO_GEOMETRY ['title']=$MAS_GTERMO_TITLE ['name']=$MAS_GTERMO_NAME ['working-directory']=$MAS_GTERMO_WD)
-  MAS_GTERMOPTS=(['class']=$MAS_GTERMO_CLASS ['role']=$MAS_GTERMO_ROLE ['profile']=$MAS_GTERMO_PROFILE ['geometry']=$MAS_GTERMO_GEOMETRY ['title']=$MAS_GTERMO_TITLE ['name']=$MAS_GTERMO_NAME ['working-directory']=$MAS_GTERMO_WD)
-
-  mas_genterminal
-  return 0
-
-# vi: ft=sh
+../base/200-genterm

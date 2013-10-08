@@ -1,0 +1,19 @@
+function unset_gtermo ()
+{
+  local v
+  for v in BIN CLASS NAME ROLE PROFILE GEOMETRY TITLE WD ; do
+    unset "MAS_GTERMO_$v"
+  done
+}
+ mas_sourcing_start 010-workspace " ( $MAS_DESKTOP_NAME )"
+ unset_gtermo
+    
+
+ [[ "$MAS_DESKTOP_NAME" ]] \
+ && \
+ mas_src_scriptsn           _bindws_rc       -   MAS_CONF_DIR_BINDWS+$MAS_BIND_GROUP Default $MAS_DESKTOP_NAME
+
+ mas_sourcing_end 010-workspace
+ return 0
+
+# vi: ft=sh

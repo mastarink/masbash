@@ -1,0 +1,11 @@
+    mas_notify key "$MAS_BIND_GROUP DEFAULT"
+# txt=$( zenity  --title "Command" --entry --text "Command" )
+    mas_notify key "$MAS_BIND_GROUP DEFAULT - $txt"
+
+# gvim
+  return 0
+
+
+# vi: ft=sh
+
+

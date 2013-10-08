@@ -1,8 +1,16 @@
+function pulseaudio_pacmd ()
+{
+  /usr/bin/pacmd $@ 2>/dev/null
+}
+function pulseaudio_pacmdz ()
+{
+  /usr/bin/pacmd $@ &>/dev/null
+}
 function pulseaudio_client_id ()
 {
   local name="$@"
   local is_index is_client
-  pacmd list-sink-inputs 2>/dev/null | while read ; do
+  pulseaudio_pacmd list-sink-inputs | while read ; do
     if [[ "$REPLY" =~ [[:space:]]+index: ]] ; then
       is_index=$(( 0 + $( echo "$REPLY" | awk '{print $2}' ) ))
     elif [[ "$REPLY" =~ [[:space:]]+client: ]] ; then
@@ -17,7 +25,7 @@ function pulseaudio_client_idc ()
 {
   local name="$@"
   local is_index is_client
-  pacmd list-clients 2>/dev/null | while read ; do
+  pulseaudio_pacmd list-clients | while read ; do
     if [[ "$REPLY" =~ [[:space:]]+index: ]] ; then
       is_index=$(( 0 + $( echo "$REPLY" | awk '{print $2}' ) ))
     elif [[ "$REPLY" =~ [[:space:]]+application.name[[:space:]]+= ]] ; then
@@ -33,7 +41,7 @@ function pulseaudio_sink_name ()
 {
   local id=$1
   local is_index sink_name
-  pacmd list-sinks 2>/dev/null | while read ; do
+  pulseaudio_pacmd list-sinks | while read ; do
     if [[ "$REPLY" =~ [[:space:]]+index: ]] ; then
       is_index=$( echo "$REPLY" | awk '{print $3}' )
       is_index=$(( 0 + $is_index ))
@@ -56,10 +64,10 @@ function pulseaudio_set_app_volume ()
   if [[ "$appid" ]] ; then
     for ai in $appid ; do
       echo "setting $vol% ($voln) for app $app ($ai)" >&2
-      pacmd set-sink-input-volume "$ai" "$voln"  >/dev/null 2>&1
+      pulseaudio_pacmdz set-sink-input-volume "$ai" "$voln" 
     done
-  else
-    echo "pulseaudio_set_app_volume: $app not found" >&2
+  elif [[ "$-" == *i* ]] ; then
+    errormas "pulseaudio_set_app_volume: $app not found"
   fi
 }
 function pulseaudio_sink_mute ()
@@ -82,10 +90,10 @@ function pulseaudio_sink_mute ()
  # else
  #   echo "$0 <id> <on/off> [$s]" >&2
   fi
-#  pacmd set-sink-mute `pulseaudio_sink_name $i` "$s" >/dev/null 2>&1
+#  pulseaudio_pacmdz set-sink-mute `pulseaudio_sink_name $i` "$s"
 
 #  echo pacmd set-sink-mute "$i" "$s" >&2
-  pacmd set-sink-mute "$i" "$s"
+  pulseaudio_pacmdz set-sink-mute "$i" "$s"
 #   >/dev/null 2>&1
 }
 function pulseaudio_set_sink_volume_old ()
@@ -95,7 +103,7 @@ function pulseaudio_set_sink_volume_old ()
   vol=$1 ; shift
   voln=`wcalc "round( 0x10000 / 100 * $vol )"`
 #  echo "setting $vol% ($voln) for sink $sink (`pulseaudio_sink_name 0`)" >&2
-  pacmd set-sink-volume "$sink" "$voln"  >/dev/null 2>&1
+  pulseaudio_pacmdz set-sink-volume "$sink" "$voln"
 }
 function pulseaudio_set_sink_volume ()
 {
@@ -113,7 +121,7 @@ function pulseaudio_sink_get_volume ()
 # echo "sink_id:$sink_id" >&2
   local sink_name=`pulseaudio_sink_name $sink_id`
 #  echo "sink_name:$sink_name" >&2
-  local xvol=`pacmd dump | grep "set-sink-volume $sink_name" | cut -d " " -f 3`
+  local xvol=`pulseaudio_pacmd dump | grep "set-sink-volume $sink_name" | cut -d " " -f 3`
 #  echo "xvol:$xvol" >&2
   local voln=`wcalc $xvol`
 #  echo "voln:$voln" >&2

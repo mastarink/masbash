@@ -19,7 +19,7 @@ if ! [[ "$MAS__MISC_SETTINGS" ]] ; then
 
 
   export PS_FORMAT='lstart,tty,ni,user,pid,lwp,%cpu,%mem,rss,vsz,sz,thcount,comm,cmd'
-  export PS_FORMAT='tt,start,user,group:15,ppid,sid,pid,lwp,stat,s,%cpu,%mem,vsz,sz,rss,nlwp,comm,cmd'
+  export PS_FORMAT='tt,start,user,group:15,nice,ppid,sid,pid,lwp,stat,s,%cpu,%mem,vsz,sz,rss,nlwp,comm,cmd'
 
   # * export GNUSTEP_USER_ROOT=$MAS_CONF_DIR/GNUstep
   # * export GNUSTEP_USER_ROOT_B=$MAS_CONF_DIR/GNUstep

@@ -1,6 +1,5 @@
-# mas_loadlib_if_not mywmws wm
-# mas_loadlib_if_not datemt time
 mas_get_lib_ifnot time datemt
+mas_get_lib_ifnot notify mas_notify
 
 MAS_GVIMER_LOADED=`datemt`
 function gvimer_loaded ()

@@ -5,4 +5,5 @@
     mas_src_scriptsn_opt_std _mastar_settings_per_scrmode MAS_CONF_DIR_SCREEN_MODE
   fi
   return 0 
+
 # vi: ft=sh

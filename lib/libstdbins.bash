@@ -1,4 +1,3 @@
-mas_sourcing_start libstdbins.bash
 # mas_loadlib_if_not mywmws wm
 # mas_loadlib_if_not gvimer ed
 

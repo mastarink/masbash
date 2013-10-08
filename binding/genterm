@@ -1,10 +1,1 @@
-if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs ]] ; then
-  . ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
-  mas_sourcing_start "(binding) genterm"
-
-
-  mas_sourcing_end "(binding) genterm"
-  return 0
-
-fi
-# vi: ft=sh
+base/Default-binding-script

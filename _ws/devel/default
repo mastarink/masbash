@@ -1,7 +1,0 @@
-  export MAS_WORK_DIR=`pwd`
-  export MAS_PROJECTS_DIR=$MAS_DEVELOP_DIR/autotools/zoc/projects
-  export MAS_WD_LIB_SUB_DIR='sh'
-  export MAS_WD_LIBS='run_functions dir_functions make_functions'
-
-
-# vi: ft=sh

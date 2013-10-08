@@ -2,36 +2,57 @@
 # needed here?
   mas_get_lib_ifnot screen screen_make_suffix
 
-# export MAS_SCREEN_SESSION=$( mas_call_from screen_find_or_propose_here screen $@ )
-  export MAS_SCREEN_SESSION=$( mas_get_lib_call screen screen_find_or_propose_here $@ )
-
-#         export MAS_SCREEN_SESSION_NUM=`echo $MAS_SCREEN_SESSION`|sed -e 's@^.*\.\(.*\)$@\1@'
-  export MAS_SCREEN_SESSION_NUM=`echo $MAS_SCREEN_SESSION| awk -F'.' '{print $3}'`
-  export MAS_SCREEN_SHELL=${BASH_SOURCE[0]}
-  export MAS_SCREEN_SHELL1=$0
-  export MAS_TIME_SCREEN_START=`datemt`
-  export MAS_TIME_SCREEN=$MAS_TIME_SCREEN_START
 # 	  echo "starting screen mode '$MAS_SCREEN_MODE' session '$MAS_SCREEN_SESSION'" >&2
 #	  MAS_BASH_MESSAGES[${#MAS_BASH_MESSAGES[@]}]="starting screen mode '$MAS_SCREEN_MODE' session '$MAS_SCREEN_SESSION'"
 #	  declare -p MAS_BASH_MESSAGES
 #	  ${MAS_SLEEP_CMD:=/bin/sleep} 2
 
-# mas_call_from define_std_directories stddirs
   mas_get_lib_call stddirs define_std_directories
 function mas_screen_exec ()
 {
-  echo "${MAS_SCREEN_DELAY_START:-3} seconds to screen" >&2
+  local wd iwd d
+# export MAS_SCREEN_SESSION=$( mas_call_from screen_find_or_propose_here screen $@ )
+  export MAS_SCREEN_SESSION=$( mas_get_lib_call screen screen_find_or_propose_here $@ )
+
+#         export MAS_SCREEN_SESSION_NUM=`echo $MAS_SCREEN_SESSION`|sed -e 's@^.*\.\(.*\)$@\1@'
+  export MAS_SCREEN_SESSION_NUM
+#  =`echo $MAS_SCREEN_SESSION| awk -F'.' '{print $3}'`
+  if [[ "$MAS_SCREEN_SESSION" =~ \.([[:digit:]]+)_*$ ]] ; then
+    MAS_SCREEN_SESSION_NUM=${BASH_REMATCH[1]}
+  fi
+
+  export MAS_SCREEN_SHELL=${BASH_SOURCE[0]}
+  export MAS_SCREEN_SHELL1=$0
+  export MAS_TIME_SCREEN_START=`datemt`
+  export MAS_TIME_SCREEN=$MAS_TIME_SCREEN_START
+
+  echo "${MAS_SCREEN_DELAY_START:-3} seconds to screen session $MAS_SCREEN_SESSION" >&2
   echo "^C to use nonscreen term (?)" >&2
+
+  if [[ "${DIRSTACK[@]}" ]] ; then
+##if [[ "$MAS_CONF_DIR_TERM_STAT" ]] ; then
+##  echo ">>>mss (stack) ${DIRSTACK[@]}" >> $MAS_CONF_DIR_TERM_STAT/sourcing.$UID.$$.stat
+##fi
+#   while popd ; do : ; done
+    iwd=$(( ${#DIRSTACK[@]} - 1 ))
+    wd=${DIRSTACK[$iwd]}
+    for d in ${DIRSTACK[@]} ; do
+      echo "> [$d]" >&2
+    done
+    if [[ "$wd" ]] && [[ -d "$wd" ]] ; then
+      cd $wd
+    fi
+  fi
+
   ${MAS_SLEEP_CMD:=/bin/sleep} ${MAS_SCREEN_DELAY_START:-3}
   
   export MAS_PROFILE_TYPE=${MAS_PROFILE_TYPE:+${MAS_PROFILE_TYPE} scrmode}
   export MAS_PROFILE_TYPE=${MAS_PROFILE_TYPE:-scrmode}
 
-# mas_loadlib_if_not datemt time
   mas_get_lib_ifnot time datemt
   export MAS_TIME_SCRMODE="`datemt`"
   export MAS_TIME_SCRMODE_EXEC_RC="`datemt`"
-
+  
   ${MAS_SCREEN_CMD:=/usr/bin/screen} -D -R -S "$MAS_SCREEN_SESSION"
 
   echo "${MAS_SCREEN_DELAY_EXIT:-5} seconds to Exit" >&2

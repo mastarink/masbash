@@ -28,28 +28,11 @@ if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
 # class=masGtermws
 # role=gtermws
 # -------------------
-function mas_set_gterminal_cmd ()
-{
-# geometry should depend on ${MAS_DESKTOP_NAME}
-  if [[ "${MAS_DESKTOP_NAME}" == test ]] ; then
-    MAS_GTERM_CMD="/usr/bin/roxterm --tab"
-  else
-    mas_get_lib_ifnot time datemt
-    MAS_GTERM_CMD="/usr/bin/gnome-terminal --class=masGtermws-`datemt`-${MAS_DESKTOP_NAME} --role=gtermws --window-with-profile='wsp-${MAS_DESKTOP_NAME}' --geometry='156x60+0+0' --title='gtermws @ ${MAS_DESKTOP_NAME}' --name=gtermws-${MAS_DESKTOP_NAME}"
-  fi
-}
 
-
-function mas_gterminal_cmd ()
-{
-  mas_set_gterminal_cmd $@
-  echo $MAS_GTERM_CMD
-}
 function mas_gterminal ()
 {
   local cmd log_to
- #cmd=$( mas_gterminal_cmd $@ )
-# ----------  mas_set_gterminal_cmd $@
+  
   cmd='sg mastar-gterm ''"'"${MAS_GTERM_CMD:-gnome-terminal} &"'"'
 # cmd="${MAS_GTERM_CMD:-gnome-terminal} &"
   unset STY
@@ -114,10 +97,15 @@ function mas_genterminal ()
       MAS_GTERMO_WD="$MAS_GTERMO_WD ${MAS_GTERMO_HAS_TABS}${MAS_GTERMO_OPTEQ:-=}${ko}"
     done
   fi
-  echo ">>> [${#MAS_GTERMOPTS[@]}]  $MAS_GTERMO_WD"
-  echo "[${#MAS_GTERMOPTS[@]}]  $MAS_GTERMO_WD" >&2
-  mas_notify gterm key ">>> $MAS_GTERMO_WD <<<"
-  eval $MAS_GTERMO_WD
+  MAS_GTERMO_WD="sg ${MAS_GTERMO_GROUP:=mastar-gterm} "'"'"${MAS_GTERMO_WD:-gnome-terminal} &"'"'" # $(datemt) $(tty) - $- - ${MAS_DESKTOP_NAME}"
+# echo ">>> [${#MAS_GTERMOPTS[@]}]  $MAS_GTERMO_WD"
+# echo "[${#MAS_GTERMOPTS[@]}]  $MAS_GTERMO_WD" >&2
+  if [[ "$MAS_GTERMO_WD" ]] ; then
+    mas_notify gterm "command: [$MAS_GTERMO_WD]"
+    eval $MAS_GTERMO_WD
+  else
+    mas_notify gterm "EMPTY command"
+  fi
 }
 
 fi

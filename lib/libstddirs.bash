@@ -77,7 +77,7 @@ function mas_define_dir_at_log_log ()
   fi
   printf "%03d %03d. %-4s %-30s=  %s [%s]\n" "$MAS_DEFINE_STD_DIRECTORIES_CNT" "$MAS_DEFINE_STD_DIRECTORY_POS" " ER3" "$fullname" "${!fullname}" "${opt}" >&$MAS_STDDIRS_LOG_FD
 # echo "Error 2 $FUNCNAME : $LINENO ($fullbasen : ${!fullbasen}) (prefix:$prefix : name:$name : basen:$basen : value:$value) [${opt}]" >&2
-echo ${FUNCNAME}-r2 >&2
+# echo ${FUNCNAME}-r2 >&2
   return 2
 }
 function mas_define_dir_at ()
@@ -135,12 +135,14 @@ function define_std_directories ()
     mas_define_dir          CONF_DIR_WM                  CONF_DIR                         maswm					rmdir
     mas_define_dir          CONF_DIR_TERM                CONF_DIR                         term_new				must
     mas_define_dir          SHLIB                        CONF_DIR_TERM                    lib
+    mas_define_dir          CONF_DIR_TERM_STAT           CONF_DIR_TERM                    stat
     mas_define_dir          CONF_DIR_BASH                CONF_DIR_TERM                    bash
     mas_define_dir          CONF_DIR_DOTS                CONF_DIR_TERM                    home_dots
     mas_define_dir          CONF_DIR_BINDING             CONF_DIR_TERM                    binding
 #   mas_define_dir          CONF_DIR_BINDWS_BASE         CONF_DIR_BINDING                 _ws
 #   mas_define_dir          CONF_DIR_BINDWS              CONF_DIR_BINDWS_BASE             "${MAS_I_WS:-${MAS_DESKTOP_NAME}}"
     mas_define_dir          CONF_DIR_BINDWS              CONF_DIR_BINDING                 _ws
+    mas_define_dir          CONF_DIR_BINDWS_TEST         CONF_DIR_BINDWS                  "${MAS_BINDING_NAME}"
     mas_define_dir          CONF_DIR_BINDGTERM           CONF_DIR_BINDING                 gterm
     mas_define_dir          CONF_DIR_PRERC               CONF_DIR_TERM                    prerc
     mas_define_dir          CONF_DIR_POSTRC              CONF_DIR_TERM                    postrc

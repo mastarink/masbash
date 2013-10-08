@@ -1,0 +1,11 @@
+ # . ./Default.gnome-terminal || . ./Default.terminator
+  mas_get_lib_ifnot ed gvimer
+  gvim_caller $HOME/.config/uzbl/config
+
+  return 0
+
+
+# vi: ft=sh
+
+
+

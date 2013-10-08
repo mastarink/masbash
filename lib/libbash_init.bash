@@ -11,13 +11,14 @@ function mas_bash_init ()
 {
   local logdir=${MAS_BASH_LOG:=${MAS_DIR:=$HOME/.mas}/log}
   export MAS_DO_EXIT=yes
- 
+
   mas_get_lib_call stdbins define_std_binnames
   mas_get_lib_call stddirs define_std_directories
   mas_get_lib_call terminal_emulator terminal_emulator_euristic
   mas_get_lib_call under mas_set_under
   mas_get_lib_ifnot ed gvim_caller gvimer
 
+##if [[ "$MAS_CONF_DIR_TERM_STAT" ]] ; then echo "${MAS_TOPPF_CNT}. $@" >> $MAS_CONF_DIR_TERM_STAT/$FUNCNAME.$UID.$$.stat ; fi
   
   if ! [[ "$MAS_BASH_RC_CALLED" ]] ; then
 #   dir from variable $MAS_CONF_DIR_PRERC : PRERC
