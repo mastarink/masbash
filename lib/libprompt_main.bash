@@ -84,7 +84,9 @@ function mas_build_ps10 ()
 #   if [ ${#MAS_PS10PWD} -ge $(($minlength)) ] ; then
 #     MAS_PS10PWD=$(echo "$MAS_PS10PWD" | /bin/sed s/\\/home\\/$USER/~/)
 #   fi
-  if [ ${#MAS_PS10PWD} -gt $(($MAS_MAXLENGTH)) ] ; then    
+  if [[ "$MAS_SHN_PROJECTS_DIR" ]] && [[ "$MAS_PS10PWD" =~ ^${MAS_SHN_PROJECTS_DIR}(.*)$ ]] ; then
+    MAS_PS10PWDS="{$(basename $(realpath ${MAS_SHN_PROJECTS_DIR}/..))}${BASH_REMATCH[1]}"
+  elif [ ${#MAS_PS10PWD} -gt $(($MAS_MAXLENGTH)) ] ; then    
     MAS_PS10PWDS=$( echo "${MAS_PS10PWD:0:$(($half-$MAS_PWD_OFFSET))}...${MAS_PS10PWD:$((${#MAS_PS10PWD}-$half-3-$MAS_PWD_OFFSET)):$half+3+$MAS_PWD_OFFSET}" )
   else
     MAS_PS10PWDS=$MAS_PS10PWD

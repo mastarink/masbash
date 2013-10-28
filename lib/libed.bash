@@ -144,8 +144,10 @@ function gvimer_have_mased ()
   if [[ "$sname_m" ]] ; then sname=$sname_m ; fi
   if ! ${MAS_GVIM_CMD:-/usr/bin/gvim} --serverlist | ${MAS_GREP_CMD:-/bin/grep} "^${sname^^*}[[:digit:]]*$" >/dev/null 2>&1 ; then
     if [[ "$@" ]] ; then 
+      echo "${MAS_GVIM_CMD} --servername $sname -o $mased_name $@"      
       ${MAS_GVIM_CMD} --servername "$sname" -o "$mased_name" $@
     else
+      echo "${MAS_GVIM_CMD} --servername $sname $mased_name"
       ${MAS_GVIM_CMD} --servername "$sname" "$mased_name"
     fi
     for  (( wcnt=0 ; $wcnt<10 ; wcnt++ )) ; do
@@ -157,6 +159,7 @@ function gvimer_have_mased ()
     if [[ "$sname_m" ]] ; then sname=$sname_m ; fi
   fi
   if [[ "$ffile" ]] && [[ -f "$ffile" ]] ; then
+    echo "${MAS_GVIM_CMD} --servername $sname --remote $ffile"
     ${MAS_GVIM_CMD} --servername "$sname" --remote "$ffile"
     if [[ "$fline" ]] ; then
       ${MAS_GVIM_CMD} --servername "$sname" --remote-expr "MasGo($fline, $fcol)"

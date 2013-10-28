@@ -30,6 +30,7 @@ function mas_set_aliases ()
   alias mshow_var=mas_show_var
   alias mshow_conf=mas_show_conf
   alias mshow_dir=mas_show_conf_dir
+  alias mprj='source ~/bin/mas_projects.sh && cd `ls -d *type*` && source shn/libwork.bash && shn_project_cd type'
   alias mscrmode='$EDITOR $MAS_CONF_DIR_I_SWS_USER_P/default'
   export MAS_ALIAS_FROM
   if [[ -f /etc/bashrc_masaliases ]] ; then

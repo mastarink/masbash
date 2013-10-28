@@ -1,20 +1,32 @@
 function mas_notify ()
 {
-  local mtime
+  local mtime sum text
   mtime=$1
+  if [[ "$mtime" ]] ; then
+    if [[ "$mtime" == '-' ]] ; then
+      mtime=2000 ; shift
+    elif [[ "$mtime" == '+' ]] ; then
+      mtime=20000 ; shift
+    elif [[ "$mtime" -gt 0 ]] ; then
+      shift
+    else
+      mtime=50000
+    fi
+  else
+    mtime=2000
+  fi
+  sum=${1:-beep}
   shift
-  local text="$@"
+  text="${@:-beep}"
 #  sw-notify-send  '***1 ping ***' "$( ${MAS_CAT_CMD:=/bin/cat} )"
 #  /usr/bin/tinynotify-send  '***2 ping ***' "$( ${MAS_CAT_CMD:=/bin/cat} )"
-  if [ -z "$mtime" ] ; then
-    mtime=1
-  fi
-  if [ -z "$text" ] ; then
-    text='beeeep'
-  fi
+# echo "$mtime:[$@]" >>/tmp/libnotify.tmp
 #?  /usr/bin/notify --expire-time="$mtime" "$text"
 # ? 5 times ??  sw-notify-send --expire-time="$mtime" "$text"
-  /usr/bin/tinynotify-send --timeout "$mtime" "$text"
+
+  ( coproc ( /usr/bin/notify-send --expire-time="$mtime" $sum "$text" &>/dev/null ) )
+
+# /usr/bin/tinynotify-send -t "$mtime" $sum "${text}" 2>/dev/null
   return 0
 }
 export -f mas_notify

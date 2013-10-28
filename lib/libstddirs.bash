@@ -1,4 +1,5 @@
-
+export MAS_HOME=${MAS_HOME:=`eval echo ~$USER`}
+export MAS_DIR_VARS
 #typemas datemt  && export MAS_TIME_LIBSTDDIRS=$(datemt)
 declare -gx MAS_GVAR_PREFIX=MAS_
 function mas_define_dir_at_log_log ()
@@ -14,7 +15,7 @@ function mas_define_dir_at_log_log ()
  #echo "mas_define_dir_at_log : $basen : $name : $value" >&2
  #echo "mas_define_dir_at_log : $basen : $name : $value" >&$MAS_STDDIRS_LOG_FD
   if [[ "${basen}" == '^' ]] ; then
-    fullbasen="HOME"
+    fullbasen="MAS_HOME"
   else
     fullbasen="${prefix}${basen}"
 #   infomas "fullbasen=$fullbasen prefix=$prefix basen=$basen :: ${name} = $value"
@@ -25,20 +26,22 @@ function mas_define_dir_at_log_log ()
       value="${prefix}${BASH_REMATCH[1]}"
       value=${!value}
       if ! [[ "$value" ]] ; then
-        printf "%03d %03d. %-4s %-30s=  %s [%s]\n" "$MAS_DEFINE_STD_DIRECTORIES_CNT" "$MAS_DEFINE_STD_DIRECTORY_POS" " ER1" "$fullname" "${!fullname}" "${opt}" >&$MAS_STDDIRS_LOG_FD
+#       printf "%03d %03d. %-4s %-30s=  %s [%s]\n" "$MAS_DEFINE_STD_DIRECTORIES_CNT" "$MAS_DEFINE_STD_DIRECTORY_POS" " ER1" "$fullname" "${!fullname}" "${opt}" >&$MAS_STDDIRS_LOG_FD
         echo "Error 1 $FUNCNAME : $LINENO ($fullbasen : ${!fullbasen}) (prefix:$prefix : name:$name : basen:$basen : value:$value) [${opt}]" >&2
       fi
       declare -gx "$fullname"="$value"
+      MAS_DIR_VARS="$MAS_DIR_VARS $fullname"
       MAS_DEFINE_STD_DIRECTORY_POS=$(( $MAS_DEFINE_STD_DIRECTORY_POS + 1 ))
     else
       declare -gx "$fullname"="${!fullbasen}/$value"
+      MAS_DIR_VARS="$MAS_DIR_VARS $fullname"
 ###   echo "2b== '$prefix' == '$name' '$basen' = '$value' ===" >&2
       MAS_DEFINE_STD_DIRECTORY_POS=$(( $MAS_DEFINE_STD_DIRECTORY_POS + 1 ))
     fi
 #  export "${fullname}_T"="${!fullbasen}/$value"
     if [[ "$MAS_DEFINE_STD_DIRECTORIES_CNT" -eq 1 ]] ; then
       if [[ -d "${!fullname}" ]] ; then
-	printf "%03d %03d. %-4s %-30s=  %s [%s]\n" "$MAS_DEFINE_STD_DIRECTORIES_CNT" "$MAS_DEFINE_STD_DIRECTORY_POS" " OK " "$fullname" "${!fullname}" "${opt}" >&$MAS_STDDIRS_LOG_FD
+#	printf "%03d %03d. %-4s %-30s=  %s [%s]\n" "$MAS_DEFINE_STD_DIRECTORIES_CNT" "$MAS_DEFINE_STD_DIRECTORY_POS" " OK " "$fullname" "${!fullname}" "${opt}" >&$MAS_STDDIRS_LOG_FD
 	nsub=`${MAS_STAT_CMD:=/usr/bin/stat} --printf='%h' "${!fullname}"`
 	case $opt in
 	  rmdir)
@@ -57,7 +60,7 @@ function mas_define_dir_at_log_log ()
 	  ;;
 	esac
       else
-	printf "%03d %03d. %-4s %-30s=  %s %s [%s]\n" "$MAS_DEFINE_STD_DIRECTORIES_CNT" "$MAS_DEFINE_STD_DIRECTORY_POS" "-no-" "$fullname" "${!fullname}" "($fullbasen : ${!fullbasen} : $value)" "${opt}" >&$MAS_STDDIRS_LOG_FD
+#	printf "%03d %03d. %-4s %-30s=  %s %s [%s]\n" "$MAS_DEFINE_STD_DIRECTORIES_CNT" "$MAS_DEFINE_STD_DIRECTORY_POS" "-no-" "$fullname" "${!fullname}" "($fullbasen : ${!fullbasen} : $value)" "${opt}" >&$MAS_STDDIRS_LOG_FD
 	case $opt in
 	  mkdir)
 	    echo "$MAS_DEFINE_STD_DIRECTORIES_CNT Create ${!fullname}" >&2
@@ -75,21 +78,22 @@ function mas_define_dir_at_log_log ()
 
     return 0
   fi
-  printf "%03d %03d. %-4s %-30s=  %s [%s]\n" "$MAS_DEFINE_STD_DIRECTORIES_CNT" "$MAS_DEFINE_STD_DIRECTORY_POS" " ER3" "$fullname" "${!fullname}" "${opt}" >&$MAS_STDDIRS_LOG_FD
+# printf "%03d %03d. %-4s %-30s=  %s [%s]\n" "$MAS_DEFINE_STD_DIRECTORIES_CNT" "$MAS_DEFINE_STD_DIRECTORY_POS" " ER3" "$fullname" "${!fullname}" "${opt}" >&$MAS_STDDIRS_LOG_FD
 # echo "Error 2 $FUNCNAME : $LINENO ($fullbasen : ${!fullbasen}) (prefix:$prefix : name:$name : basen:$basen : value:$value) [${opt}]" >&2
 # echo ${FUNCNAME}-r2 >&2
   return 2
 }
 function mas_define_dir_at ()
 {
-  export MAS_STDDIRS_LOG_FD
-  if [[ "${MAS_STDDIRS_LOG_FD}" ]] && [[ -w /dev/fd/${MAS_STDDIRS_LOG_FD} ]] ; then
+# export MAS_STDDIRS_LOG_FD
+# if [[ "${MAS_STDDIRS_LOG_FD}" ]] && [[ -w /dev/fd/${MAS_STDDIRS_LOG_FD} ]] ; then
+#   mas_define_dir_at_log_log $@
+# else
+#   local logdir=${MAS_BASH_LOG:=${MAS_DIR:=$MAS_HOME/.mas}/log}
+#   local logfile=$logdir/stddirs.log
+#   mas_define_dir_at_log_log $@ {MAS_STDDIRS_LOG_FD}>>$logfile
     mas_define_dir_at_log_log $@
-  else
-    local logdir=${MAS_BASH_LOG:=${MAS_DIR:=$HOME/.mas}/log}
-    local logfile=$logdir/stddirs.log
-    mas_define_dir_at_log_log $@ {MAS_STDDIRS_LOG_FD}>>$logfile
-  fi
+# fi
 }
 function mas_define_dir ()
 {
@@ -101,9 +105,9 @@ declare -gx MAS_DEFINE_STD_DIRECTORY_POS=0
 
 function define_std_directories ()
 {
-  unset MAS_CONF_DIR
-  unset MAS_CONF_DIR_TERM
-
+# unset MAS_CONF_DIR
+# unset MAS_CONF_DIR_TERM
+  unset MAS_DIR_VARS
 # for MAS_WS_CMD
 # mas_loadlib_if_not define_std_binnames stdbins
 # mas_get_lib_ifnot stdbins define_std_binnames

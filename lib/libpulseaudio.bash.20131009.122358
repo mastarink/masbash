@@ -1,34 +1,20 @@
-/usr/bin/logger "ACPI event libpulseaudio"
 function pulseaudio_pactl ()
 {
-# echo "/usr/bin/pactl $*" >&2
-  if [[ "$USER" == 'mastar' ]] ; then
-    /usr/bin/pactl $*
-  else
-    /usr/bin/logger "ACPI event  pactl $*"
-    sudo -umastar /usr/bin/pactl $*
-  fi
+  echo "/usr/bin/pactl $*" >&2
+  su mastar -c "/usr/bin/pactl $*"
 }
 function pulseaudio_pacmd ()
 {
-# echo "/usr/bin/pacmd $*" >&2
-  if [[ "$USER" == 'mastar' ]] ; then
-    /usr/bin/pacmd $*
-  else
-    sudo -umastar /usr/bin/pacmd $*
-  fi  
+  echo "/usr/bin/pacmd $*" >&2
+  su mastar -c "/usr/bin/pacmd '$*'"
 }
 function pulseaudio_pacmdne ()
 {
-  date >> /tmp/pulseaudio_pacmdne.tmp
-  pulseaudio_pacmd $* 2>> /tmp/pulseaudio_pacmdne.tmp 
-  #2>/dev/null
+  pulseaudio_pacmd 2>/dev/null
 }
 function pulseaudio_pacmdz ()
 {
-  date >> /tmp/pulseaudio_pacmdz.tmp
-  pulseaudio_pacmd $* &>> /tmp/pulseaudio_pacmdz.tmp
-  # &>/dev/null
+  pulseaudio_pacmd &>/dev/null
 }
 function pulseaudio_client_id ()
 {
@@ -87,7 +73,7 @@ function pulseaudio_set_app_volume ()
   appid=`pulseaudio_client_id "$app"`
   if [[ "$appid" ]] ; then
     for ai in $appid ; do
-#     echo "setting $vol% ($voln) for app $app ($ai)" >&2
+      echo "setting $vol% ($voln) for app $app ($ai)" >&2
       pulseaudio_pacmdz set-sink-input-volume "$ai" "$voln" 
     done
   elif [[ "$-" == *i* ]] ; then
@@ -101,6 +87,7 @@ function pulseaudio_sink_mute ()
   local s=$1
   shift
   local fname="${MAS_HOME:=/home/mastar}/.pulse_mas_mute.$i"
+  echo ">> $fname" >&2
   if [ "@$s" == '@on' ] ; then
     s=on
   elif [ "@$s" == '@off' ] ; then
@@ -114,11 +101,13 @@ function pulseaudio_sink_mute ()
  # else
  #   echo "$0 <id> <on/off> [$s]" >&2
   fi
+  echo ">> $fname  s:$s" >&2
 #  pulseaudio_pacmdz set-sink-mute `pulseaudio_sink_name $i` "$s"
 
 #  echo pacmd set-sink-mute "$i" "$s" >&2
-  pulseaudio_pacmdz set-sink-mute "$i" "$s"
+  pulseaudio_pacmd set-sink-mute "$i" "$s"
 #   >/dev/null 2>&1
+  echo ">> $fname  s:$s" >&2
 }
 function pulseaudio_set_sink_volume_old ()
 {
@@ -134,8 +123,7 @@ function pulseaudio_set_sink_volume ()
   local sink vol voln
   sink=$1 ; shift
   vol=$1 ; shift
-  date >> /tmp/pulseaudio_set_sink_volume.tmp
-  pulseaudio_pactl set-sink-volume "$sink" -- "${vol}%" >/tmp/pulseaudio_set_sink_volume.tmp
+  pulseaudio_pactl set-sink-volume "$sink" -- "${vol}%"
 #  >/dev/null 2>&1
 }
 

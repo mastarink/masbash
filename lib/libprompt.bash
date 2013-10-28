@@ -342,7 +342,7 @@ function  set_prompt_workdir_ps ()
 {
   set_prompt_color_by_id workdir
 # Work dir
-  if [[ "$MAS_PROMPT_NUMLINE" -ge "$MAS_PS10LIMIT" ]] ; then
+  if [[ "$MAS_PROMPT_NUMLINE" -ge "$MAS_PS10LIMIT" ]] && ! [[ "${MAS_SHN_PROJECTS_DIR}" ]] ; then
     set_prompt_string " \W "
   else 
     set_prompt_string " ${MAS_PS10PWDS} "
@@ -352,7 +352,7 @@ function  set_prompt_workdir_psl ()
 {
   set_prompt_color_by_id workdir
 # Work dir
-  if [[ "$MAS_PROMPT_NUMLINE" -ge "$MAS_PS10LIMIT" ]] ; then
+  if [[ "$MAS_PROMPT_NUMLINE" -ge "$MAS_PS10LIMIT" ]] && ! [[ "${MAS_SHN_PROJECTS_DIR}" ]] ; then
     set_prompt_string " \w "
   else
     set_prompt_string " ${MAS_PS10PWDS} "
