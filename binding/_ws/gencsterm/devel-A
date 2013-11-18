@@ -1,0 +1,21 @@
+ def_ref=Default.${MAS_DEFAULT_TERMINAL:-Terminal}
+ def_ref=$( readlink -f $def_ref )
+ . $def_ref
+  
+  if [[ "$MAS_DEBUG" -gt 0 ]] ; then echo "_ws/gencterm/devel-A : `pwd`" >&2 ; fi
+  
+# MAS_GTERMO_HAS_TABS="--tab --working-directory"
+  MAS_GTERMO_DEFAULT_WD=$MAS_DEVELOP_DIR/autotools/zoc-new/projects
+  MAS_GTERMO_TABS=(
+     'bins/zocromas_server'
+     'bins/zocromas_client'
+     ''
+     '..'
+     )
+
+  return 0
+
+
+# vi: ft=sh
+
+

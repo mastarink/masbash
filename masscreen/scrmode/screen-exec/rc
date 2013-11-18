@@ -26,7 +26,7 @@ function mas_screen_exec ()
   export MAS_TIME_SCREEN_START=`datemt`
   export MAS_TIME_SCREEN=$MAS_TIME_SCREEN_START
 
-  echo "${MAS_SCREEN_DELAY_START:-3} seconds to screen session $MAS_SCREEN_SESSION" >&2
+  echo "${MAS_SCREEN_DELAY_START:-300000} seconds to screen session $MAS_SCREEN_SESSION" >&2
   echo "^C to use nonscreen term (?)" >&2
 
   if [[ "${DIRSTACK[@]}" ]] ; then
@@ -44,7 +44,7 @@ function mas_screen_exec ()
     fi
   fi
 
-  ${MAS_SLEEP_CMD:=/bin/sleep} ${MAS_SCREEN_DELAY_START:-3}
+# ${MAS_SLEEP_CMD:=/bin/sleep} ${MAS_SCREEN_DELAY_START:-3}
   
   export MAS_PROFILE_TYPE=${MAS_PROFILE_TYPE:+${MAS_PROFILE_TYPE} scrmode}
   export MAS_PROFILE_TYPE=${MAS_PROFILE_TYPE:-scrmode}
@@ -55,9 +55,10 @@ function mas_screen_exec ()
   
   ${MAS_SCREEN_CMD:=/usr/bin/screen} -D -R -S "$MAS_SCREEN_SESSION"
 
-  echo "${MAS_SCREEN_DELAY_EXIT:-5} seconds to Exit" >&2
-  echo "^C to use nonscreen term" >&2
-  ${MAS_SLEEP_CMD:=/bin/sleep} "${MAS_SCREEN_DELAY_EXIT:-5}"
+  echo "${MAS_SCREEN_DELAY_EXIT:-500000} seconds to Exit" >&2
+  mas_dynsleep "${MAS_SCREEN_DELAY_EXIT}" "^C to use nonscreen term"
+# ${MAS_SLEEP_CMD:=/bin/sleep} "${MAS_SCREEN_DELAY_EXIT:-5}"
+
   exit
 }
 function mas_screen_exec0 ()
@@ -69,13 +70,14 @@ function mas_screen_exec0 ()
   fi
   exec ${MAS_SCREEN_CMD:=/usr/bin/screen} -D -R -S "$MAS_SCREEN_SESSION"
 
-  echo "${MAS_SCREEN_DELAY_EXIT:-5} seconds to Exit" >&2
-  echo "^C to use nonscreen term (?)" >&2
-  ${MAS_SLEEP_CMD:=/bin/sleep} "${MAS_SCREEN_DELAY_EXIT:-5}"
+  echo "${MAS_SCREEN_DELAY_EXIT:-500000} seconds to Exit" >&2
+  mas_dynsleep "${MAS_SCREEN_DELAY_EXIT}" "^C to use nonscreen term (?)"
+# ${MAS_SLEEP_CMD:=/bin/sleep} "${MAS_SCREEN_DELAY_EXIT:-5}"
   exit
 }
 
-mas_screen_exec
+# mas_screen_exec
 
+launch_screen_shell
 
 # vi: ft=sh

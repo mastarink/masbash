@@ -48,13 +48,9 @@
     local suffix=$1
     shift
   # echo ">>>>>>>>[`terminal_emulator_euristic_show`]  ${term}\.${ws}\.[[:digit:]]\+.*(\<\($rex\)\>) --- $term.$ws - $limit" >&2
-    echo "SCREENDIR: $SCREENDIR" >&2
-    echo "SCREENDIR: $SCREENDIR" >&2
-    {
-      ${MAS_SCREEN_CMD:=/usr/bin/screen} -list "${term}.${ws}$( screen_make_suffix $suffix)" \
-        | grep "${term}\.${ws}\.[[:digit:]]\+_.*(\<\($rex\)\>)" \
-        | head -${limit} 
-    } || sleep 20
+    ${MAS_SCREEN_CMD:=/usr/bin/screen} -list "${term}.${ws}$( screen_make_suffix $suffix)" \
+      | grep "${term}\.${ws}\.[[:digit:]]\+_.*(\<\($rex\)\>)" \
+      | head -${limit}
   }
   function screen_list_as_test ()
   {
@@ -182,8 +178,8 @@
       if [[ "$RANDOM" =~ ^(.)(.*)$ ]] ; then w1=${BASH_REMATCH[1]} w2=${BASH_REMATCH[2]} w="${w1}.${w2}" ; fi
       if [[ "$RANDOM" -lt 20000 ]] ; then w1=0 ; else w1=1 ; fi
       w="${w1}.${w2}"     
-      echo "Wait $w" >&2
-      sleep "$w"
+      echo "W $w" >&2
+      sleep $w
       sess2=$( screen_find_detached '' $@ )
       if [[ "$sess1" == "$sess2" ]] ; then
         sess=$sess1
@@ -202,161 +198,7 @@
     local sess=$( screen_find_or_propose $@ )
     echo -n "$sess"
   }
-  function launch_screen_shell_try1 ()
-  {
-    local session="S`pwd | md5sum | awk '{print $1}'`"
-    if ${MAS_SCREEN_CMD:=/usr/bin/screen} -ls "$session"  | grep '(Attached)'  2>/dev/null ; then
-      :
-      mas_notify + "OPEN:" "${MAS_GTERMO_TABSS}"
-      launch_screen_shell_try2
-      return $?
-    else
-      :
-      mas_notify + "NOT OPEN:" "`pwd`"
-    fi
-    declare -gx MAS_XSHELL_CMD="${MAS_SCREEN_CMD:=/usr/bin/screen}"
-    MAS_XSHELL_CMD="$MAS_XSHELL_CMD -D -RR -S $session"
-    declare -gx MAS_SGSHELL_CMD="${MAS_SG_CMD:=/usr/bin/sg} mastar-screen '$MAS_XSHELL_CMD'"
-    if [[ "$MAS_DEBUG" -gt 0 ]] ; then
-      echo "MAS_SCREEN_VAR_WS_DIR: $MAS_SCREEN_VAR_WS_DIR" >&2
-      echo "MAS_SCREEN_VAR_WST_DIR: $MAS_SCREEN_VAR_WST_DIR" >&2
-      echo "MAS_SCREENDIR: $MAS_SCREENDIR" >&2
-      echo "SCREENDIR: $SCREENDIR" >&2
-      echo "MAS_SGSHELL_CMD: $MAS_SGSHELL_CMD" >&2
-      echo "lmode: $lmode" >&2
-    fi
-    infomas "libscreen Go ($lmode) screen $MAS_SGSHELL_CMD"
-    infomas "sgs: $MAS_SGSHELL_CMD"
-    
-#   MAS_SCREEN_DELAY_START=20000
-
-    mas_dynsleep "${MAS_SCREEN_DELAY_START}" "${MAS_SCREEN_DELAY_START} seconds to screen [$lmode]"
-    case "$lmode" in
-      bash)
-	${MAS_BASH_CMD:=/bin/bash} --norc --noprofile -c $MAS_SGSHELL_CMD && return 0
-      ;;
-      call)
-	eval $MAS_SGSHELL_CMD && return 0
-      ;;
-      exec)
-	eval exec "$MAS_SGSHELL_CMD" && return 0
-      ;;
-      *)
-#       eval "$MAS_SGSHELL_CMD || $MAS_SGSHELL_CMD2"
-	eval "$MAS_SGSHELL_CMD" && return 0
-      ;;
-    esac  
-    return 1
-  }
-  function launch_screen_shell_try2 ()
-  {
-    local session session2
-    session=`${MAS_SCREEN_CMD:=/usr/bin/screen} -ls | grep '(Detached)' | head -1 | awk '{print $1}'`
-    if [[ "$session" ]] ; then
-      w="0.$RANDOM"
-      w1=10
-      if [[ "$RANDOM" =~ ^(.)(.*)$ ]] ; then w1=${BASH_REMATCH[1]} w2=${BASH_REMATCH[2]} w="${w1}.${w2}" ; fi
-      if [[ "$RANDOM" -lt 20000 ]] ; then w1=0 ; else w1=1 ; fi
-      w="${w1}.${w2}"     
-      echo "Wait $w" >&2
-      sleep "$w"
-    
-      session2=`${MAS_SCREEN_CMD:=/usr/bin/screen} -ls | grep '(Detached)' | head -1 | awk '{print $1}'`
-      if ! [[ "$session" == "$session2" ]] ; then
-	return 1
-      fi
-    fi
-    declare -gx MAS_XSHELL_CMD="${MAS_SCREEN_CMD:=/usr/bin/screen}"
-    if [[ "$session" ]] ; then
-      MAS_XSHELL_CMD="$MAS_XSHELL_CMD -r $session"
-    else
-      MAS_XSHELL_CMD="$MAS_XSHELL_CMD -R"
-    fi
-    declare -gx MAS_SGSHELL_CMD="${MAS_SG_CMD:=/usr/bin/sg} mastar-screen '$MAS_XSHELL_CMD'"
-    if [[ "$MAS_DEBUG" -gt 0 ]] ; then
-      echo "MAS_SCREEN_VAR_WS_DIR: $MAS_SCREEN_VAR_WS_DIR" >&2
-      echo "MAS_SCREEN_VAR_WST_DIR: $MAS_SCREEN_VAR_WST_DIR" >&2
-      echo "MAS_SCREENDIR: $MAS_SCREENDIR" >&2
-      echo "SCREENDIR: $SCREENDIR" >&2
-      echo "MAS_SGSHELL_CMD: $MAS_SGSHELL_CMD" >&2
-      echo "lmode: $lmode" >&2
-    fi
-    infomas "libscreen Go ($lmode) screen $MAS_SGSHELL_CMD"
-    infomas "sgs: $MAS_SGSHELL_CMD"
-    
-#   MAS_SCREEN_DELAY_START=20000
-
-    mas_dynsleep "${MAS_SCREEN_DELAY_START}" "${MAS_SCREEN_DELAY_START} seconds to screen [$lmode]"
-    case "$lmode" in
-      bash)
-	${MAS_BASH_CMD:=/bin/bash} --norc --noprofile -c $MAS_SGSHELL_CMD && return 0
-      ;;
-      call)
-	eval $MAS_SGSHELL_CMD && return 0
-      ;;
-      exec)
-	eval exec "$MAS_SGSHELL_CMD" && return 0
-      ;;
-      *)
-#       eval "$MAS_SGSHELL_CMD || $MAS_SGSHELL_CMD2"
-	eval "$MAS_SGSHELL_CMD" && return 0
-      ;;
-    esac  
-    return 1
-  }
   function launch_screen_shell ()
-  {
-    local  ns  session
-    local lmode
-    lmode=$1
-    shift
-    infomas "launch_screen_shell 1"
-    declare -gx MAS_PRE_PWD=`pwd`
-    declare -gx \
-    	SCREENRC="${SCREENRC:=${MAS_CONF_DIR_SCREENS:=${MAS_CONF_DIR_TERM:=${MAS_CONF_DIR:=${MAS_DIR:=$HOME/.mas}/config}/term_new}/masscreen}/rc0}" 
-    declare -gx SCREENDIR=$MAS_SCREENDIR
-#     declare -gx MAS_XSHELL_CMD="${MAS_SCREEN_CMD:=/usr/bin/screen} -t $sesname -D -RR $sesname"
-    
-    if [[ "$MAS_SCREEN_SESMODE" -eq "1" ]] ; then
-      for (( ii=0 ; $ii < 100 ; ii++ )) ; do
-	launch_screen_shell_try1 && break
-	mas_dynsleep "10000" "wait"
-      done
-    else
-      for (( ii=0 ; $ii < 100 ; ii++ )) ; do
-	launch_screen_shell_try2 && break
-	mas_dynsleep "10000" "wait"
-      done
-    fi
-
-    ${MAS_SCREEN_CMD:=/usr/bin/screen} -list
-
-    case "$lmode" in
-      bash)
-	echo "--------------to start bash--------" >&2
-	/bin/bash
-      ;;
-      call)
-	echo "--------------to start bash--------" >&2
-	/bin/bash
-      ;;
-      exec)
-      ;;
-      *)
-      ;;
-    esac
-    mas_dynsleep "${MAS_SCREEN_DELAY_EXIT}" "${MAS_SCREEN_DELAY_EXIT} seconds to Exit; ^C to use nonscreen term"
-
-#   echo "${losleep} seconds to Exit" >&2
-#   echo "^C to use nonscreen term" >&2
-#   for (( ii=0; ii<30 ; ii++)) ; do
-#     echo -n '.' >&2
-#     [[ "$MAS_USLEEP" ]] && [[ -x "$MAS_USLEEP" ]] && $MAS_USLEEP $losleep
-#   done
-
-    exit 0
-  }
-  function launch_screen_shell_old ()
   {
     local sesname ns
     local lmode
@@ -367,13 +209,8 @@
     infomas "launch_screen_shell 1"
     if [[ "$sesname" ]] ; then
       export SCREENRC="${SCREENRC:=${MAS_CONF_DIR_SCREENS:=${MAS_CONF_DIR_TERM:=${MAS_CONF_DIR:=${MAS_DIR:=$HOME/.mas}/config}/term_new}/masscreen}/rc0}" 
-      export SCREENDIR=$MAS_SCREEN_WST_DIR
-      if [[ "$MAS_DEBUG" -gt 0 ]] ; then
-        echo "MAS_SCREEN_VAR_WS_DIR: $MAS_SCREEN_VAR_WS_DIR" >&2
-        echo "MAS_SCREEN_VAR_WST_DIR: $MAS_SCREEN_VAR_WST_DIR" >&2
-        echo "MAS_SCREENDIR: $MAS_SCREENDIR" >&2
-        echo "SCREENDIR: $SCREENDIR" >&2
-      fi
+      export SCREENDIR=${SCREENDIR:=${MAS_SCREEN_VAR_DIR:=${MAS_VAR_DIR:=${MAS_DIR:=$HOME/.mas}/var}/screen}}
+      
       export MAS_XSHELL_CMD="${MAS_SCREEN_CMD:=/usr/bin/screen} -t $sesname -D -RR $sesname"
       export MAS_SGSHELL_CMD="${MAS_SG_CMD:=/usr/bin/sg} mastar-screen '$MAS_XSHELL_CMD'"
       infomas "libscreen Go ($lmode) screen $MAS_SGSHELL_CMD"
@@ -396,11 +233,11 @@
       ${MAS_SCREEN_CMD:=/usr/bin/screen} -list
       echo "--------------to start bash--------" >&2
       /bin/bash
-#     echo "--------------to sleep 3--------" >&2
-      mas_dynsleep "30000" "--------- to sleep 3"
-#     ${MAS_SLEEP_CMD:=/bin/sleep} 3
+      echo "--------------to sleep 3--------" >&2
+      ${MAS_SLEEP_CMD:=/bin/sleep} 3
     fi  
   }
+
   export -f screen_find_detached screen_list_as screen_list_ws screen_list_attached screen_list_detached screen_propose_new
   export -f screen_find_or_propose screen_find_or_propose_here launch_screen_shell
 

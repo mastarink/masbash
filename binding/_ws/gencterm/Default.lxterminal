@@ -1,0 +1,10 @@
+  
+  MAS_GTERMO_BINNAME='lxterminal'
+  MAS_GTERMO_GEOMETRY='156x60+0+0'
+  MAS_GTERMO_TITLE="lxtermws @ ${MAS_GTERMO_WS}"
+  MAS_GTERMO_WD=$HOME
+
+  return 0
+
+
+# vi: ft=sh

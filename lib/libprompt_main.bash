@@ -135,7 +135,8 @@ function mas_build_ps10 ()
   fi
 # echo "$PS10" >/tmp/ps10.tmp
 }
-function mas_prompt ()
+
+function mas_prompt1 ()
 {
   export MAS_TERM=$TERM
   local mas_new_result='' MAS_DATE2 i
@@ -309,6 +310,18 @@ function mas_prompt ()
       ${MAS_LS_CMD:=/bin/ls} -l "$XAUTHORITY"
       ${MAS_LS_CMD:=/bin/ls} -l "/home/mastar/.Xauthority"
     fi
+  fi
+}
+function mas_prompt ()
+{
+# SSH_CLIENT='192.168.71.2 38786 22'
+# SSH_CONNECTION='192.168.71.2 38786 192.168.71.70 22'
+# SSH_TTY=/dev/pts/21
+
+  if [[ "$SSH_CONNECTION" ]] ; then
+    PS1='\w \$ '
+  else
+    mas_prompt1
   fi
 }
 return 0

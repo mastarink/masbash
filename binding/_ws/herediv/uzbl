@@ -1,4 +1,11 @@
- . ./Default.gnome-terminal || . ./Default.terminator
+ 
+ 
+ def_ref1=Default.${MAS_DEFAULT_TERMINAL:-gnome-terminal}
+ def_ref1=$( readlink -f $def_ref )
+ def_ref2=Default.${MAS_DEFAULT_TERMINAL:-terminator}
+ def_ref2=$( readlink -f $def_ref )
+
+ . $def_ref1 || . $def_ref2
 
   return 0
 

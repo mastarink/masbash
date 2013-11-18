@@ -32,7 +32,11 @@ function gvimer2_uuid ()
   local string
   local rp
   for file in $@ ; do
-    rp=`realpath $file`
+    if [[ "$typf" ]] && [[ "$typf" == shn ]] ; then
+      rp=`realpath $file`
+    else
+      rp=`realpath -s $file`
+    fi
     if [[ "$string" ]] ; then
       string="$string;$r"
     else
@@ -71,7 +75,7 @@ function gvimer2_regfile_in ()
 #       echo "via mased:${typf}.mased"
         gvimer2_bin --servername "$fuuid" "${typf}.mased"
 #     gvimer2_fuuid "${typf}.mased" $fuuid
-	sleep 0.1
+	sleep 0.5
 	gvimer2_resident $rfile $fuuid
       else
         echo "$FUNCNAME not found ${filen} at $masedf" >&2
@@ -126,6 +130,7 @@ function gvimer2_mased ()
   filef=`basename $rfile`
   local dir=`dirname $rfile`
   local dirn=`basename $dir`
+  local masedf
   if [[ "$filef" == *.c ]] || [[ "$filef" == *.h ]]  ; then
     typf="src"
   elif  [[ "$dirn" == shn ]] && ( [[ "$filef" == *.sh ]] || [[ "$filef" == *.bash ]] ) ; then
@@ -133,7 +138,7 @@ function gvimer2_mased ()
   elif [[ "$filef" == *.ac ]] || [[ "$filef" == *.am ]] ; then
     typf="ac"
   fi
-  local masedf=mased/${typf}.mased.vim
+  masedf=mased/${typf}.mased.vim
   local fuuid="gvimer2-$( gvimer2_uuid $masedf )"
   if ! [[ -f "$masedf" ]] ; then
     if [[ "$typf" == shn ]] && [[ -d "$typf" ]] ; then
@@ -144,8 +149,8 @@ function gvimer2_mased ()
 #   echo "mased rfile: $rfile" >&2
 #   echo "mased filef: $filef" >&2
 #   echo "mased typf: $typf" >&2
-#   echo "mased fuuid: $fuuid" >&2
-#   echo "mased masedf: $masedf" >&2
+    echo "mased fuuid: $fuuid" >&2
+    echo "mased masedf: $masedf" >&2
     gvimer2_regfile $rfile $fuuid $masedf $typf
     return $?
   else

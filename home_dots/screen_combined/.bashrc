@@ -9,6 +9,7 @@ if [[ "$-" == *i* ]] ; then
 #   infomas "MAS_TERMINAL_EMULATOR=$MAS_TERMINAL_EMULATOR"
    echo ".bashrc <@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@>" >&2
 fi
+declare -gx MAS_BASHRC_PWD=${MAS_BASHRC_PWD:-$(pwd)}
 shopt -u sourcepath
 if shopt login_shell >/dev/null ; then
   :

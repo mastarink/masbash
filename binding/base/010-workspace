@@ -8,7 +8,6 @@ function unset_gtermo ()
  mas_sourcing_start 010-workspace " ( $MAS_DESKTOP_NAME )"
  unset_gtermo
     
-
  [[ "$MAS_DESKTOP_NAME" ]] \
  && \
  mas_src_scriptsn           _bindws_rc       -   MAS_CONF_DIR_BINDWS+$MAS_BIND_GROUP Default $MAS_DESKTOP_NAME

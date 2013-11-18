@@ -1,9 +1,12 @@
-  def_ref=Default.terminator
-  def_ref=Default.gnome-terminal
-  def_ref=$( readlink -f $def_ref )
-  . $def_ref
+    mas_notify key "$MAS_BIND_GROUP SAMPLE"
+# txt=$( zenity  --title "Command" --entry --text "Command" )
+txt=$( Xdialog  --stdout --center --no-tags --menubox - 15 30 10 1 one 2 two 3 three 4 four 5 five 6 six 7 seven )
 
+    mas_notify key "$MAS_BIND_GROUP SAMPLE - $txt"
+
+# gvim
   return 0
 
 
 # vi: ft=sh
+

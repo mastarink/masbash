@@ -93,6 +93,8 @@ if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
     shift
 
     result=0
+    
+    if [[ "$MAS_DEBUG" -gt 3 ]] ; then echo " --- $FUNCNAME ()" >&2 ; fi
 
     mas_sourcing_start_r '@' $name
   ####  mas_echo_trace "   Call      $name"
@@ -100,6 +102,7 @@ if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
   # echo "${MAS_CALL_SCRIPT_SERIAL:=0}   Call      $name" >&2
     if [[ "$name" ]] ; then
       if [[ -r "$name" ]] ; then
+        if [[ "$MAS_DEBUG" -gt 1 ]] ; then echo "source `realpath $name`" >&2 ; fi
         if ! source $name ; then
 	  mas_src_not_found $LINENO $name
 	  result=1
@@ -111,6 +114,7 @@ if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
 	  fi
 	fi
       elif [[ -r "$defscript" ]] ; then
+        if [[ "$MAS_DEBUG" -gt 1 ]] ; then echo "source `realpath $defscript`" >&2 ; fi
         if ! source $defscript ; then
 	  mas_src_not_found $LINENO "$name / $defscript"
 	  result=1
@@ -142,6 +146,7 @@ if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
     if [[ "$mpath" ]] ; then
       echo "$mpath"
     fi
+    if [[ "$MAS_DEBUG" -gt 3 ]] ; then echo " --- $FUNCNAME ()" >&2 ; fi
   }
   # do scripts, report absent files (if mas_src_scripts_optional not set)
   # args:
@@ -160,6 +165,7 @@ if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
     defscript="$1"
     shift
 
+    if [[ "$MAS_DEBUG" -gt 3 ]] ; then echo " --- $FUNCNAME ()" >&2 ; fi
 
     if [[ "$defscript" ]] && ! [[ "$defscript" == '-' ]] ; then
       defscript="./$defscript"
@@ -239,6 +245,7 @@ if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
     if [[ "$exten" ]] && ! [[ "$exten" == '-' ]] ; then
       mas_src_scripts_tail="$exten"
     fi
+    if [[ "$MAS_DEBUG" -gt 3 ]] ; then echo " --- $FUNCNAME ()" >&2 ; fi
   # args:  mpath var name , ...... (scripts)
   # env : $mas_src_scripts_tail==<extension> ; $mas_src_scripts_name=<name>
   ####  mas_echo_trace ">To call   $mas_src_scripts_name [$exten] $@"

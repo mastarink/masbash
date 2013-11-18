@@ -1,0 +1,29 @@
+ def_ref=Default.${MAS_DEFAULT_TERMINAL:-gnome-terminal}
+ def_ref=$( readlink -f $def_ref )
+ . $def_ref
+
+##MAS_GTERMO_HAS_TABS="--tab -e '$MAS_DIR/gtbin/scs' --working-directory"
+# MAS_GTERMO_HAS_TABS="--tab --working-directory"
+  MAS_GTERMO_PROJECT=$MAS_DEVELOP_DIR/autotools/zoc-new/projects
+  MAS_GTERMO_NTABS=6
+# MAS_GTERMO_TABS=(
+#    '/bins/zocromas_server'
+#    '/bins/zocromas_client'
+#    '/'
+#    '/..'
+#    )
+  declare -gx -a MAS_GTERMO_TABS
+  if [[ -f "$MAS_GTERMO_PROJECT/projects.tabs" ]] ; then
+    readarray -t MAS_GTERMO_TABS < $MAS_GTERMO_PROJECT/projects.tabs
+  elif [[ -f "$MAS_GTERMO_PROJECT/projects.list" ]] ; then
+    readarray -t -s 0 -n "${MAS_GTERMO_NTABS}" MAS_GTERMO_TABS < $MAS_GTERMO_PROJECT/projects.list
+  else
+    MAS_GTERMO_TABS=( '/bins/zocromas_server' '/bins/zocromas_client' '/' '/..')
+  fi
+  MAS_GTERMO_NTABS=${#MAS_GTERMO_TABS}
+  mas_notify + kp1 "TABS: ${MAS_GTERMO_TABS[@]}"
+
+  return 0
+
+
+# vi: ft=sh

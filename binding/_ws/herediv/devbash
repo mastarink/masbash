@@ -1,7 +1,18 @@
 #    mas_notify key "$MAS_BIND_GROUP SAMPLE"
 # txt=$( zenity  --title "Command" --entry --text "Command" )
 # txt=$( Xdialog  --stdout --center --no-tags --menubox - 15 30 10 1 one 2 two 3 three 4 four 5 five 6 six 7 seven )
- . ./Default.gnome-terminal || . ./Default.terminator
+ 
+ 
+ def_ref1=Default.${MAS_DEFAULT_TERMINAL:-gnome-terminal}
+ def_ref1=$( readlink -f $def_ref 2>/dev/null )
+ def_ref2=Default.${MAS_DEFAULT_TERMINAL:-terminator}
+ def_ref2=$( readlink -f $def_ref 2>/dev/null )
+
+ { [[ "$def_ref1" ]] && [[ -f "$def_ref1" ]] && . $def_ref1 ; } || \
+ { [[ "$def_ref2" ]] && [[ -f "$def_ref2" ]] && . $def_ref2 ; }
+
+
+
 #   mas_notify key "$MAS_BIND_GROUP SAMPLE - $txt"
 
 # gvim

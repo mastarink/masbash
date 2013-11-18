@@ -1,10 +1,59 @@
-export MAS_HOME=${MAS_HOME:=`eval echo ~$USER`}
+export MAS_HOME=${MAS_HOME:=$(eval echo ~$USER)}
 export MAS_DIR_VARS
-#typemas datemt  && export MAS_TIME_LIBSTDDIRS=$(datemt)
 declare -gx MAS_GVAR_PREFIX=MAS_
+
+function mas_defined_dir_action ()
+{
+  local fullname=$1
+  shift
+  local opt=$1
+  shift
+  local tmpdir nsub
+
+  tmpdir="${!fullname}"
+  if ! [[ "$MAS_DIR_STDDIRS_PASSED" ]] ; then
+    if [[ -d "$tmpdir" ]] ; then
+      if false ; then
+	nsub=`${MAS_STAT_CMD:=/usr/bin/stat} --printf='%h' "$tmpdir"`
+	case $opt in
+	  rmdir)
+	    if [[ "`${MAS_STAT_CMD:=/usr/bin/stat} --printf='%h' $tmpdir`" -eq 2 ]] && \
+				[[ "`${MAS_LS_CMD:=/bin/ls} -1 $tmpdir | ${MAS_WC_CMD:=/bin/wc} -l`" -eq 0 ]] ; then
+	      echo "$MAS_DEFINE_STD_DIRECTORIES_CNT removing $tmpdir" >&2
+	      ${MAS_RMDIR_CMD:=/bin/rmdir} "$tmpdir"
+	    fi
+	  ;;
+	  must)
+	    :
+	  ;;
+	  *)
+    #	    echo "$MAS_DEFINE_STD_DIRECTORIES_CNT Present optional $tmpdir" >&2
+	    :
+	  ;;
+	esac
+      fi
+    else
+  #	printf "%03d %03d. %-4s %-30s=  %s %s [%s]\n" "$MAS_DEFINE_STD_DIRECTORIES_CNT" "$MAS_DEFINE_STD_DIRECTORY_POS" "-no-" "$fullname" "$tmpdir" "($fullbasen : ${!fullbasen} : $value)" "${opt}" >&$MAS_STDDIRS_LOG_FD
+      case $opt in
+	mkdir)
+	  echo "$MAS_DEFINE_STD_DIRECTORIES_CNT Create $tmpdir" >&2
+	  mkdir $tmpdir
+	;;
+	must)
+	  echo "$MAS_DEFINE_STD_DIRECTORIES_CNT Absent $tmpdir" >&2
+	  sleep 20
+	;;
+  #         opt|rmdir|*)
+  #           echo "Absent optional $tmpdir" >&2
+  #  	  ;;
+      esac
+    fi
+  fi
+  return 0
+}
 function mas_define_dir_at_log_log ()
 {
-  local prefix name basen fullbasen value opt fullname nsub
+  local prefix name basen fullbasen value opt fullname 
 
   prefix="$1" ; shift
   name="$1"   ; shift
@@ -21,7 +70,7 @@ function mas_define_dir_at_log_log ()
 #   infomas "fullbasen=$fullbasen prefix=$prefix basen=$basen :: ${name} = $value"
   fi
   fullname="${prefix}${name}"
-  if [[ "$basen"  && "$name" && "$value" && "$prefix" ]] ; then
+  if [[ "$basen"  && "$name" && "$prefix" ]] ; then
     if [[ "$value" == =* && "$value" =~ ^=(.+)$ ]] ; then
       value="${prefix}${BASH_REMATCH[1]}"
       value=${!value}
@@ -30,52 +79,20 @@ function mas_define_dir_at_log_log ()
         echo "Error 1 $FUNCNAME : $LINENO ($fullbasen : ${!fullbasen}) (prefix:$prefix : name:$name : basen:$basen : value:$value) [${opt}]" >&2
       fi
       declare -gx "$fullname"="$value"
+      export "$fullname"
       MAS_DIR_VARS="$MAS_DIR_VARS $fullname"
       MAS_DEFINE_STD_DIRECTORY_POS=$(( $MAS_DEFINE_STD_DIRECTORY_POS + 1 ))
     else
       declare -gx "$fullname"="${!fullbasen}/$value"
+      export "$fullname"
       MAS_DIR_VARS="$MAS_DIR_VARS $fullname"
 ###   echo "2b== '$prefix' == '$name' '$basen' = '$value' ===" >&2
       MAS_DEFINE_STD_DIRECTORY_POS=$(( $MAS_DEFINE_STD_DIRECTORY_POS + 1 ))
     fi
 #  export "${fullname}_T"="${!fullbasen}/$value"
-    if [[ "$MAS_DEFINE_STD_DIRECTORIES_CNT" -eq 1 ]] ; then
-      if [[ -d "${!fullname}" ]] ; then
-#	printf "%03d %03d. %-4s %-30s=  %s [%s]\n" "$MAS_DEFINE_STD_DIRECTORIES_CNT" "$MAS_DEFINE_STD_DIRECTORY_POS" " OK " "$fullname" "${!fullname}" "${opt}" >&$MAS_STDDIRS_LOG_FD
-	nsub=`${MAS_STAT_CMD:=/usr/bin/stat} --printf='%h' "${!fullname}"`
-	case $opt in
-	  rmdir)
-	    if [[ "`${MAS_STAT_CMD:=/usr/bin/stat} --printf='%h' ${!fullname}`" -eq 2 ]] && \
-	    			[[ "`${MAS_LS_CMD:=/bin/ls} -1 ${!fullname} | ${MAS_WC_CMD:=/bin/wc} -l`" -eq 0 ]] ; then
-	      echo "$MAS_DEFINE_STD_DIRECTORIES_CNT removing ${!fullname}" >&2
-	      MAS_RMDIR_CMD=${MAS_RMDIR_CMD:=/bin/rmdir} "${!fullname}"
-	    fi
-	  ;;
-	  must)
-	    :
-	  ;;
-	  *)
-#	    echo "$MAS_DEFINE_STD_DIRECTORIES_CNT Present optional ${!fullname}" >&2
-	    :
-	  ;;
-	esac
-      else
-#	printf "%03d %03d. %-4s %-30s=  %s %s [%s]\n" "$MAS_DEFINE_STD_DIRECTORIES_CNT" "$MAS_DEFINE_STD_DIRECTORY_POS" "-no-" "$fullname" "${!fullname}" "($fullbasen : ${!fullbasen} : $value)" "${opt}" >&$MAS_STDDIRS_LOG_FD
-	case $opt in
-	  mkdir)
-	    echo "$MAS_DEFINE_STD_DIRECTORIES_CNT Create ${!fullname}" >&2
-	  ;;
-	  must)
-	    echo "$MAS_DEFINE_STD_DIRECTORIES_CNT Absent ${!fullname}" >&2
-	    sleep 20
-	  ;;
-#         opt|rmdir|*)
-#           echo "Absent optional ${!fullname}" >&2
-#  	  ;;
-	esac
-      fi
-    fi
-
+#   if [[ "$MAS_DEFINE_STD_DIRECTORIES_CNT" -eq 1 ]] ; then
+      mas_defined_dir_action "${fullname}" "$opt" || return 1
+#   fi
     return 0
   fi
 # printf "%03d %03d. %-4s %-30s=  %s [%s]\n" "$MAS_DEFINE_STD_DIRECTORIES_CNT" "$MAS_DEFINE_STD_DIRECTORY_POS" " ER3" "$fullname" "${!fullname}" "${opt}" >&$MAS_STDDIRS_LOG_FD
@@ -105,11 +122,11 @@ declare -gx MAS_DEFINE_STD_DIRECTORY_POS=0
 
 function define_std_directories ()
 {
+  mas_get_lib_call terminal_emulator terminal_emulator_euristic
 # unset MAS_CONF_DIR
 # unset MAS_CONF_DIR_TERM
   unset MAS_DIR_VARS
 # for MAS_WS_CMD
-# mas_loadlib_if_not define_std_binnames stdbins
 # mas_get_lib_ifnot stdbins define_std_binnames
 
   unset MAS_I_WS
@@ -128,6 +145,10 @@ function define_std_directories ()
     mas_define_dir          TRY1_DIR                     DIR                              try1
     mas_define_dir          TRY2_DIR                     TRY1_DIR                         try2
     mas_define_dir          SCREEN_VAR_DIR               VAR_DIR                          screen
+    mas_define_dir          SCREEN_VAR_WS_BASE           SCREEN_VAR_DIR                   "_ws"
+    mas_define_dir          SCREEN_VAR_WS_DIR            SCREEN_VAR_WS_BASE               "${MAS_I_WS:-${MAS_DESKTOP_NAME}}"  mkdir
+    mas_define_dir          SCREEN_VAR_WST_DIR           SCREEN_VAR_WS_DIR                "${MAS_TERMINAL_EMULATOR}"		mkdir
+    mas_define_dir          SCREENDIR                    SCREEN_VAR_WST_DIR
     mas_define_dir          TERM_VAR_DIR                 VAR_DIR                          term
     mas_define_dir          TERM_WIN_VAR_DIR             TERM_VAR_DIR                     win
     mas_define_dir          GTERM_VAR_DIR                TERM_VAR_DIR                     gterm
@@ -207,9 +228,12 @@ function define_std_directories ()
   export MAS_DIRS="$MAS_BIN $MAS_UBIN $MAS_CONF_DIR $MAS_CONF_DIR_TERM $MAS_CONF_DIR_WS $MAS_CONF_DIR_CUSTOM $MAS_CONF_DIR_TERM_TERM $MAS_CONF_DIR_BASH $MAS_CONF_DIR_PROFILE $MAS_CONF_DIR_TMP $MAS_CONF_DIR_PROFILE_GROUPS $MAS_WM_DOCKAPPLETS $MAS_HISTORY_DIR $MAS_BASH_LOG $MAS_CONF_DIR_PATH_UTIL $MAS_CONF_DIR_PATHS $MAS_CONF_DIR_I_WS"
   export MAS_DIRS_SEARCH_BASH_AT="MAS_BIN MAS_UBIN MAS_CONF_DIR_TERM MAS_CONF_DIR_BASH MAS_CONF_DIR_PATH_UTIL MAS_CONF_DIR_PROFILE MAS_CONF_DIR_I_WS"
   export MAS_DIRS_SEARCH_BASH="$MAS_BIN $MAS_UBIN $MAS_CONF_DIR_RUNONCE $MAS_CONF_DIR_TERM $MAS_CONF_DIR_BASH $MAS_CONF_DIR_PATH_UTIL $MAS_CONF_DIR_PROFILE $MAS_CONF_DIR_I_WS"
+  
+  mas_get_lib_ifnot time datemt
 # export MAS_TIME_DIRS=`datemt`
   unset MAS_FILES_AT_BASH_DIRS_CACHE
   MAS_DEFINE_STD_DIRECTORIES_CNT=$(( ${MAS_DEFINE_STD_DIRECTORIES_CNT:=0} + 1 ))
+  declare -gx MAS_DIR_STDDIRS_PASSED=`datemt`
 }
 function define_std_directories_init ()
 {

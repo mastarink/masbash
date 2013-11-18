@@ -1,9 +1,11 @@
- def_ref=Default.${MAS_DEFAULT_TERMINAL:-terminator}
  def_ref=Default.${MAS_DEFAULT_TERMINAL:-gnome-terminal}
  def_ref=$( readlink -f $def_ref )
+ MAS_GTERMO_PROFILE_PREFIX=wspscr
  . $def_ref
-
- return 0
+  
+  return 0
 
 
 # vi: ft=sh
+
+

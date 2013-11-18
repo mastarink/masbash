@@ -1,4 +1,4 @@
-mas_get_lib_ifnot notify mas_notify
+mas_get_lib notify mas_notify
 if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs ]] ; then
   . ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
 
@@ -82,29 +82,43 @@ function mas_gterminal ()
 function mas_genterminal ()
 {
   local ko val
-  declare -gx MAS_GTERMO_WD
-  MAS_GTERMO_WD=$MAS_GTERMO_BIN
-  for ko in ${!MAS_GTERMOPTS[@]} ; do
-    val="${MAS_GTERMOPTS[$ko]}"
-    if [[ "$val" ]] ; then MAS_GTERMO_WD="$MAS_GTERMO_WD ${MAS_GTERMO_OPTPREF:---}${ko}${MAS_GTERMO_OPTEQ:-=}'${val}'" ; fi
-  done
-  for ko in ${!MAS_GTERMOPTSPLUS[@]} ; do
-    val="${MAS_GTERMOPTSPLUS[$ko]}"
-    if [[ "$val" ]] ; then MAS_GTERMO_WD="$MAS_GTERMO_WD ${MAS_GTERMO_OPTPREF:--}${ko}${MAS_GTERMO_OPTEQ:-=}'${val}'" ; fi
-  done
-  if [[ "$MAS_GTERMO_HAS_TABS" ]] ; then
-    for ko in ${MAS_GTERMO_TABS[@]} ; do
-      MAS_GTERMO_WD="$MAS_GTERMO_WD ${MAS_GTERMO_HAS_TABS}${MAS_GTERMO_OPTEQ:-=}${ko}"
+  declare -gx MAS_GTERMO_EVC
+  if [[ "$MAS_GTERMO_BINNAME" ]] ; then MAS_GTERMO_BIN=`which $MAS_GTERMO_BINNAME` ; fi
+  if [[ "$MAS_GTERMO_BIN" ]] ; then
+    MAS_GTERMO_EVC=$MAS_GTERMO_BIN
+    for ko in ${!MAS_GTERMOPTS[@]} ; do
+      val="${MAS_GTERMOPTS[$ko]}"
+      if [[ "$val" ]] ; then MAS_GTERMO_EVC="$MAS_GTERMO_EVC ${MAS_GTERMO_OPTPREF:---}${ko}${MAS_GTERMO_OPTEQ:-=}'${val}'" ; fi
     done
-  fi
-  MAS_GTERMO_WD="sg ${MAS_GTERMO_GROUP:=mastar-gterm} "'"'"${MAS_GTERMO_WD:-gnome-terminal} &"'"'" # $(datemt) $(tty) - $- - ${MAS_DESKTOP_NAME}"
-# echo ">>> [${#MAS_GTERMOPTS[@]}]  $MAS_GTERMO_WD"
-# echo "[${#MAS_GTERMOPTS[@]}]  $MAS_GTERMO_WD" >&2
-  if [[ "$MAS_GTERMO_WD" ]] ; then
-    mas_notify gterm "command: [$MAS_GTERMO_WD]"
-    eval $MAS_GTERMO_WD
-  else
-    mas_notify gterm "EMPTY command"
+    for ko in ${!MAS_GTERMOPTSPLUS[@]} ; do
+      val="${MAS_GTERMOPTSPLUS[$ko]}"
+      if [[ "$val" ]] ; then MAS_GTERMO_EVC="$MAS_GTERMO_EVC ${MAS_GTERMO_OPTPREF:--}${ko}${MAS_GTERMO_OPTEQ:-=}'${val}'" ; fi
+    done
+    if [[ "$MAS_GTERMO_CAN_TABS" ]] ; then
+      for ko in ${MAS_GTERMO_TABS[@]} ; do
+	MAS_GTERMO_EVC="$MAS_GTERMO_EVC ${MAS_GTERMO_CAN_TABS}${MAS_GTERMO_OPTEQ:-=}${MAS_GTERMO_PROJECT}/${ko}"
+      done
+    fi
+    MAS_GTERMO_EVC="sg ${MAS_GTERMO_GROUP:=mastar-gterm} "'"'"${MAS_GTERMO_EVC:-gnome-terminal} &"'"'" # $(datemt) $(tty) - $- - ${MAS_DESKTOP_NAME}"
+  # echo ">>> [${#MAS_GTERMOPTS[@]}]  $MAS_GTERMO_EVC"
+  # echo "[${#MAS_GTERMOPTS[@]}]  $MAS_GTERMO_EVC" >&2
+    if [[ "$MAS_GTERMO_EVC" ]] ; then
+      mas_notify gterm "command: [${MAS_GTERMO_EVC}]"
+      mas_notify + "GT" "... ... [${MAS_GTERMO_EVC}]"
+      echo "[MAS_GTERMO_PROJECT: $MAS_GTERMO_PROJECT]" >> /tmp/gtermnew.tmp
+      echo "[MAS_DEVELOP_DIR: $MAS_DEVELOP_DIR]" >> /tmp/gtermnew.tmp
+      echo "[MAS_GTERMO_EVC: $MAS_GTERMO_EVC]" >> /tmp/gtermnew.tmp
+      echo "[MAS_GTERMO_TABS: ${MAS_GTERMO_TABS[@]}]" >> /tmp/gtermnew.tmp
+      if [[ "$MAS_DRY_RUN" ]] ; then
+	echo "DRY RUN : $MAS_GTERMO_EVC" >&2
+      else
+        declare -gx MAS_GTERMO_TABSS="${MAS_GTERMO_TABS[*]}"
+        declare -gx -a MAS_GTERMO_TABSA=( ${MAS_GTERMO_TABS[*]} )
+	eval $MAS_GTERMO_EVC
+      fi
+    else
+      mas_notify gterm "EMPTY command"
+    fi
   fi
 }
 

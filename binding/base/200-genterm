@@ -1,7 +1,19 @@
   mas_get_lib_ifnot gtermnew mas_gterminal
   
-  MAS_GTERMOPTS=(['class']=$MAS_GTERMO_CLASS ['role']=$MAS_GTERMO_ROLE ['profile']=$MAS_GTERMO_PROFILE ['geometry']=$MAS_GTERMO_GEOMETRY ['title']=$MAS_GTERMO_TITLE ['name']=$MAS_GTERMO_NAME ['working-directory']=$MAS_GTERMO_WD)
+  MAS_GTERMOPTS=(
+    [class]=$MAS_GTERMO_CLASS
+    [role]=$MAS_GTERMO_ROLE
+    [profile]=$MAS_GTERMO_PROFILE
+    [geometry]=$MAS_GTERMO_GEOMETRY
+    [title]=$MAS_GTERMO_TITLE
+    [name]=$MAS_GTERMO_NAME
+    [working-directory]=$MAS_GTERMO_WD
+    [default-working-directory]=$MAS_GTERMO_DEFWD
+    )
 
+  if [[ "$MAS_DEBUG" -gt 0 ]] ; then
+    declare -p MAS_GTERMOPTS >&2
+  fi
   mas_genterminal
   return 0
 
