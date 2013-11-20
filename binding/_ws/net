@@ -1,0 +1,3 @@
+MAS_GTERMO_WD=$MAS_CONF_DIR/iptables-build
+
+# vi: ft=sh

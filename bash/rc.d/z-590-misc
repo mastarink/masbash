@@ -13,9 +13,9 @@ if ! [[ "$MAS__MISC_SETTINGS" ]] ; then
   export MAS_INPUTRC="$MAS_CONF_DIR_INPUT/rc" 
   export INPUTRC="$MAS_INPUTRC"
 
- #export MAS_PROMPT_SCRIPT_NAME=masprompt
-  #export MAS_PROMPT_SCRIPT="${MAS_PROMPT_SCRIPT_NAME}.sh"
-  #export MAS_PROMPT_SCRIPT_PATH="$MAS_CONF_DIR_UTIL/$MAS_PROMPT_SCRIPT"
+ #export MASPROMPT_SCRIPT_NAME=masprompt
+  #export MASPROMPT_SCRIPT="${MASPROMPT_SCRIPT_NAME}.sh"
+  #export MASPROMPT_SCRIPT_PATH="$MAS_CONF_DIR_UTIL/$MASPROMPT_SCRIPT"
 
 
   export PS_FORMAT='lstart,tty,ni,user,pid,lwp,%cpu,%mem,rss,vsz,sz,thcount,comm,cmd'

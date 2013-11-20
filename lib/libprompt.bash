@@ -31,11 +31,11 @@ function set_prompt_eofsign ()
 function set_prompt_geometry ()
 {
   set_prompt_color_by_id geometry
-  set_prompt_string "${MAS_PROMPT_GEOMETRY}"
+  set_prompt_string "${MASPROMPT_GEOMETRY}"
 }
 function set_prompt_bash_version ()
 {
-  if [[ "$MAS_PROMPT_NUMLINE" -ge "$MAS_PS10LIMIT" ]] ; then
+  if [[ "$MASPROMPT_NUMLINE" -ge "$MASPROMPT_PS10LIMIT" ]] ; then
     set_prompt_color_by_id bash_version
     set_prompt_string "V\v"
   fi
@@ -43,18 +43,18 @@ function set_prompt_bash_version ()
 function set_prompt_prompt_options ()
 {
   set_prompt_color_by_id prompt_options
-  set_prompt_string "$MAS_PROMPT_OPTIONS"
+  set_prompt_string "$MASPROMPT_OPTIONS"
 }
 function set_prompt_tty_old ()
 {
   set_prompt_color_by_id tty
 
-  if [ -z "$MAS_GTTY" ] ; then
-    export MAS_GTTY
-    MAS_GTTY=$( ${MAS_TTY_CMD:=/bin/tty} )
+  if [ -z "$MASPROMPT_GTTY" ] ; then
+    export MASPROMPT_GTTY
+    MASPROMPT_GTTY=$( ${MAS_TTY_CMD:=/bin/tty} )
   fi
-  if [[ "$MAS_PROMPT_NUMLINE" -ge "$MAS_PS10LIMIT" ]] ; then
-    set_prompt_string "$MAS_GTTY \l"
+  if [[ "$MASPROMPT_NUMLINE" -ge "$MASPROMPT_PS10LIMIT" ]] ; then
+    set_prompt_string "$MASPROMPT_GTTY \l"
   fi
 # \l     the basename of the shell's terminal device name
 }
@@ -73,7 +73,7 @@ function set_prompt_tty ()
 
   mtty=$( ${MAS_TTY_CMD:=/bin/tty} )
   set_prompt_string "${mtty}"
-  if [[ "$MAS_PROMPT_NUMLINE" -ge "$MAS_PS10LIMIT" ]] ; then
+  if [[ "$MASPROMPT_NUMLINE" -ge "$MASPROMPT_PS10LIMIT" ]] ; then
     set_prompt_string ":\l"
 # \l     the basename of the shell's terminal device name
   fi
@@ -81,8 +81,8 @@ function set_prompt_tty ()
 function set_prompt_stty ()
 {
   set_prompt_color_by_id stty
-  if [[ "${STY:-$MAS_PROMPT_STY}" ]] ; then
-    set_prompt_string ":<${STY:-$MAS_PROMPT_STY}>"
+  if [[ "${STY:-$MASPROMPT_STY}" ]] ; then
+    set_prompt_string ":<${STY:-$MASPROMPT_STY}>"
     #${MAS_CAT_CMD:=/bin/cat} /proc/$PPID/environ  | tr '\0' '\n'|grep STY
   fi
 }
@@ -103,7 +103,7 @@ function set_prompt_ttys ()
 function set_prompt_windowid ()
 {
   set_prompt_color_by_id windowid
-  if [[ "$MAS_PROMPT_NUMLINE" -ge "$MAS_PS10LIMIT" ]] ; then
+  if [[ "$MASPROMPT_NUMLINE" -ge "$MASPROMPT_PS10LIMIT" ]] ; then
     set_prompt_string '$MAS_WINDOWID'
   else
     set_prompt_string "$MAS_WINDOWID"
@@ -112,7 +112,7 @@ function set_prompt_windowid ()
 function set_prompt_tabidws ()
 {
   set_prompt_color_by_id tabidws
-  if [[ "$MAS_PROMPT_NUMLINE" -ge "$MAS_PS10LIMIT" ]] ; then
+  if [[ "$MASPROMPT_NUMLINE" -ge "$MASPROMPT_PS10LIMIT" ]] ; then
     set_prompt_string '$MAS_WIN_TABNUMWS'
   else
     set_prompt_string "$MAS_WIN_TABNUMWS"
@@ -121,7 +121,7 @@ function set_prompt_tabidws ()
 function set_prompt_tabidp ()
 {
   set_prompt_color_by_id tabidp
-  if [[ "$MAS_PROMPT_NUMLINE" -ge "$MAS_PS10LIMIT" ]] ; then
+  if [[ "$MASPROMPT_NUMLINE" -ge "$MASPROMPT_PS10LIMIT" ]] ; then
     set_prompt_string '$MAS_WIN_TABNUMP'
   else
     set_prompt_string "$MAS_WIN_TABNUMP"
@@ -130,7 +130,7 @@ function set_prompt_tabidp ()
 function set_prompt_tabidt ()
 {
   set_prompt_color_by_id tabidt
-  if [[ "$MAS_PROMPT_NUMLINE" -ge "$MAS_PS10LIMIT" ]] ; then
+  if [[ "$MASPROMPT_NUMLINE" -ge "$MASPROMPT_PS10LIMIT" ]] ; then
     set_prompt_string '$MAS_WIN_TABNUMT'
   else
     set_prompt_string "$MAS_WIN_TABNUMT"
@@ -139,7 +139,7 @@ function set_prompt_tabidt ()
 function set_prompt_screen_windid ()
 {
   set_prompt_color_by_id screen_windid
-  if [[ "$MAS_PROMPT_NUMLINE" -ge "$MAS_PS10LIMIT" ]] ; then
+  if [[ "$MASPROMPT_NUMLINE" -ge "$MASPROMPT_PS10LIMIT" ]] ; then
     set_prompt_string '$WINDOW'
   else
     set_prompt_string "$WINDOW"
@@ -154,7 +154,7 @@ function set_prompt_screen_start_at ()
 function set_prompt_user ()
 {
   set_prompt_color_by_id user
-  if [[ "$MAS_PROMPT_NUMLINE" -ge "$MAS_PS10LIMIT" ]] ; then
+  if [[ "$MASPROMPT_NUMLINE" -ge "$MASPROMPT_PS10LIMIT" ]] ; then
     set_prompt_string "\u"
   else
     set_prompt_string "$USER"
@@ -163,22 +163,22 @@ function set_prompt_user ()
 function set_prompt_host ()
 {
   set_prompt_color_by_id host
-  if [[ "$MAS_PROMPT_NUMLINE" -ge "$MAS_PS10LIMIT" ]] ; then
+  if [[ "$MASPROMPT_NUMLINE" -ge "$MASPROMPT_PS10LIMIT" ]] ; then
     set_prompt_string "\h"
   else
-    set_prompt_string "$MAS_HOSTNAME"
+    set_prompt_string "$MASPROMPT_HOSTNAME"
   fi
 }
 function set_prompt_weekday ()
 {
-  if [[ "$MAS_PROMPT_NUMLINE" -ge "$MAS_PS10LIMIT" ]] ; then
+  if [[ "$MASPROMPT_NUMLINE" -ge "$MASPROMPT_PS10LIMIT" ]] ; then
     set_prompt_color_by_id day
     set_prompt_string "\D{%a}"
   fi
 }
 function set_prompt_monthday ()
 {
-  if [[ "$MAS_PROMPT_NUMLINE" -ge "$MAS_PS10LIMIT" ]] ; then
+  if [[ "$MASPROMPT_NUMLINE" -ge "$MASPROMPT_PS10LIMIT" ]] ; then
     set_prompt_color_by_id date
     set_prompt_string "\D{%d}"
   fi
@@ -192,15 +192,15 @@ function set_prompt_time ()
 {
   # Time
 
-  #if [ -z "$MAS_DATE2" ] ; then
-  #export MAS_DATE2=`/bin/date +%H:%M:%S`
+  #if [ -z "$MASPROMPT_DATE2" ] ; then
+  #export MASPROMPT_DATE2=`/bin/date +%H:%M:%S`
   #fi
-  unset MAS_DATE2
+  unset MASPROMPT_DATE2
   set_prompt_color_by_id time
 
-  if [[ -v MAS_DATE2 && -n "$MAS_DATE2" ]] ; then
-    set_prompt_string "$MAS_DATE2"
-  elif [[ "$MAS_PROMPT_NUMLINE" -ge "$MAS_PS10LIMIT" ]] ; then
+  if [[ -v MASPROMPT_DATE2 && -n "$MASPROMPT_DATE2" ]] ; then
+    set_prompt_string "$MASPROMPT_DATE2"
+  elif [[ "$MASPROMPT_NUMLINE" -ge "$MASPROMPT_PS10LIMIT" ]] ; then
     set_prompt_string "\t"
   fi
 }
@@ -212,7 +212,7 @@ function set_prompt_terminal_emulator ()
 function set_prompt_workspace ()
 {
   set_prompt_color_by_id workspace
-  set_prompt_string "$MAS_OLD_WS"
+  set_prompt_string "$MASPROMPT_OLD_WS"
 }
 
 function set_prompt_user_host_date_time ()
@@ -225,17 +225,17 @@ function set_prompt_user_host_date_time ()
 function set_prompt_shlvl ()
 {
 #      '¹²³⁴⁵⁶⁷⁸'
-  if [[ "$TERM" == 'linux' ]] ; then MAS_PS10="${MAS_PS10}${SHLVL}."
-  elif [[ "$TERM" == 'xterm' ]] ; then MAS_PS10="${MAS_PS10}${SHLVL}."
-  elif [ "$SHLVL" == 1 ] ; then MAS_PS10="${MAS_PS10}¹."
-  elif [ "$SHLVL" == 2 ] ; then MAS_PS10="${MAS_PS10}²."
-  elif [ "$SHLVL" == 3 ] ; then MAS_PS10="${MAS_PS10}³."
-  elif [ "$SHLVL" == 4 ] ; then MAS_PS10="${MAS_PS10}⁴."
-  elif [ "$SHLVL" == 5 ] ; then MAS_PS10="${MAS_PS10}⁵."
-  elif [ "$SHLVL" == 6 ] ; then MAS_PS10="${MAS_PS10}⁶."
-  elif [ "$SHLVL" == 7 ] ; then MAS_PS10="${MAS_PS10}⁷."
-  elif [ "$SHLVL" == 8 ] ; then MAS_PS10="${MAS_PS10}⁸."
-  else                          MAS_PS10="${MAS_PS10}${SHLVL}."
+  if [[ "$TERM" == 'linux' ]] ; then MASPROMPT_PS10="${MASPROMPT_PS10}${SHLVL}."
+  elif [[ "$TERM" == 'xterm' ]] ; then MASPROMPT_PS10="${MASPROMPT_PS10}${SHLVL}."
+  elif [ "$SHLVL" == 1 ] ; then MASPROMPT_PS10="${MASPROMPT_PS10}¹."
+  elif [ "$SHLVL" == 2 ] ; then MASPROMPT_PS10="${MASPROMPT_PS10}²."
+  elif [ "$SHLVL" == 3 ] ; then MASPROMPT_PS10="${MASPROMPT_PS10}³."
+  elif [ "$SHLVL" == 4 ] ; then MASPROMPT_PS10="${MASPROMPT_PS10}⁴."
+  elif [ "$SHLVL" == 5 ] ; then MASPROMPT_PS10="${MASPROMPT_PS10}⁵."
+  elif [ "$SHLVL" == 6 ] ; then MASPROMPT_PS10="${MASPROMPT_PS10}⁶."
+  elif [ "$SHLVL" == 7 ] ; then MASPROMPT_PS10="${MASPROMPT_PS10}⁷."
+  elif [ "$SHLVL" == 8 ] ; then MASPROMPT_PS10="${MASPROMPT_PS10}⁸."
+  else                          MASPROMPT_PS10="${MASPROMPT_PS10}${SHLVL}."
   fi
 }
 function set_prompt_cmdnum ()
@@ -276,12 +276,12 @@ function  set_prompt_pause ()
   set_prompt_format_time "$delta_seconds"
 
   if [ "$delta_seconds" -gt 86400 ] ; then
-    set_prompt_string " : $MAS_LAST_ENTER"
+    set_prompt_string " : $MASPROMPT_LAST_ENTER"
   fi
 
   set_prompt_color_by_id timing2
   mas_get_lib_ifnot time datemt
-  export MAS_LAST_ENTER=`datemt`
+  export MASPROMPT_LAST_ENTER=`datemt`
 
   if [[ -v TMOUT && -n "$TMOUT" ]] ; then
     if [ "$delta_seconds" -gt $(( $TMOUT / 2 )) ] ; then
@@ -300,8 +300,8 @@ function  set_prompt_period ()
 }
 function  set_prompt_seconds ()
 {
-  if [[ "$SECONDS" && "$MAS_PSECONDS" ]] ; then
-    local delta_seconds=$(( $SECONDS - $MAS_PSECONDS ))
+  if [[ "$SECONDS" && "$MASPROMPT_PSECONDS" ]] ; then
+    local delta_seconds=$(( $SECONDS - $MASPROMPT_PSECONDS ))
     # No-touch seconds
 
     if [ "$delta_seconds" -gt 0 ] ; then
@@ -309,10 +309,10 @@ function  set_prompt_seconds ()
       if [[ $- =~ 'i' ]] ; then
 	if [[ -v MAS_PROFILE_DATA_DIR && -n "$MAS_PROFILE_DATA_DIR" && -d "$MAS_PROFILE_DATA_DIR" ]] ; then
 	  echo "$OLDPWD" > $MAS_PROFILE_DATA_DIR/oldpwd.$SHLVL.$WINDOW.txt
-	  echo "$MAS_PS10PWD" > $MAS_PROFILE_DATA_DIR/pwd.$SHLVL.$WINDOW.txt
+	  echo "$MASPROMPT_PS10PWD" > $MAS_PROFILE_DATA_DIR/pwd.$SHLVL.$WINDOW.txt
 	  mas_get_lib_ifnot time datemt
-	  echo "$MAS_PROMPT_COUNT. `datemt` [$prompt_window $MAS_WINDOWID] old: $OLDPWD" >> $MAS_PROFILE_DATA_DIR/pwds.txt
-	  echo "$MAS_PROMPT_COUNT. `datemt` [$prompt_window $MAS_WINDOWID] pwd: $MAS_PS10PWD" >> $MAS_PROFILE_DATA_DIR/pwds.txt
+	  echo "$MASPROMPT_COUNT. `datemt` [$prompt_window $MAS_WINDOWID] old: $OLDPWD" >> $MAS_PROFILE_DATA_DIR/pwds.txt
+	  echo "$MASPROMPT_COUNT. `datemt` [$prompt_window $MAS_WINDOWID] pwd: $MASPROMPT_PS10PWD" >> $MAS_PROFILE_DATA_DIR/pwds.txt
 	  #${MAS_ENV_CMD:=/bin/env} > $MAS_PROFILE_DATA_DIR/env.`datemt`.txt
 	fi
       fi
@@ -323,7 +323,7 @@ function  set_prompt_seconds ()
       #set_prompt_reset_colors ' '
     fi
   else
-    echo "Error timing $SECONDS : $MAS_PSECONDS" >&2
+    echo "Error timing $SECONDS : $MASPROMPT_PSECONDS" >&2
   fi
   set_prompt_color_by_id current_time
 }
@@ -336,26 +336,26 @@ function  set_prompt_workdir ()
 {
   set_prompt_color_by_id workdir
 # Work dir
-  set_prompt_string " ${MAS_PS10PWDS} "
+  set_prompt_string " ${MASPROMPT_PS10PWDS} "
 }
 function  set_prompt_workdir_ps ()
 {
   set_prompt_color_by_id workdir
 # Work dir
-  if [[ "$MAS_PROMPT_NUMLINE" -ge "$MAS_PS10LIMIT" ]] && ! [[ "${MAS_SHN_PROJECTS_DIR}" ]] ; then
+  if [[ "$MASPROMPT_NUMLINE" -ge "$MASPROMPT_PS10LIMIT" ]] && ! [[ "${MAS_SHN_PROJECTS_DIR}" ]] ; then
     set_prompt_string " \W "
   else 
-    set_prompt_string " ${MAS_PS10PWDS} "
+    set_prompt_string " ${MASPROMPT_PS10PWDS} "
   fi
 }
 function  set_prompt_workdir_psl ()
 {
   set_prompt_color_by_id workdir
 # Work dir
-  if [[ "$MAS_PROMPT_NUMLINE" -ge "$MAS_PS10LIMIT" ]] && ! [[ "${MAS_SHN_PROJECTS_DIR}" ]] ; then
+  if [[ "$MASPROMPT_NUMLINE" -ge "$MASPROMPT_PS10LIMIT" ]] && ! [[ "${MAS_SHN_PROJECTS_DIR}" ]] ; then
     set_prompt_string " \w "
   else
-    set_prompt_string " ${MAS_PS10PWDS} "
+    set_prompt_string " ${MASPROMPT_PS10PWDS} "
   fi
 }
 function  set_prompt_seconds_seconds_pid ()
@@ -368,7 +368,7 @@ function  set_prompt_seconds_seconds_pid ()
 }
 function  set_prompt_last_not_found_cmd ()
 {
-  if [[ "$MAS_OLD_RESULT" -eq 1 ]]; then
+  if [[ "$MASPROMPT_OLD_RESULT" -eq 1 ]]; then
     local lfile="$MAS_BASH_LOG/last_command_not_found.log"
     if [[ "$MAS_BASH_LOG" && -s "$lfile" ]] ; then
       set_prompt_color_by_id error_details
@@ -378,7 +378,7 @@ function  set_prompt_last_not_found_cmd ()
 }
 function set_prompt_audio ()
 {
-  if [[ "$MAS_PROMPT_NUMLINE" -ge "$MAS_PS10LIMIT" ]] ; then
+  if [[ "$MASPROMPT_NUMLINE" -ge "$MASPROMPT_PS10LIMIT" ]] ; then
   # for PS1
     set_prompt_string "\[\a\]"
   else
@@ -392,12 +392,12 @@ function set_prompt_smiley_result ()
     set_prompt_string "R!"
   fi
   # Exit status - smiley
-  if [[ "$MAS_OLD_RESULT" -eq 0 ]]; then
+  if [[ "$MASPROMPT_OLD_RESULT" -eq 0 ]]; then
     set_prompt_color_by_id smiley
     set_prompt_string ":)"
   else 
     set_prompt_color_by_id result
-    set_prompt_string "${MAS_OLD_RESULT}"
+    set_prompt_string "${MASPROMPT_OLD_RESULT}"
     set_prompt_color_by_id sad
     set_prompt_string ":("
   fi
@@ -413,7 +413,7 @@ function set_prompt_ruby ()
     set_prompt_string "(+)"
   else
     #set_prompt_string "x\[\e[D"
-    case "$MAS_PROMPT_FLAGS" in
+    case "$MASPROMPT_FLAGS" in
      0)
 	set_prompt_string "◇"
 	;;
@@ -468,7 +468,7 @@ function set_prompt_ruby ()
 }
 function set_prompt_symbol ()
 {
-  if [[ "$MAS_OLD_RESULT" -eq 0 ]]; then
+  if [[ "$MASPROMPT_OLD_RESULT" -eq 0 ]]; then
     set_prompt_color_by_id symbol
   else
     set_prompt_color_by_id sadsymbol
@@ -484,7 +484,7 @@ function set_prompt_symbol ()
 #       sh_count=$(( $sh_count - $MAS_WM_SHLVL + 1 ))
 #     fi
   #sh_count=$(( ${SHLVL:-0} - ${MAS_SH_CORR:-0} - ${MAS_WM_SHLVL:-0} +1  ))
-  if [[ "$MAS_PROMPT_OPTIONS" != *\$* ]] ; then
+  if [[ "$MASPROMPT_OPTIONS" != *\$* ]] ; then
     set_prompt_string "$IGNOREEOF"
     set_prompt_dollar
   else
@@ -502,13 +502,13 @@ function set_prompt_alternative ()
 function mas_build_ps10_details ()
 {
   local i
-MAS_PROMPT_NUMLINE=0
-MAS_ESCAPE_NP=''
-#No:  MAS_PS10="${MAS_PS10}\n"
+MASPROMPT_NUMLINE=0
+MASPROMPT_ESCAPE_NP=''
+#No:  MASPROMPT_PS10="${MASPROMPT_PS10}\n"
 		      mas_prompt_conditional E          _eofsign             '&'
 		      
 		      mas_prompt_conditional M    "\n\n"
-MAS_PROMPT_NUMLINE=$(( $MAS_PROMPT_NUMLINE + 1 ))
+MASPROMPT_NUMLINE=$(( $MASPROMPT_NUMLINE + 1 ))
 
 		      mas_prompt_conditional G          _geometry
 		      mas_prompt_conditional v    ' '   _bash_version        ' '
@@ -522,22 +522,22 @@ MAS_PROMPT_NUMLINE=$(( $MAS_PROMPT_NUMLINE + 1 ))
   [[ "$WINDOW" ]] &&  mas_prompt_conditional R    '+'  _screen_windid
   [[ "$WINDOW" ]] &&  mas_prompt_conditional r    ' @ (' _screen_start_at ')'
 		      mas_prompt_conditional M    "\n"
-MAS_ESCAPE_NP='yes'
-MAS_PROMPT_NUMLINE=$(( $MAS_PROMPT_NUMLINE + 1 ))
+MASPROMPT_ESCAPE_NP='yes'
+MASPROMPT_NUMLINE=$(( $MASPROMPT_NUMLINE + 1 ))
 		      mas_prompt_conditional UHTD '['   _user_host_date_time ']'
 		      mas_prompt_conditional u    ' ['  _terminal_emulator           ']'
 		      mas_prompt_conditional w    ' ['  _workspace           ']'
-[[ "$MAS_OLD_RESULT" -eq 1 && -s "$MAS_BASH_LOG/last_command_not_found.log" ]] \
+[[ "$MASPROMPT_OLD_RESULT" -eq 1 && -s "$MAS_BASH_LOG/last_command_not_found.log" ]] \
 		&& mas_prompt_conditional e  '                      ? ['  _last_not_found_cmd ' ...]'
 		      mas_prompt_conditional M    "\n"
-MAS_PROMPT_NUMLINE=$(( $MAS_PROMPT_NUMLINE + 1 ))
+MASPROMPT_NUMLINE=$(( $MASPROMPT_NUMLINE + 1 ))
 		      
 		      mas_prompt_conditional V          _shlvl
 		      mas_prompt_conditional N          _cmdnum              '&'
 		      mas_prompt_conditional SWi  '[ '  _seconds_seconds_pid '] '
 		      mas_prompt_conditional B          _ruby
 		      mas_prompt_conditional M    "\n"
-MAS_PROMPT_NUMLINE=$(( $MAS_PROMPT_NUMLINE + 1 ))
+MASPROMPT_NUMLINE=$(( $MASPROMPT_NUMLINE + 1 ))
                                    mas_prompt_conditional c '[' _workdir_psl '] ' \
 		      		|| \
 				   mas_prompt_conditional W '[' _workdir '] ' \

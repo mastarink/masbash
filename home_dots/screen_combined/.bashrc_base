@@ -2,6 +2,12 @@ if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
   . ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
   mas_sourcing_start .bashrc_base
 
+# declare -gx MAS_BASHRC_DPWD=${MAS_BASHRC_PWD:-$(pwd)}
+  declare -gx MAS_BASHRC_DPWD0="$PWD"
+  echo "dumb pwd `pwd`" >>/tmp/mas_bashrc_pwd.tmp
+  echo "dumb PWD $MAS_BASHRC_DPWD0" >>/tmp/mas_bashrc_pwd.tmp
+  
+
   export MAS_BASHRC_TYPE=masbase
   function mas_bashrc_base ()
   { 

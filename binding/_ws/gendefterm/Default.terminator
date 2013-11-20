@@ -1,0 +1,10 @@
+  MAS_GTERMO_GROUP='mastar-gterm'
+  MAS_GTERMO_BINNAME='terminator'
+  MAS_GTERMO_GEOMETRY='1270x900+0+30'
+
+
+  return 0
+
+# vi: ft=sh
+
+

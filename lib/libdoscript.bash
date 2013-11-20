@@ -7,6 +7,7 @@ if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
     shift
     local errmpath=$1
     shift
+    dbgmasp 3 "$LINENO:$FUNCNAME"
     
     case $MAS_SCRIPTSN_ERRTYPE in
       notify)
@@ -32,8 +33,10 @@ if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
     shift
     local shscr=$1
     shift
+    dbgmasp 3 "$LINENO:$FUNCNAME"
 
     mas_src_literal_script - "./$shs"  "$cnt" $@
+    dbgmasp 3 "$LINENO:/$FUNCNAME"
   }
   # scripts in <directory>.d/
   function mas_src_literal_subscripts ()
@@ -43,11 +46,12 @@ if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
     shift
     cnt=$1
     shift
-    
+    dbgmasp 3 "$LINENO:$FUNCNAME"
 
     ddir="${shscr}.d"
     if [[ -d "$ddir" ]] ; then
       mas_sourcing_start_r '@/' $ddir
+      dbgmasp 3 "$LINENO:-$FUNCNAME source dir @RP$ddir@"
       #${MAS_ECHO_CMD:=/bin/echo} $ddir/* >&2
   ##### mas_echo_trace "-- Call from $ddir"
   #   echo "-- Call from $ddir" >&2
@@ -57,9 +61,13 @@ if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
 ##      echo ">>>msls (pushd) pushd $ddir" >> $MAS_CONF_DIR_TERM_STAT/sourcing.$UID.$$.stat
 ##      cat $prog >> $MAS_CONF_DIR_TERM_STAT/sourcing.$UID.$$.stat
 ##    fi
+      dbgmasp 3 "$LINENO:-$FUNCNAME"
       for shs in * ; do
+        dbgmasp 3 "$LINENO:-$FUNCNAME"
 	if [[ -f "$shs" ]] ; then
+          dbgmasp 3 "$LINENO:-$FUNCNAME"
 	  mas_src_literal_sub "$shs" $cnt "${shscr}" $@
+	  dbgmasp 3 "$LINENO:-$FUNCNAME"
 	fi
   #   find "$ddir" -maxdepth 1 -type f >&2
   #   find "$ddir" -maxdepth 1 -type f -exec mas_src_literal_sub \{} $cnt >&2 \;
@@ -73,7 +81,10 @@ if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
 ##    fi
       mas_sourcing_end_r '@/' $ddir
   # else
+    else
+      dbgmasp 3 "$LINENO:-$FUNCNAME :: no subdir @RP$ddir@"
     fi
+    dbgmasp 3 "$LINENO:/$FUNCNAME"
     return 0
   }
   # source file
@@ -91,10 +102,10 @@ if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
     shift
     cnt=$1
     shift
+    dbgmasp 3 "$LINENO:$FUNCNAME"
 
     result=0
     
-    if [[ "$MAS_DEBUG" -gt 3 ]] ; then echo " --- $FUNCNAME ()" >&2 ; fi
 
     mas_sourcing_start_r '@' $name
   ####  mas_echo_trace "   Call      $name"
@@ -102,24 +113,33 @@ if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
   # echo "${MAS_CALL_SCRIPT_SERIAL:=0}   Call      $name" >&2
     if [[ "$name" ]] ; then
       if [[ -r "$name" ]] ; then
-        if [[ "$MAS_DEBUG" -gt 1 ]] ; then echo "source `realpath $name`" >&2 ; fi
+	dbgmasp 1 "$LINENO:$FUNCNAME () source @RP$name@"
+	
+	dbgmas 0 "source (present) @RP$name@"
         if ! source $name ; then
 	  mas_src_not_found $LINENO $name
 	  result=1
 	elif ! [[ "$mas_src_scripts_no_subscript" ]] ; then
+	  dbgmas 0 "sourced @RP$name@; do subscripts for it"
 	  result=0
 	  if ! mas_src_literal_subscripts "$name" "$cnt" $@ ; then
 	    mas_src_not_found $LINENO "sub: ($name)"
 	    result=1
 	  fi
+	  dbgmasp 3 "$LINENO:-$FUNCNAME"
+	else
+	  dbgmas 0 "sourced @RP$name@"
 	fi
       elif [[ -r "$defscript" ]] ; then
-        if [[ "$MAS_DEBUG" -gt 1 ]] ; then echo "source `realpath $defscript`" >&2 ; fi
+	dbgmasp 0 "source (present) default @RP$defscript@"
         if ! source $defscript ; then
 	  mas_src_not_found $LINENO "$name / $defscript"
 	  result=1
+	else
+	  dbgmasp 0 "sourced default @RP$defscript@"
 	fi
       elif [[ "${mas_src_scripts_optional}" ]] ; then
+	dbgmas 0 "not source (optional) @RP$shs@"
         result=7
       else
 	mas_src_not_found $LINENO "name: $name default: $defscript"
@@ -128,11 +148,14 @@ if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
     fi
   # source file subscripts ; args: full path, cnt
     mas_sourcing_end_r '@' $name
+    dbgmasp 3 "$LINENO:/$FUNCNAME"
     return $result
   }
   function mas_src_get_mpath ()
   {
     local mpath_name=$1 mpath_x mpath
+    dbgmasp 3 "$LINENO:$FUNCNAME"
+
     if [[ "$mpath_name" =~ ^(.*)\+(.*)$ ]] ; then
       mpath_name=${BASH_REMATCH[1]}
       mpath_x=${BASH_REMATCH[2]}
@@ -146,7 +169,7 @@ if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
     if [[ "$mpath" ]] ; then
       echo "$mpath"
     fi
-    if [[ "$MAS_DEBUG" -gt 3 ]] ; then echo " --- $FUNCNAME ()" >&2 ; fi
+    dbgmasp 3 "$LINENO:/$FUNCNAME"
   }
   # do scripts, report absent files (if mas_src_scripts_optional not set)
   # args:
@@ -164,8 +187,8 @@ if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
     shift
     defscript="$1"
     shift
-
-    if [[ "$MAS_DEBUG" -gt 3 ]] ; then echo " --- $FUNCNAME ()" >&2 ; fi
+    if ! [[ "$MAS_SCRIPTS_WORKDIR" ]] ; then local MAS_SCRIPTS_WORKDIR=$PWD ; fi
+    dbgmasp 3 "$LINENO:$FUNCNAME"
 
     if [[ "$defscript" ]] && ! [[ "$defscript" == '-' ]] ; then
       defscript="./$defscript"
@@ -185,19 +208,24 @@ if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
 ##    echo ">>>mss (pushd) `pwd`" >> $MAS_CONF_DIR_TERM_STAT/sourcing.$UID.$$.stat
 ##    echo ">>>mss (pushd) pushd $mpath" >> $MAS_CONF_DIR_TERM_STAT/sourcing.$UID.$$.stat
 ##  fi
+    dbgmasp 3 "$LINENO:$FUNCNAME"
     if [[ "$mpath" ]] && pushd "$mpath" &>/dev/null ; then
+      dbgmasp 3 "$LINENO:$FUNCNAME"
       for s in $@ ; do
   #     if [[ "$s" ]] ; then
   #       echo "eval ... $s" >&2
   #       s=`eval "builtin echo $s"`
   #     fi 
+        dbgmasp 3 "$LINENO:$FUNCNAME"
 	if [[ "$s" ]] ; then
 	  cnt=$(( $cnt + 1 ))
 	  shscrx="${s}${mas_src_scripts_tail}"
 	  declare -gx MAS_DOSCRIPT_NAME=$s
 	  mas_src_literal_script "${defscript:--}" "./$shscrx" "$cnt"
+	  dbgmasp 3 "$LINENO:-$FUNCNAME"
 	  result=$?
 	  if [[ $result -ne 7 ]] ; then
+	    dbgmasp 3 "$LINENO:$FUNCNAME"
 	    break
 	  fi
 #         if [[ "$shscrx" ]] && [[ -f $shscrx ]] ; then
@@ -219,13 +247,17 @@ if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
 	fi
       done
 ##    echo ">>>mss (popd) `pwd`" >> $MAS_CONF_DIR_TERM_STAT/sourcing.$UID.$$.stat
+      dbgmasp 3 "$LINENO:$FUNCNAME"
       popd  &>/dev/null
+      dbgmasp 3 "$LINENO:$FUNCNAME"
 ##    echo ">>>mss (popd) `pwd`" >> $MAS_CONF_DIR_TERM_STAT/sourcing.$UID.$$.stat
     else
   #   ${MAS_ECHO_CMD:=/bin/echo} "directory error: '$mpath' <== '$mpath_name'" >&2
       [[ "${mas_src_scripts_optional}" ]] || mas_src_not_found $LINENO ${mpath:-EMPTY} "$mpath_name"
+      dbgmasp 5 " --- $FUNCNAME () -- bad mpath:$mpath"
       result=2
     fi
+    dbgmasp 3 "$LINENO:/$FUNCNAME"
     return $result
   }
   # do scripts, report absent files (if mas_src_scripts_optional not set)
@@ -242,14 +274,16 @@ if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
     shift
     local exten=$1
     shift
+    dbgmasp 3 "$LINENO:$FUNCNAME"
+
     if [[ "$exten" ]] && ! [[ "$exten" == '-' ]] ; then
       mas_src_scripts_tail="$exten"
     fi
-    if [[ "$MAS_DEBUG" -gt 3 ]] ; then echo " --- $FUNCNAME ()" >&2 ; fi
   # args:  mpath var name , ...... (scripts)
   # env : $mas_src_scripts_tail==<extension> ; $mas_src_scripts_name=<name>
   ####  mas_echo_trace ">To call   $mas_src_scripts_name [$exten] $@"
     mas_src_scripts $@
+    dbgmasp 3 "$LINENO:/$FUNCNAME"
   }
   # do scripts, don't report absent files
   # args:
@@ -261,7 +295,10 @@ if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
   function mas_src_scriptsn_optional ()
   {
     local mas_src_scripts_optional=yes
+    dbgmasp 3 "$LINENO:$FUNCNAME"
+
     mas_src_scriptsn $@
+    dbgmasp 3 "$LINENO:/$FUNCNAME"
   }
   # do std scripts (opt.?) default and opt. rc with opt.subscripts
   # args:
@@ -270,6 +307,8 @@ if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
   function mas_src_scriptsn_opt_std ()
   {
     local mas_src_scripts_name=$1
+    dbgmasp 3 "$LINENO:$FUNCNAME"
+
     shift
     local mpath_name
     local mas_src_scripts_no_subscript
@@ -280,6 +319,7 @@ if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
       unset mas_src_scripts_no_subscript
       mas_src_scriptsn_optional "${mas_src_scripts_name:-unknown_mssn}" - ${mpath_name:-unknown_mpn} - rc
     done
+    dbgmasp 3 "$LINENO:/$FUNCNAME"
   }
   # do scripts, report absent files (if mas_src_scripts_optional not set)
   # SAME as mas_src_scriptsn, but with timing
@@ -292,6 +332,8 @@ if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
   function mas_src_scriptsnt ()
   {
     local start_time end_time interval intervalp
+    dbgmasp 3 "$LINENO:$FUNCNAME"
+
     if [[ "$MAS_RC_TIMING" ]] ; then
       start_time=$(umoment)
     fi
@@ -313,6 +355,7 @@ if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
 	fi
       fi
     fi
+    dbgmasp 3 "$LINENO:/$FUNCNAME"
   }
   # do scripts, don't report absent files
   # SAME as mas_src_scriptsn_optional, but with timing
@@ -325,11 +368,15 @@ if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
   function mas_src_scriptsnt_optional ()
   {
     local mas_src_scripts_optional=yes
+    dbgmasp 3 "$LINENO:$FUNCNAME"
+
     mas_src_scriptsnt $@
   }
 
   function mas_interactive ()
   {
+    dbgmasp 3 "$LINENO:$FUNCNAME"
+
     [[ $- =~ 'i' ]] && return 0
     return 2
   }

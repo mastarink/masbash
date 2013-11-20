@@ -1,43 +1,43 @@
-export MAS_SET_PROMPT_TERM=$TERM
+export MASPROMPT_SET_TERM=$TERM
 # mas_loadlib_if_not set_prompt_reset_colors prompt_main
 mas_get_lib_ifnot  prompt_main set_prompt_reset_colors
 
-unset PROMPT_COMMAND MAS_PROMPT_COMMAND_LENGTH
+unset PROMPT_COMMAND MASPROMPT_COMMAND_LENGTH
 
 
 if mas_interactive >/dev/null 2>&1 ; then
   if [ -n "$MAS_CONF_DIR_TERM" -a -d "$MAS_CONF_DIR_TERM" ] ; then
-    if [ -z "$MAS_PROMPT_COMMAND_LENGTH" ] ; then
+    if [ -z "$MASPROMPT_COMMAND_LENGTH" ] ; then
       if shopt -q restricted_shell ; then
         true
       # ??????????
-	#export PROMPT_COMMAND="$(cat $MAS_PROMPT_SCRIPT_PATH| grep -v '^ *$'| grep -v '^ *#')"
+	#export PROMPT_COMMAND="$(cat $MASPROMPT_SCRIPT_PATH| grep -v '^ *$'| grep -v '^ *#')"
 	#unset PROMPT_COMMAND
       else
 
-	export PROMPT_COMMAND="MAS_RESULT=\$? ; type -t mas_prompt >/dev/null 2>&1 && mas_prompt \$MAS_RESULT"
-#	export PROMPT_COMMAND="MAS_RESULT=\$? ; declare -f -F mas_prompt >/dev/null 2>&1 || . ${BASH_SOURCE[0]} && mas_prompt"
+	export PROMPT_COMMAND="MASPROMPT_RESULT=\$? ; type -t mas_prompt >/dev/null 2>&1 && mas_prompt \$MASPROMPT_RESULT"
+#	export PROMPT_COMMAND="MASPROMPT_RESULT=\$? ; declare -f -F mas_prompt >/dev/null 2>&1 || . ${BASH_SOURCE[0]} && mas_prompt"
 
 #	|| merror
 	#export PROMPT_COMMAND="$(cat $MAS_CONF_DIR_TERM/bin/masprompt| grep -v '^ *$'| grep -v '^ *#')" || merror
       fi
-      MAS_PROMPT_COMMAND_LENGTH=$(echo "$PROMPT_COMMAND"|/usr/bin/wc -l)
+      MASPROMPT_COMMAND_LENGTH=$(echo "$PROMPT_COMMAND"|/usr/bin/wc -l)
     fi
   else
     echo "MAS_CONF_DIR_TERM not set" >&2
   fi
 fi
-if [ -z "$MAS_PROMPT_COUNT" ] ; then
+if [ -z "$MASPROMPT_COUNT" ] ; then
 
 # mas_loadlib_if_not datemt time
 mas_get_lib_ifnot time datemt
-export MAS_TIME_PROMPT_FIRST=`datemt`
+export MASPROMPT_TIME_FIRST=`datemt`
 
 #???
-#?export MAS_PROMPT_STY="${STY:-0.${MAS_SCREEN_SESSION}}"
+#?export MASPROMPT_STY="${STY:-0.${MAS_SCREEN_SESSION}}"
 fi
-if [ -z "$MAS_DSECONDS0" ] ; then
-  MAS_DSECONDS0=0
+if [ -z "$MASPROMPT_DSECONDS0" ] ; then
+  MASPROMPT_DSECONDS0=0
 fi
 
 

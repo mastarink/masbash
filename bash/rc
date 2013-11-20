@@ -5,7 +5,7 @@ function mas_term_new_bash__rc ()
 # see rc.d
 
   if ! [[ "$TERM" =~ ^(screen)(\..*|)$ ]] ; then
-    unset STY MAS_PROMPT_STY WINDOW
+    unset STY MASPROMPT_STY WINDOW
   fi
 
   if [[ $- == *i* ]] ; then

@@ -1,30 +1,48 @@
 shopt -u sourcepath
-if [[ "$-" == *i* ]] ; then
-    echo ".profile <@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@>" >&2
-    echo "-=$-" >&2
-    echo "TERM=$TERM" >&2
-    echo "MAS_TERM=$MAS_TERM" >&2
-    echo "MAS_BASHRC_TYPE=$MAS_BASHRC_TYPE" >&2
-    echo "MAS_DOTS_NAME=$MAS_DOTS_NAME" >&2
-    echo "MAS_UNDER=$MAS_UNDER" >&2
-    echo "MAS_DESKTOP_NUM=$MAS_DESKTOP_NUM" >&2
-    echo "MAS_DESKTOP_NAME=$MAS_DESKTOP_NAME" >&2
-    echo "MAS_TERMINAL_EMULATOR=$MAS_TERMINAL_EMULATOR" >&2
-fi
-if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs ]] ; then
-  . ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
+#if [[ "$-" == *i* ]] ; then
+#   echo ".profile <@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@><@>" >&2
+#   echo "-=$-" >&2
+#   echo "TERM=$TERM" >&2
+#   echo "MAS_TERM=$MAS_TERM" >&2
+#   echo "MAS_BASHRC_TYPE=$MAS_BASHRC_TYPE" >&2
+#   echo "MAS_DOTS_NAME=$MAS_DOTS_NAME" >&2
+#   echo "MAS_UNDER=$MAS_UNDER" >&2
+#   echo "MAS_DESKTOP_NUM=$MAS_DESKTOP_NUM" >&2
+#   echo "MAS_DESKTOP_NAME=$MAS_DESKTOP_NAME" >&2
+#   echo "MAS_TERMINAL_EMULATOR=$MAS_TERMINAL_EMULATOR" >&2
+#fi
+
+function mas_profile_main ()
+{
+  dbgmasp 3 "$LINENO:$FUNCNAME"
+  mas_dynsleep 1 '.profile - ^C to run w/o'
+
   mas_sourcing_start .profile
-  infomas "$MAS_BASHRC :: $MAS_BASHRC_SUB"
+  dbgmasp 3 "$LINENO:-$FUNCNAME -- $MAS_BASHRC :: $MAS_BASHRC_SUB"
 
   # sure - needless - while - debug
   # CURRENT(!) /etc/profile.env --- except PATH
 
   export MAS_SHOME MAS_BHOME MAS_BASHRC MAS_BASHRCL MAS_BASHRC_NAME MAS_BASHPRF MAS_BASHPRFL MAS_BASHPRF_NAME MAS_DIRNAME_CMD MAS_BASENAME_CMD MAS_READLINK MAS_TERM
 
+  dbgmasp 3 "$LINENO:-$FUNCNAME"
   mas_get_lib_call stddirs define_std_directories
 
+  dbgmasp 3 "$LINENO:-$FUNCNAME"
   mas_get_lib_call doscript mas_src_scriptsn _profcomm_profile -  MAS_CONF_DIR_PROFILE - bash_profile rc
+  dbgmasp 3 "$LINENO:-$FUNCNAME"
+
   mas_sourcing_end ".profile"
+  
+  dbgmasp 3 "$LINENO:/$FUNCNAME"
+  return 0
+}
+
+if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs ]] ; then
+  . ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
+  if ! [[ "$MAS_DESKTOP_NAME" =~ ^devel-A$ ]] ; then
+    mas_profile_main $@
+  fi
 fi
 
 # vi: ft=sh

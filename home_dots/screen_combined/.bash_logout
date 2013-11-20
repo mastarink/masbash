@@ -29,7 +29,7 @@ function mas_logout ()
 
   # ${MAS_SHLIB:=${MAS_CONFIG_DIR_TERM:=${MAS_CONFIG_DIR:=${MAS_DIR:=${HOME}/.mas}/config}/term_new}/lib}
 }
-export MAS_LOGOUT_DELAY=150000
+export MAS_LOGOUT_DELAY=2
 
 mas_logout $MAS_LOGOUT_DELAY
 

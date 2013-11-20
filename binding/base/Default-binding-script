@@ -2,10 +2,12 @@ if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
   . ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
 
  declare -gx MAS_BIND_GROUP
+ declare -gx MAS_GTERMO_WD MAS_GTERMO_CMD
  declare -gx MAS_GTERMO_BINNAME=''
  MAS_BIND_GROUP=$MAS_DOSCRIPT_NAME
   mas_sourcing_start "(binding) $MAS_BIND_GROUP"
-mas_notify key "binding/$MAS_BIND_GROUP"
+  
+  mas_notify binding "binding/$MAS_BIND_GROUP"
 
   mas_sourcing_end "(binding) $MAS_BIND_GROUP"
   return 0

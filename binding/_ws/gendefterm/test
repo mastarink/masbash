@@ -1,0 +1,7 @@
+ def_ref=Default.choose-terminal
+ def_ref=$( readlink -f $def_ref )
+ . $def_ref
+
+ return 0
+
+# vi: ft=sh

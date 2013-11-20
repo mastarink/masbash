@@ -1,0 +1,4 @@
+ MAS_GTERMO_PROFILE_PREFIXA=( wspscr wsp )
+ dbgmas 0 "MAS_GTERMO_PROFILE_PREFIXA: ${MAS_GTERMO_PROFILE_PREFIXA[@]}"
+
+# vi: ft=sh

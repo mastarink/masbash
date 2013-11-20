@@ -1,0 +1,8 @@
+  MAS_GTERMO_BINNAME='aterm'
+  MAS_GTERMO_GEOMETRY='156x60+0+0'
+  MAS_GTERMO_OPTPREF='-'
+  MAS_GTERMO_OPTEQ=' '
+  return 0
+
+
+# vi: ft=sh

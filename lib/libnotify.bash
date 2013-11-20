@@ -27,7 +27,7 @@ function mas_notify ()
 #?  /usr/bin/notify --expire-time="$mtime" "$text"
 # ? 5 times ??  sw-notify-send --expire-time="$mtime" "$text"
 
-  if [[ "$MAS_DEBUG" -gt 0 ]] ; then
+  if [[ "$MAS_DEBUG" -gt 5 ]] ; then
     echo "NOTIFY $mtime :: $sum / $text" >&2
   else
   ( coproc ( /usr/bin/notify-send --expire-time="$mtime" "[$sum]" "[$text]" &>/dev/null ) )

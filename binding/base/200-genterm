@@ -1,5 +1,14 @@
   mas_get_lib_ifnot gtermnew mas_gterminal
-  
+  if [[ "$MAS_GTERMO_PROFILE_ALTER_PREFIX" ]] ; then
+    declare -gx  MAS_GTERMO_PROFILE_PREFIX=${MAS_GTERMO_PROFILE_PREFIXA[1]}
+  else
+    declare -gx  MAS_GTERMO_PROFILE_PREFIX=${MAS_GTERMO_PROFILE_PREFIXA[0]}
+  fi
+  dbgmas 3 "@@@ MAS_GTERMO_PROFILE_ALTER_PREFIX: $MAS_GTERMO_PROFILE_ALTER_PREFIX :: $MAS_GTERMO_PROFILE_PREFIX"
+  if [[ "$MAS_GTERMO_PROFILE_SUFFIX" ]] ; then
+    declare -gx MAS_GTERMO_PROFILE="${MAS_GTERMO_PROFILE_PREFIX:-wsp}-${MAS_GTERMO_PROFILE_SUFFIX}"
+  fi
+  dbgmas 0 "MAS_GTERMO_PROFILE_PREFIX: $MAS_GTERMO_PROFILE_PREFIX - ${MAS_GTERMO_PROFILE_SUFFIX} / ${MAS_GTERMO_DESKTOP_NAME:-$MAS_DESKTOP_NAME}"
   MAS_GTERMOPTS=(
     [class]=$MAS_GTERMO_CLASS
     [role]=$MAS_GTERMO_ROLE
@@ -11,8 +20,9 @@
     [default-working-directory]=$MAS_GTERMO_DEFWD
     )
 
-  if [[ "$MAS_DEBUG" -gt 0 ]] ; then
+  if [[ "$MAS_DEBUG" -gt 4 ]] ; then
     declare -p MAS_GTERMOPTS >&2
+    declare -p MAS_GTERMO_BINNAME >&2
   fi
   mas_genterminal
   return 0

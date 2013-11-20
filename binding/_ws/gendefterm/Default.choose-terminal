@@ -1,0 +1,26 @@
+
+txt=$( Xdialog  --stdout --center --no-tags --menubox - 25 30 10 \
+  aterm		aterm \
+  Eterm		Eterm \
+  gnome-terminal	gnome-terminal \
+  lilyterm	lilyterm \
+  lxterminal	lxterminal \
+  roxterm	roxterm \
+  rxvt		rxvt \
+  sakura	sakura \
+  Terminal	Terminal \
+  terminator	terminator \
+  xterm		xterm \
+  mrxvt		mrxvt \
+  evilvte	evilvte \
+)
+    mas_notify key "genterm CHOOSE - $txt"
+ if [[ -r "./Default.$txt" ]] ; then
+    . ./Default.$txt
+ else
+    mas_notify key "genterm CHOOSE Not found: $txt"
+ fi
+  return 0
+
+
+# vi: ft=sh

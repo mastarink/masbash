@@ -1,0 +1,10 @@
+ def_ref=Default.${MAS_DEFAULT_TERMINAL:-lxterminal}
+ def_ref=$( readlink -f $def_ref )
+ . $def_ref
+  
+  MAS_GTERMO_WD=/tmp
+
+  return 0
+
+
+# vi: ft=sh

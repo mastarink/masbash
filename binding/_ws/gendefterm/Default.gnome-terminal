@@ -1,0 +1,27 @@
+  # allow tabs
+  MAS_GTERMO_CAN_TABS="--tab --working-directory"
+  # allow sg <group> ''
+  MAS_GTERMO_GROUP='mastar-gterm'
+  MAS_GTERMO_BINNAME='gnome-terminal'
+  # allow --class
+  MAS_GTERMO_CLASS="masGtermws-`datemt`-${MAS_GTERMO_WS}"
+  # allow --name
+  MAS_GTERMO_NAME="gtermws-${MAS_GTERMO_WS}"
+  # allow --role
+  MAS_GTERMO_ROLE='gtermws'
+  # allow --profile
+  MAS_GTERMO_PROFILE_SUFFIX="${MAS_GTERMO_DESKTOP_NAME:-$MAS_DESKTOP_NAME}"
+  # allow --geometry
+  MAS_GTERMO_GEOMETRY='156x60+0+0'
+  # allow --title
+  MAS_GTERMO_TITLE="gtermws @ ${MAS_GTERMO_WS}"
+  # allow --working-directory
+  MAS_GTERMO_WD=${MAS_GTERMO_DEFAULT_WD:-$HOME}
+  if [[ "$MAS_DEBUG" -gt 0 ]] ; then echo "Default.gnome-terminal : `pwd`" >&2 ; fi
+# declare -gx MAS_GTERMO_EXE=/bin/bash
+  # WD & TITLE && EXE -> arrays by tab
+
+  return 0
+
+
+# vi: ft=sh

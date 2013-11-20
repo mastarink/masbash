@@ -5,13 +5,25 @@ function unset_gtermo ()
     unset "MAS_GTERMO_$v"
   done
 }
- mas_sourcing_start 010-workspace " ( $MAS_DESKTOP_NAME )"
+ mas_sourcing_start 010-workspace " ( ${MAS_GTERMO_DESKTOP_NAME:-$MAS_DESKTOP_NAME} )"
  unset_gtermo
+ 
+ if [[ "$MAS_SCREEN_DELAY_START" -gt 1000 ]] ; then
+   MAS_SCREEN_DELAY_START=1
+ fi
+ if [[ "$MAS_SCREEN_DELAY_EXIT" -gt 1000 ]] ; then
+   MAS_SCREEN_DELAY_EXIT=2
+ fi
     
- [[ "$MAS_DESKTOP_NAME" ]] \
- && \
- mas_src_scriptsn           _bindws_rc       -   MAS_CONF_DIR_BINDWS+$MAS_BIND_GROUP Default $MAS_DESKTOP_NAME
-
+ if [[ "${MAS_GTERMO_DESKTOP_NAME:-$MAS_DESKTOP_NAME}" ]] ; then
+   if ! [[ "$MAS_BIND_GROUP" ]] ; then
+     echo "MAS_BIND_GROUP not defined" >&2
+   fi
+   mas_src_scriptsn           _bindwsg_rc       -   MAS_CONF_DIR_BINDWS+$MAS_BIND_GROUP Default ${MAS_GTERMO_DESKTOP_NAME:-$MAS_DESKTOP_NAME}
+   mas_src_scriptsn           _bindws_rc        -   MAS_CONF_DIR_BINDWS Default ${MAS_GTERMO_DESKTOP_NAME:-$MAS_DESKTOP_NAME}
+ else
+   echo "MAS_DESKTOP_NAME not defined" >&2
+ fi
  mas_sourcing_end 010-workspace
  return 0
 

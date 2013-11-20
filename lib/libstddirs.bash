@@ -146,8 +146,8 @@ function define_std_directories ()
     mas_define_dir          TRY2_DIR                     TRY1_DIR                         try2
     mas_define_dir          SCREEN_VAR_DIR               VAR_DIR                          screen
     mas_define_dir          SCREEN_VAR_WS_BASE           SCREEN_VAR_DIR                   "_ws"
-    mas_define_dir          SCREEN_VAR_WS_DIR            SCREEN_VAR_WS_BASE               "${MAS_I_WS:-${MAS_DESKTOP_NAME}}"  mkdir
-    mas_define_dir          SCREEN_VAR_WST_DIR           SCREEN_VAR_WS_DIR                "${MAS_TERMINAL_EMULATOR}"		mkdir
+    mas_define_dir          SCREEN_VAR_WS_DIR            SCREEN_VAR_WS_BASE               "${MAS_I_WS:-${MAS_DESKTOP_NAME:-unknown}}"  mkdir
+    mas_define_dir          SCREEN_VAR_WST_DIR           SCREEN_VAR_WS_DIR                "${MAS_TERMINAL_EMULATOR:-unknown}"		mkdir
     mas_define_dir          SCREENDIR                    SCREEN_VAR_WST_DIR
     mas_define_dir          TERM_VAR_DIR                 VAR_DIR                          term
     mas_define_dir          TERM_WIN_VAR_DIR             TERM_VAR_DIR                     win
@@ -167,7 +167,7 @@ function define_std_directories ()
 #   mas_define_dir          CONF_DIR_BINDWS_BASE         CONF_DIR_BINDING                 _ws
 #   mas_define_dir          CONF_DIR_BINDWS              CONF_DIR_BINDWS_BASE             "${MAS_I_WS:-${MAS_DESKTOP_NAME}}"
     mas_define_dir          CONF_DIR_BINDWS              CONF_DIR_BINDING                 _ws
-    mas_define_dir          CONF_DIR_BINDWS_TEST         CONF_DIR_BINDWS                  "${MAS_BINDING_NAME}"
+    mas_define_dir          CONF_DIR_BINDWS_TEST         CONF_DIR_BINDWS                  "${MAS_BINDING_NAME:-unknown}"
     mas_define_dir          CONF_DIR_BINDGTERM           CONF_DIR_BINDING                 gterm
     mas_define_dir          CONF_DIR_PRERC               CONF_DIR_TERM                    prerc
     mas_define_dir          CONF_DIR_POSTRC              CONF_DIR_TERM                    postrc
@@ -179,10 +179,10 @@ function define_std_directories ()
     mas_define_dir          CONF_DIR_PATH_UTIL           CONF_DIR_TERM                    path_util
     mas_define_dir          CONF_DIR_PATHS               CONF_DIR_TERM                    paths
     mas_define_dir          CONF_DIR_WS_BASE             CONF_DIR_TERM                    _ws					rmdir
-    mas_define_dir          CONF_DIR_I_WS                CONF_DIR_WS_BASE                "${MAS_I_WS:-${MAS_DESKTOP_NAME}}"	rmdir
+    mas_define_dir          CONF_DIR_I_WS                CONF_DIR_WS_BASE                "${MAS_I_WS:-${MAS_DESKTOP_NAME:-unknown}}"	rmdir
 
     mas_define_dir          CONF_DIR_I_WS_USERS          CONF_DIR_I_WS                    _user					rmdir
-    mas_define_dir          CONF_DIR_I_WS_USER           CONF_DIR_I_WS_USERS             "$USER"				rmdir
+    mas_define_dir          CONF_DIR_I_WS_USER           CONF_DIR_I_WS_USERS             "${USER:-unknown}"			rmdir
 
     mas_define_dir          CONF_DIR_I_WS_USER_SCMS      CONF_DIR_I_WS_USER               _screen_mode				rmdir
     mas_define_dir          CONF_DIR_I_WS_USER_SCM       CONF_DIR_I_WS_USER_SCMS         "${MAS_SCREEN_MODE:-unknown_msm}"	rmdir
@@ -197,34 +197,34 @@ function define_std_directories ()
 
 
     mas_define_dir          CONF_DIR_I_SWS_BASE          CONF_DIR_SCREEN_MODE             _ws					rmdir
-    mas_define_dir          CONF_DIR_I_SWS               CONF_DIR_I_SWS_BASE             "${MAS_I_WS:-${MAS_DESKTOP_NAME}}"	rmdir
+    mas_define_dir          CONF_DIR_I_SWS               CONF_DIR_I_SWS_BASE             "${MAS_I_WS:-${MAS_DESKTOP_NAME:-unknown}}"	rmdir
     mas_define_dir          CONF_DIR_I_SWS_USER_BASE     CONF_DIR_I_SWS                   _user					rmdir
-    mas_define_dir          CONF_DIR_I_SWS_USER          CONF_DIR_I_SWS_USER_BASE        "$USER"				rmdir
+    mas_define_dir          CONF_DIR_I_SWS_USER          CONF_DIR_I_SWS_USER_BASE        "${USER:-unknown}"			rmdir
 
 
     mas_define_dir          CONF_DIR_I_SWS_BASE_P        CONF_DIR_SCREEN_MODE_P           _ws					rmdir
-    mas_define_dir          CONF_DIR_I_SWS_P             CONF_DIR_I_SWS_BASE_P           "${MAS_I_WS:-${MAS_DESKTOP_NAME}}"	rmdir
+    mas_define_dir          CONF_DIR_I_SWS_P             CONF_DIR_I_SWS_BASE_P           "${MAS_I_WS:-${MAS_DESKTOP_NAME:-unknown}}"	rmdir
     mas_define_dir          CONF_DIR_I_SWS_USER_BASE_P   CONF_DIR_I_SWS_P                 _user					rmdir
-    mas_define_dir          CONF_DIR_I_SWS_USER_P        CONF_DIR_I_SWS_USER_BASE_P      "$USER"				rmdir
+    mas_define_dir          CONF_DIR_I_SWS_USER_P        CONF_DIR_I_SWS_USER_BASE_P      "${USER:-unknown}"			rmdir
 
 
     mas_define_dir          HISTORY_T_DIR_BASE            CONF_DIR                         term_history
     mas_define_dir          HISTORY_DIR_BASE		 HISTORY_T_DIR_BASE                history
     mas_define_dir          HISTORY_DIR_USER_BASE        HISTORY_DIR_BASE		  user					rmdir
-    mas_define_dir          HISTORY_DIR_USER             HISTORY_DIR_USER_BASE		 "$USER"				rmdir
-    mas_define_dir          HISTORY_DIR                  HISTORY_DIR_BASE                "$UID"					mkdir
+    mas_define_dir          HISTORY_DIR_USER             HISTORY_DIR_USER_BASE		 "${USER:-unknown}"			rmdir
+    mas_define_dir          HISTORY_DIR                  HISTORY_DIR_BASE                "${UID:-unknown}"			mkdir
     mas_define_dir          WM_DOCKAPPLETS               CONF_DIR                         wmaker				rmdir
 
     mas_define_dir          CONF_DIR_CUSTOM_BASE         CONF_DIR_BASH                    custom				rmdir
-    mas_define_dir          CONF_DIR_CUSTOM              CONF_DIR_CUSTOM_BASE            "$USER"				rmdir
+    mas_define_dir          CONF_DIR_CUSTOM              CONF_DIR_CUSTOM_BASE            "${USER:-unknown}"			rmdir
 
     mas_define_dir          CONF_DIR_TERM_TERM_BASE      CONF_DIR_BASH                   _term					rmdir
-    mas_define_dir          CONF_DIR_TERM_TERM           CONF_DIR_TERM_TERM_BASE         "$TERM"				rmdir
+    mas_define_dir          CONF_DIR_TERM_TERM           CONF_DIR_TERM_TERM_BASE         "${TERM:-unknown}"			rmdir
     mas_define_dir          CONF_DIR_TERM_EMUL_BASE      CONF_DIR_TERM_TERM              _emul					rmdir
     mas_define_dir          CONF_DIR_TERM_EMUL           CONF_DIR_TERM_EMUL_BASE         "${MAS_PROBABLE_TERMINAL_EMULATOR:-unknown_pte}" rmdir
 
   export MAS_DIRS_CONF_AT=${!MAS_CONF_*}
-# export MAS_MASVARS=${!MAS_*}
+  export MAS_VARS=${!MAS_*}
   export MAS_DIRS="$MAS_BIN $MAS_UBIN $MAS_CONF_DIR $MAS_CONF_DIR_TERM $MAS_CONF_DIR_WS $MAS_CONF_DIR_CUSTOM $MAS_CONF_DIR_TERM_TERM $MAS_CONF_DIR_BASH $MAS_CONF_DIR_PROFILE $MAS_CONF_DIR_TMP $MAS_CONF_DIR_PROFILE_GROUPS $MAS_WM_DOCKAPPLETS $MAS_HISTORY_DIR $MAS_BASH_LOG $MAS_CONF_DIR_PATH_UTIL $MAS_CONF_DIR_PATHS $MAS_CONF_DIR_I_WS"
   export MAS_DIRS_SEARCH_BASH_AT="MAS_BIN MAS_UBIN MAS_CONF_DIR_TERM MAS_CONF_DIR_BASH MAS_CONF_DIR_PATH_UTIL MAS_CONF_DIR_PROFILE MAS_CONF_DIR_I_WS"
   export MAS_DIRS_SEARCH_BASH="$MAS_BIN $MAS_UBIN $MAS_CONF_DIR_RUNONCE $MAS_CONF_DIR_TERM $MAS_CONF_DIR_BASH $MAS_CONF_DIR_PATH_UTIL $MAS_CONF_DIR_PROFILE $MAS_CONF_DIR_I_WS"

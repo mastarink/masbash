@@ -1,8 +1,6 @@
   if [[ "${MAS_SCREEN_MODE_NEW}" ]] ; then
     mas_get_lib_call stddirs define_std_directories
-#   echo "${MAS_SCREEN_DELAY_START:-300000} seconds to screen mode processing" >&2
-    mas_dynsleep "${MAS_SCREEN_DELAY_START:-300000}" "seconds to screen mode processing"
-#   ${MAS_SLEEP_CMD:=/bin/sleep} ${MAS_SCREEN_DELAY_START:-3}
+    mas_dynsleep "${MAS_SCREEN_DELAY_START:-1}" "seconds to screen mode processing"
     mas_src_scriptsn_opt_std _mastar_settings_per_scrmode MAS_CONF_DIR_SCREEN_MODE
   fi
   return 0 

@@ -1,0 +1,5 @@
+  MAS_GTERMO_BINNAME='evilvte'
+  return 0
+
+
+# vi: ft=sh

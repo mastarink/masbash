@@ -1,0 +1,7 @@
+  
+  MAS_GTERMO_BINNAME='Eterm'
+  MAS_GTERMO_GEOMETRY='156x60+0+0'
+  return 0
+
+
+# vi: ft=sh

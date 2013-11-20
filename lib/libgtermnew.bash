@@ -2,7 +2,7 @@ mas_get_lib notify mas_notify
 if [[ "$HOME" ]] && [[ -f ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs ]] ; then
   . ${MAS_ETC_BASH:=/etc/mastar/shell/bash}/.topparamfuncs
 
-# use $MAS_DESKTOP_NAME $UID $USER $USERNAME  
+# use ${MAS_GTERMO_DESKTOP_NAME:-$MAS_DESKTOP_NAME} $UID $USER $USERNAME  
 # set terminal_bin, class, role, profile, execute
 # terminal_bin=gnome-terminal
 #	--profile
@@ -73,7 +73,7 @@ function mas_gterminal ()
 ##  echo ":6: '$( mywmws )'" >&2
 #   echo "$cmd" >>/tmp/gtermcmd.txt
 #   echo "$cmd" >&2
-    mas_notify gterm "$MAS_GTERM_CMD"
+    mas_notify gterm "$cmd"
     eval $cmd  >>/tmp/gtermcmd.txt 2>&1
   else
     echo $cmd
@@ -96,16 +96,16 @@ function mas_genterminal ()
     done
     if [[ "$MAS_GTERMO_CAN_TABS" ]] ; then
       for ko in ${MAS_GTERMO_TABS[@]} ; do
-	MAS_GTERMO_EVC="$MAS_GTERMO_EVC ${MAS_GTERMO_CAN_TABS}${MAS_GTERMO_OPTEQ:-=}${MAS_GTERMO_PROJECT}/${ko}"
+	MAS_GTERMO_EVC="$MAS_GTERMO_EVC ${MAS_GTERMO_CAN_TABS}${MAS_GTERMO_OPTEQ:-=}${MAS_GTERMO_PROJECTS_DIR}/${ko}"
       done
     fi
-    MAS_GTERMO_EVC="sg ${MAS_GTERMO_GROUP:=mastar-gterm} "'"'"${MAS_GTERMO_EVC:-gnome-terminal} &"'"'" # $(datemt) $(tty) - $- - ${MAS_DESKTOP_NAME}"
+    MAS_GTERMO_EVC="sg ${MAS_GTERMO_GROUP:=mastar-gterm} "'"'"${MAS_GTERMO_EVC:-gnome-terminal} &"'"'" # $(datemt) $(tty) - $- - ${MAS_GTERMO_DESKTOP_NAME:-$MAS_DESKTOP_NAME}"
   # echo ">>> [${#MAS_GTERMOPTS[@]}]  $MAS_GTERMO_EVC"
   # echo "[${#MAS_GTERMOPTS[@]}]  $MAS_GTERMO_EVC" >&2
     if [[ "$MAS_GTERMO_EVC" ]] ; then
       mas_notify gterm "command: [${MAS_GTERMO_EVC}]"
       mas_notify + "GT" "... ... [${MAS_GTERMO_EVC}]"
-      echo "[MAS_GTERMO_PROJECT: $MAS_GTERMO_PROJECT]" >> /tmp/gtermnew.tmp
+      echo "[MAS_GTERMO_PROJECTS_DIR: $MAS_GTERMO_PROJECTS_DIR]" >> /tmp/gtermnew.tmp
       echo "[MAS_DEVELOP_DIR: $MAS_DEVELOP_DIR]" >> /tmp/gtermnew.tmp
       echo "[MAS_GTERMO_EVC: $MAS_GTERMO_EVC]" >> /tmp/gtermnew.tmp
       echo "[MAS_GTERMO_TABS: ${MAS_GTERMO_TABS[@]}]" >> /tmp/gtermnew.tmp

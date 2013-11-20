@@ -2,7 +2,7 @@
 mas_get_lib_ifnot prompt set_prompt_reset_colors
 
 mas_get_lib_ifnot time datemt
-export MAS_TIME_LIBPROMPT_MAIN=$(datemt)
+export MASPROMPT_TIME_LIBPROMPT_MAIN=$(datemt)
 
 function mas_build_ps10 ()
 {
@@ -43,93 +43,90 @@ function mas_build_ps10 ()
   # Y - $STY / tty
 
   # OFF all: (quoted due to dollar)
-  #export MAS_PROMPT_OPTIONS='EBGYUHDTPSRrWdcNLOV$wivpaAoM'
+  #export MASPROMPT_OPTIONS='EBGYUHDTPSRrWdcNLOV$wivpaAoM'
   # ON all:
   
 
   #########################################################################################################
   if false \
-     || [[ "$MAS_PS10PWD" != "$PWD"                        ]] \
-     || [[ "$MAS_PROMPT_GEOMETRY" != "${COLUMNS}x${LINES}" ]] \
-     || [[ "$mas_new_result" -ne "$MAS_OLD_RESULT"         ]] \
-     || [[ "$MAS_I_WS" != "$MAS_OLD_WS"                    ]] \
-     || [[ "$SECONDS" -gt "$MAS_SECONDS_OLD"               ]] \
+     || [[ "$MASPROMPT_PS10PWD" != "$PWD"                        ]] \
+     || [[ "$MASPROMPT_GEOMETRY" != "${COLUMNS}x${LINES}" ]] \
+     || [[ "$mas_new_result" -ne "$MASPROMPT_OLD_RESULT"         ]] \
+     || [[ "$MASPROMPT_I_WS" != "$MASPROMPT_OLD_WS"                    ]] \
+     || [[ "$SECONDS" -gt "$MASPROMPT_SECONDS_OLD"               ]] \
      ; then
-#  echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>> [$MAS_PS10PWD : $PWD] [$MAS_PROMPT_GEOMETRY : ${COLUMNS}x${LINES}] [$mas_new_result : $MAS_OLD_RESULT] [$MAS_I_WS : $MAS_OLD_WS] [$MAS_DSECONDS0 : $MAS_DSECONDS0_OLD] RESET" >&2
-   #echo "'$MAS_PS10PWD'" >&2
+#  echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>> [$MASPROMPT_PS10PWD : $PWD] [$MASPROMPT_GEOMETRY : ${COLUMNS}x${LINES}] [$mas_new_result : $MASPROMPT_OLD_RESULT] [$MASPROMPT_I_WS : $MASPROMPT_OLD_WS] [$MASPROMPT_DSECONDS0 : $MASPROMPT_DSECONDS0_OLD] RESET" >&2
+   #echo "'$MASPROMPT_PS10PWD'" >&2
    #echo "'$PWD'" >&2
-    MAS_PS10PWD=$PWD
-    MAS_PROMPT_GEOMETRY="${COLUMNS}x${LINES}"
-    MAS_OLD_RESULT=$mas_new_result
-    MAS_OLD_WS=$MAS_I_WS
-    MAS_SECONDS_OLD=$(( $SECONDS + 1 ))
-    unset MAS_PS10
-    unset MAS_APS10
+    MASPROMPT_PS10PWD=$PWD
+    MASPROMPT_GEOMETRY="${COLUMNS}x${LINES}"
+    MASPROMPT_OLD_RESULT=$mas_new_result
+    MASPROMPT_OLD_WS=$MASPROMPT_I_WS
+    MASPROMPT_SECONDS_OLD=$(( $SECONDS + 1 ))
+    unset MASPROMPT_PS10
+    unset MASPROMPT_APS10
   #else
-    #echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>> NO reset $MAS_DSECONDS0_OLD ? $MAS_DSECONDS0 " >&2
+    #echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>> NO reset $MASPROMPT_DSECONDS0_OLD ? $MASPROMPT_DSECONDS0 " >&2
   fi
-  # MAS_MAXLENGTH >= 14
-  MAS_PWD_OFFSET=4
-  MAS_MAXLENGTH="24"
-  MAS_MINHOMELENGTH="15"
+  # MASPROMPT_MAXLENGTH >= 14
+  MASPROMPT_PWD_OFFSET=4
+  MASPROMPT_MAXLENGTH="24"
+  MASPROMPT_MINHOMELENGTH="15"
 
-  if [ $MAS_MAXLENGTH -lt $((10 + $MAS_PWD_OFFSET)) ] ; then
-    MAS_MAXLENGTH=$((10 + $MAS_PWD_OFFSET))
+  if [ $MASPROMPT_MAXLENGTH -lt $((10 + $MASPROMPT_PWD_OFFSET)) ] ; then
+    MASPROMPT_MAXLENGTH=$((10 + $MASPROMPT_PWD_OFFSET))
   fi
-  if [ $(( $MAS_MAXLENGTH * 3 )) -lt ${#MAS_PS10PWD} ] ; then
-    MAS_MAXLENGTH=$(( ${#MAS_PS10PWD} / 3 ))
+  if [ $(( $MASPROMPT_MAXLENGTH * 3 )) -lt ${#MASPROMPT_PS10PWD} ] ; then
+    MASPROMPT_MAXLENGTH=$(( ${#MASPROMPT_PS10PWD} / 3 ))
   fi
-    #MAS_MAXLENGTH=$((40 + $MAS_PWD_OFFSET))
-  half="$(($MAS_MAXLENGTH/2))"
-#   if [ ${#MAS_PS10PWD} -ge $(($minlength)) ] ; then
-#     MAS_PS10PWD=$(echo "$MAS_PS10PWD" | /bin/sed s/\\/home\\/$USER/~/)
+    #MASPROMPT_MAXLENGTH=$((40 + $MASPROMPT_PWD_OFFSET))
+  half="$(($MASPROMPT_MAXLENGTH/2))"
+#   if [ ${#MASPROMPT_PS10PWD} -ge $(($minlength)) ] ; then
+#     MASPROMPT_PS10PWD=$(echo "$MASPROMPT_PS10PWD" | /bin/sed s/\\/home\\/$USER/~/)
 #   fi
-  if [[ "$MAS_SHN_PROJECTS_DIR" ]] && [[ "$MAS_PS10PWD" =~ ^${MAS_SHN_PROJECTS_DIR}(.*)$ ]] ; then
-    MAS_PS10PWDS="{$(basename $(realpath ${MAS_SHN_PROJECTS_DIR}/..))}${BASH_REMATCH[1]}"
-  elif [ ${#MAS_PS10PWD} -gt $(($MAS_MAXLENGTH)) ] ; then    
-    MAS_PS10PWDS=$( echo "${MAS_PS10PWD:0:$(($half-$MAS_PWD_OFFSET))}...${MAS_PS10PWD:$((${#MAS_PS10PWD}-$half-3-$MAS_PWD_OFFSET)):$half+3+$MAS_PWD_OFFSET}" )
+  if [[ "$MASPROMPT_SHN_PROJECTS_DIR" ]] && [[ "$MASPROMPT_PS10PWD" =~ ^${MASPROMPT_SHN_PROJECTS_DIR}(.*)$ ]] ; then
+    MASPROMPT_PS10PWDS="{$(basename $(realpath ${MASPROMPT_SHN_PROJECTS_DIR}/..))}${BASH_REMATCH[1]}"
+  elif [ ${#MASPROMPT_PS10PWD} -gt $(($MASPROMPT_MAXLENGTH)) ] ; then    
+    MASPROMPT_PS10PWDS=$( echo "${MASPROMPT_PS10PWD:0:$(($half-$MASPROMPT_PWD_OFFSET))}...${MASPROMPT_PS10PWD:$((${#MASPROMPT_PS10PWD}-$half-3-$MASPROMPT_PWD_OFFSET)):$half+3+$MASPROMPT_PWD_OFFSET}" )
   else
-    MAS_PS10PWDS=$MAS_PS10PWD
+    MASPROMPT_PS10PWDS=$MASPROMPT_PS10PWD
   fi
-  #if [ -z "MAS_UNAME" ] ; then
-  # export MAS_UNAME
-  # MAS_UNAME=`uname -a`
+  #if [ -z "MASPROMPT_UNAME" ] ; then
+  # export MASPROMPT_UNAME
+  # MASPROMPT_UNAME=`uname -a`
   #fi
 
-# if [ -z "MAS_MDATE" ] ; then
-#  export MAS_MDATE
-#  MAS_MDATE=`/bin/date +%a` `/bin/date +%T`
+# if [ -z "MASPROMPT_MDATE" ] ; then
+#  export MASPROMPT_MDATE
+#  MASPROMPT_MDATE=`/bin/date +%a` `/bin/date +%T`
 # fi
 
   mdate="`/bin/date '+%a %T'`"
-  #mdate=$MAS_MDATE
+  #mdate=$MASPROMPT_MDATE
 
 
-  export MAS_PROMPT_FLAGS=0
-  if [[ -v MAS_NODEBUG && -n "$MAS_NODEBUG" ]] ; then
-    MAS_PROMPT_FLAGS=$(( $MAS_PROMPT_FLAGS | 1 ))
+  export MASPROMPT_FLAGS=0
+  if [[ -v MASPROMPT_NODEBUG && -n "$MASPROMPT_NODEBUG" ]] ; then
+    MASPROMPT_FLAGS=$(( $MASPROMPT_FLAGS | 1 ))
   fi
-  if [[ -v MAS_NOWARNINGS && -n "$MAS_NOWARNINGS" ]] ; then
-    MAS_PROMPT_FLAGS=$(( $MAS_PROMPT_FLAGS | 2 ))
+  if [[ -v MASPROMPT_NOWARNINGS && -n "$MASPROMPT_NOWARNINGS" ]] ; then
+    MASPROMPT_FLAGS=$(( $MASPROMPT_FLAGS | 2 ))
   fi
-  if [[ -v MAS_NOLOG && -n "$MAS_NOLOG" ]] ; then
-    MAS_PROMPT_FLAGS=$(( $MAS_PROMPT_FLAGS | 4 ))
+  if [[ -v MASPROMPT_NOLOG && -n "$MASPROMPT_NOLOG" ]] ; then
+    MASPROMPT_FLAGS=$(( $MASPROMPT_FLAGS | 4 ))
   fi
-  if [[ -v MAS_DEBUG && -n "$MAS_DEBUG" ]] ; then
-    if [ "$MAS_DEBUG" -gt 0 ] ; then
-      MAS_PROMPT_FLAGS=$(( $MAS_PROMPT_FLAGS | 8 ))
+  if [[ -v MASPROMPT_DEBUG && -n "$MASPROMPT_DEBUG" ]] ; then
+    if [ "$MASPROMPT_DEBUG" -gt 0 ] ; then
+      MASPROMPT_FLAGS=$(( $MASPROMPT_FLAGS | 8 ))
     fi
   fi
 
-  if [ -z "$MAS_HOSTNAME" ] ; then
-    export MAS_HOSTNAME
-    MAS_HOSTNAME=$(/bin/hostname)
-  fi
-  if ! [[ "$MAS_PS10" ]] ; then
-    #MAS_PS10="X$WHOOO"
-    MAS_PS10=""
+  MASPROMPT_HOSTNAME=${MASPROMPT_HOSTNAME:-$(/bin/hostname)}
+  if ! [[ "$MASPROMPT_PS10" ]] ; then
+    #MASPROMPT_PS10="X$whooo"
+    MASPROMPT_PS10=""
   # character set on some terminals
-#   MAS_PS10="${MAS_PS10}"'\e[10m' # ???
+#   MASPROMPT_PS10="${MASPROMPT_PS10}"'\e[10m' # ???
 #   set_prompt_string '\e[10m'
     mas_build_ps10_details 
   fi
@@ -138,8 +135,8 @@ function mas_build_ps10 ()
 
 function mas_prompt1 ()
 {
-  export MAS_TERM=$TERM
-  local mas_new_result='' MAS_DATE2 i
+  export MASPROMPT_TERM=${MAS_TERM:-$TERM}
+  local mas_new_result='' MASPROMPT_DATE2 i
   local prompt_window prompt_mas_pname before after
   
   declare -p MAS_COLORS >/dev/null 2>&1 || declare -Axg MAS_COLORS
@@ -153,52 +150,52 @@ function mas_prompt1 ()
     mas_init_colors
   fi
   PROMPT_DIRTRIM=4
-  MAS_PSECONDS=${MAS_PSECONDS:-$SECONDS}
+  MASPROMPT_PSECONDS=${MASPROMPT_PSECONDS:-$SECONDS}
   
   mas_new_result="$1"
   shift
 
-  export MAS_I_WS=${MAS_I_WS:-${MAS_DESKTOP_NAME}}
- #if [[ -z "$MAS_PSECONDS" ]] ; then export MAS_PSECONDS=$SECONDS ; fi
- #export MAS_DSECONDS0=$(( $SECONDS - $MAS_PSECONDS ))
-  #export MAS_pDSECONDS=`printf '%03d' $MAS_DSECONDS0`
+  export MASPROMPT_I_WS=${MAS_I_WS:-${MAS_DESKTOP_NAME}}
+ #if [[ -z "$MASPROMPT_PSECONDS" ]] ; then export MASPROMPT_PSECONDS=$SECONDS ; fi
+ #export MASPROMPT_DSECONDS0=$(( $SECONDS - $MASPROMPT_PSECONDS ))
+  #export MASPROMPT_pDSECONDS=`printf '%03d' $MASPROMPT_DSECONDS0`
 
   if [[ -v WINDOW ]] ; then  prompt_window="$WINDOW" ; else prompt_window='' ; fi
-  if [[ -v MAS_PNAME ]] ; then prompt_mas_pname="$MAS_PNAME" ; else prompt_mas_pname='' ; fi
+  if [[ -v MASPROMPT_PNAME ]] ; then prompt_mas_pname="$MASPROMPT_PNAME" ; else prompt_mas_pname='' ; fi
 
-  if [ -z "$mas_new_result" ] ; then mas_new_result=$? ; fi
-
-  local WHOOO='+' 
+  if ! [[ "$mas_new_result" ]] ; then mas_new_result=$? ; fi
+  local whooo='+' 
   local half mdate sl tt
 # cg_ws
 
 # if [ -n "$WM" -a "$WM" == awesome -a -s $awe_status_dir/shlvl ] ; then
-#  export MAS_PREV_SHLVL=`cat $awe_status_dir/shlvl`
+#  export MASPROMPT_PREV_SHLVL=`cat $awe_status_dir/shlvl`
 # fi
 
-  if [ "x$WHOOO" == "x" ] ; then
+  if [ "x$whooo" == "x" ] ; then
     PS1='> '
-  elif [[ "$MAS_PS1" ]] ; then
-    PS1=$MAS_PS1
+  elif [[ "$MASPROMPT_PS1" ]] ; then
+    PS1=$MASPROMPT_PS1
   else
-    if [[ -z "$MAS_PROMPT_OPTIONS" ]] ; then export MAS_PROMPT_OPTIONS='' ; fi
+    if [[ -z "$MASPROMPT_OPTIONS" ]] ; then export MASPROMPT_OPTIONS='' ; fi
 
     mas_build_ps10
 
     #########################################################################################################
     # ???   cd .
     #alias ee1='echo "[`pwd`]"'
-    MAS_PS10LIMIT=2
+    MASPROMPT_PS10LIMIT=2
     before=''
     after=''
-    for (( i=0 ; $i < $MAS_PS10LIMIT ; i++ )) ; do
-      before="${before}${MAS_APS10[$i]}"
+    for (( i=0 ; $i < $MASPROMPT_PS10LIMIT ; i++ )) ; do
+      before="${before}${MASPROMPT_APS10[$i]}"
     done
-    for (( i=$MAS_PS10LIMIT ; $i < ${#MAS_APS10[@]} ; i++ )) ; do
-      after="${after}${MAS_APS10[$i]}"
+    for (( i=$MASPROMPT_PS10LIMIT ; $i < ${#MASPROMPT_APS10[@]} ; i++ )) ; do
+      after="${after}${MASPROMPT_APS10[$i]}"
     done
     echo -ne "${before}"
-    if [[ "$MAS_USE_PS1" ]] ; then
+#   echo -ne "<(<${after}>)> :: $TERM :: [$MASPROMPT_USE_PS1]"
+    if [[ "$MASPROMPT_USE_PS1" ]] ; then
 #     if   [[ "$TERM" == 'xterm' ]]                     ; then  PS1="${after}"
 #     elif [[ "$TERM" == 'xterm-color' ]]               ; then  PS1="${after}"
 #     elif [[ "$TERM" =~ ^(rxvt-unicode|rxvt|Eterm)$ ]] ; then  PS1="${after}"
@@ -233,18 +230,18 @@ function mas_prompt1 ()
 
     if false ; then
       if [ -v STY && -n "$STY" ] ; then 
-	screen -S $STY -X title "$STY @ $prompt_mas_pname @ $mdate @ $MAS_PS10PWD"
-	if [ -n "$MAS_PNUM" ] ; then
-	  screen -S $STY -X number "$MAS_PNUM"
+	screen -S $STY -X title "$STY @ $prompt_mas_pname @ $mdate @ $MASPROMPT_PS10PWD"
+	if [ -n "$MASPROMPT_PNUM" ] ; then
+	  screen -S $STY -X number "$MASPROMPT_PNUM"
 	else
-	  export MAS_PNUM=`echo $prompt_mas_pname|/bin/sed -r 's/^[^0-9]*([0-9]+)$/\1/'`
+	  export MASPROMPT_PNUM=`echo $prompt_mas_pname|/bin/sed -r 's/^[^0-9]*([0-9]+)$/\1/'`
 	fi
 	echo -ne "\e]2;"'\e\\'
       else
       # Window title (slows down!) :
-      #if [ $MAS_pDSECONDS -gt 0 ] ; then 
+      #if [ $MASPROMPT_pDSECONDS -gt 0 ] ; then 
 	col=$(($COLUMNS-12))
-	echo -ne "\e]2;[ $MAS_WINDOWID $prompt_mas_pname @ $mdate @ $MAS_PS10PWD ]"'\e\\'
+	echo -ne "\e]2;[ $MASPROMPT_WINDOWID $prompt_mas_pname @ $mdate @ $MASPROMPT_PS10PWD ]"'\e\\'
       #  echo -ne "\e[s\e[2;${col}f${mdate}\e[u"
       #fi
       fi
@@ -260,44 +257,44 @@ function mas_prompt1 ()
 	  else
 	    tt='\e]2;'" gT ${$}"	    
 	  fi
-	  if [ "$MAS_DSECONDS0" -gt 10 ] ; then
+	  if [ "$MASPROMPT_DSECONDS0" -gt 10 ] ; then
 	     tt="$tt+"
 	  else
 	     tt="$tt-"
 	  fi
-	  export MAS_I_WS=${MAS_I_WS:-${MAS_DESKTOP_NAME}}
-	  export MAS_GTERM_WORKSPACE=$MAS_I_WS
-	  if [ -n "${MAS_GTERM_WORKSPACE}" ] ; then tt="$tt(${MAS_GTERM_WORKSPACE})" ; fi
-	  if [[ -v MAS_PSET_NAME && -n "${MAS_PSET_NAME}" ]] ; then tt="$tt.${MAS_PSET_NAME}" ; fi
+	  export MASPROMPT_I_WS=${MAS_I_WS:-${MAS_DESKTOP_NAME}}
+	  export MASPROMPT_GTERM_WORKSPACE=$MASPROMPT_I_WS
+	  if [ -n "${MASPROMPT_GTERM_WORKSPACE}" ] ; then tt="$tt(${MASPROMPT_GTERM_WORKSPACE})" ; fi
+	  if [[ -v MASPROMPT_PSET_NAME && -n "${MASPROMPT_PSET_NAME}" ]] ; then tt="$tt.${MASPROMPT_PSET_NAME}" ; fi
 	  if [ -n "${prompt_mas_pname}" ] ; then tt="$tt:${prompt_mas_pname}" ; fi
-	  tt="$tt id$MAS_WINDOWID $mdate"'\e\\'
+	  tt="$tt id$MASPROMPT_WINDOWID $mdate"'\e\\'
 	  echo -ne $tt
 	fi
       fi
     fi
-#   if [ -z "$MAS_PROMPT_COUNT" ] ; then
+#   if [ -z "$MASPROMPT_COUNT" ] ; then
 #     mas_logger Set prompt first time
 #     mas_logger "TERM:$TERM"
 #   fi
-    export MAS_PROMPT_STY="${MAS_SCREEN_SESSION}"
-    MAS_PROMPT_STY="${STY:-${MAS_PROMPT_STY}}"
+    export MASPROMPT_STY="${MASPROMPT_SCREEN_SESSION}"
+    MASPROMPT_STY="${STY:-${MASPROMPT_STY}}"
 
 
 
     #PS1="\[\033[0m\]\[\033[1;31m\](\[\033[0m\]\[\033[0;35m\]\u\[\033[0m\]\[\033[1;31m\]@\[\033[0m\]\[\033[0;35m\]\h\[\033[0m\]\[\033[1;31m\])\[\033[0m\]\[\033[1;37m\]--\[\033[0m\]\[\033[1;31m\](\[\033[0m\]\[\033[0;35m\]\${PWD}\[\033[0m\]\[\033[1;31m\]:\[\033[0m\]\[\033[0;35m\]\$(ls -l | grep \"^-\" | /usr/bin/wc -l | tr -d \" \")\[\033[0m\]\[\033[1;31m\]/\[\033[0m\]\[\033[0;35m\]\$(ls --si -s | /usr/bin/head -1 | /usr/bin/awk '{print \$2}')\[\033[0m\]\[\033[1;31m\])\[\033[0m\]\[\033[1;37m\]-\n(\[\033[0m\]\[\033[0;35m\]\!\[\033[0m\]\[\033[1;37m\])\[\033[0m\]\[\033[1;31m\]\$ \[\033[0m\]"
     #unset PS1
-    # /bin/date +%Y%m%d.%H%M%S >> $MAS_BASH_LOG/prompt_log
-    export MAS_PROMPT_COUNT=$(($MAS_PROMPT_COUNT + 1))
-#   if ! [[ "$MAS_USE_PS1" ]] ; then
-#     echo -ne "$MAS_PS10\e[-1;100H"
+    # /bin/date +%Y%m%d.%H%M%S >> $MASPROMPT_BASH_LOG/prompt_log
+    export MASPROMPT_COUNT=$(($MASPROMPT_COUNT + 1))
+#   if ! [[ "$MASPROMPT_USE_PS1" ]] ; then
+#     echo -ne "$MASPROMPT_PS10\e[-1;100H"
 #   fi
   fi
-  if [[ "$MAS_USE_PS1" ]] ; then
+  if [[ "$MASPROMPT_USE_PS1" ]] ; then
     if ! [[ "$PS1" ]] ; then
       PS1='?>'
     fi
   fi
-  MAS_PSECONDS=${SECONDS:-0}
+  MASPROMPT_PSECONDS=${SECONDS:-0}
   PS1=$( echo $PS1|sed -n -e 's@\\\]\\\[@@pg' )
 
 # mas_loadlib_if_not mas_set_keyboard service
@@ -307,8 +304,8 @@ function mas_prompt1 ()
     if [[ "$XAUTHORITY" ]] && [[ -f "/home/mastar/.Xauthority" ]] ; then
       /bin/cp "/home/mastar/.Xauthority" "$XAUTHORITY" && mas_set_keyboard
     else
-      ${MAS_LS_CMD:=/bin/ls} -l "$XAUTHORITY"
-      ${MAS_LS_CMD:=/bin/ls} -l "/home/mastar/.Xauthority"
+      ${MAS_LS_CMD:-/bin/ls} -l "$XAUTHORITY"
+      ${MAS_LS_CMD:-/bin/ls} -l "/home/mastar/.Xauthority"
     fi
   fi
 }
@@ -321,7 +318,7 @@ function mas_prompt ()
   if [[ "$SSH_CONNECTION" ]] ; then
     PS1='\w \$ '
   else
-    mas_prompt1
+    mas_prompt1 $*
   fi
 }
 return 0

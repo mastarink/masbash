@@ -1,0 +1,17 @@
+$MAS_CONF_DIR_BINDING:
+genaltterm
+genaltterm.d/101.profile
+gendefterm
+gendefterm.d/010-workspace
+gendefterm.d/101.profile
+gendefterm.d/200-genterm
+_ws/genaltterm/Default
+_ws/genaltterm/Install
+_ws/gendefterm/Default
+_ws/gendefterm/Default.gnome-terminal
+_ws/gendefterm/Default.Terminal
+_ws/gendefterm/Install
+/etc/mastar/shell/bash/.topparamfuncs
+~/.mas/bin/app_kp1.sh
+~/.mas/config/term_new/lib/libgtermnew.bash
+
